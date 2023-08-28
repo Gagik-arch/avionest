@@ -36,7 +36,7 @@ const s = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "transparent",
+    backgroundColor: "white",
     justifyContent: "space-between",
     position: "relative",
     ...padding(16),

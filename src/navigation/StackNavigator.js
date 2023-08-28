@@ -1,6 +1,6 @@
 import {useEffect} from "react";
 import {
-    ForgotPassword, NoNetwork, Signin, Signup, OTP, NewPassword
+    ForgotPassword, NoNetwork, Signin, Signup, OTP, NewPassword, Steps, UserInfo,Welcome
 } from "../screens";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {useNavigation} from "@react-navigation/native";
@@ -26,11 +26,11 @@ const StackNavigator = () => {
                                 navigation.reset({index: 0, routes: [{name: "Home"}]});
                             } else {
                                 if (currentRoute?.name !== "Signin") {
-                                    navigation.reset({index: 0, routes: [{name: "Signin"}]});
+                                    navigation.reset({index: 0, routes: [{name: "Steps"}]});
                                 }
                             }
                         }).catch(() => {
-                        navigation.reset({index: 0, routes: [{name: "Signin"}]});
+                        navigation.reset({index: 0, routes: [{name: "Steps"}]});
                     });
                 } else {
                     navigation.reset({index: 0, routes: [{name: "NoNetwork"}]});
@@ -43,10 +43,21 @@ const StackNavigator = () => {
 
 
     return (
-        <Stack.Navigator initialRouteName={"Signin"}
-                         screenOptions={{
-                             // navigationBarColor: scheme === "light" ? "white" : "black"
-                         }}>
+        <Stack.Navigator initialRouteName={"Steps"}
+            // screenOptions={{
+            //     navigationBarColor: "white"
+            // }}
+        >
+            <Stack.Group>
+                <Stack.Screen name={"Steps"}
+                              component={Steps}
+                              options={{header: () => null}}
+                />
+                <Stack.Screen name={"Welcome"}
+                              component={Welcome}
+                              options={{header: () => null}}
+                />
+            </Stack.Group>
             <Stack.Group>
                 <Stack.Screen name={"Signin"}
                               component={Signin}
@@ -66,6 +77,10 @@ const StackNavigator = () => {
                 />
                 <Stack.Screen name={"NewPassword"}
                               component={NewPassword}
+                              options={{header: () => null}}
+                />
+                <Stack.Screen name={"UserInfo"}
+                              component={UserInfo}
                               options={{header: () => null}}
                 />
             </Stack.Group>

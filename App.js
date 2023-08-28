@@ -6,14 +6,14 @@ import { Provider } from "react-redux";
 import store from "./src/store";
 import { NavigationContainer } from "@react-navigation/native";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-
+import {useEffect} from "react";
+import SplashScreen from "react-native-splash-screen";
 
 export default () => {
 
-  // useEffect(() => {
-  //   SplashScreen.hide();
-  // }, []);
-
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
 
   return (
     <Provider store={store}>

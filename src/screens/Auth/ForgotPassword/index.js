@@ -1,9 +1,8 @@
-import React, {useContext} from "react";
+import React from "react";
 import s from "./style";
 import {Screen, Text, Button, NavigationHeader, Icon, Input} from "../../../core";
-import {margin, padding, ThemeContext, themes} from "../../../resources";
-import {ImageBackground} from "react-native";
-import global from "../../../styles/global";
+import {margin, padding, } from "../../../resources";
+
 
 export const ForgotPassword = (props) => {
 

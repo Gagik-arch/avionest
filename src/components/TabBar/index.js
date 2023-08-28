@@ -1,14 +1,13 @@
-import React, { useContext } from "react";
+import React from "react";
 import { TouchableOpacity, useColorScheme, View } from "react-native";
 import s from "./style";
 import { Icon } from "../../core";
 import { ThemeContext, themes } from "../../resources";
 
 export const TabBar = ({ state, descriptors, navigation }) => {
-  const scheme = useContext(ThemeContext);
 
   return (
-    <View style={[s.container, { backgroundColor: themes[scheme].backgroundColor }]}>
+    <View style={[s.container]}>
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
 

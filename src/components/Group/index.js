@@ -1,14 +1,12 @@
-import React, { useContext } from "react";
+import React from "react";
 import {Button, Icon, Text} from "../../core";
 import s from "./style";
 import {View} from "react-native";
-import { ThemeContext, themes } from "../../resources";
 
 export const Group = ({data = [],
                           containerStyle = {},
                           rightRenderer = null,
                           btnStyle={}}) => {
-  const scheme = useContext(ThemeContext);
 
     return (
         <View style={[s.container, containerStyle]}>
@@ -18,7 +16,7 @@ export const Group = ({data = [],
                         <Button key={index}
                                 onPress={item.onPress}
                                 style={[s.list_btn,btnStyle]}>
-                            {item.icon && <Icon type={item.icon} fill={themes[scheme].primaryTextColor} size={14}/>}
+                            {item.icon && <Icon type={item.icon}  size={14}/>}
                             <View style={[s.line_container, index < data.length - 1 ? [s.border] : null]}>
                                 <Text> {item.label}</Text>
                                 {rightRenderer?.()  }

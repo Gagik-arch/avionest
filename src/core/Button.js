@@ -1,22 +1,21 @@
-import React, { forwardRef, useContext } from "react";
+import React, { forwardRef } from "react";
 import { ActivityIndicator, StyleSheet, TouchableOpacity, useColorScheme } from "react-native";
 import { Text } from "./index";
 import { Colors, padding, fonts, ThemeContext } from "../resources";
 import LinearGradientBG from "./LinearGradientBG";
 import { themes } from "../resources";
-let a= 0
+
 const Button = forwardRef(({
                              label,
                              style,
-                             textStyle = {},
-                             textSize = null,
+                             labelStyle = {},
+                             labelSize = null,
                              variant = "",
                              isLoading = false,
                              children,
                              disabled = false,
                              ...args
                            }, ref) => {
-  const scheme = useContext(ThemeContext);
   variant = variant.toLowerCase();
 
   const s = StyleSheet.create({
@@ -43,20 +42,21 @@ const Button = forwardRef(({
       opacity: 0.5,
     },
     container_primary: {
-      backgroundColor: Colors.green,
-      borderColor: Colors.green,
-      fontWeight: 600,
-      borderRadius: 4,
+      backgroundColor: Colors.darkBlue,
+      borderColor: Colors.darkBlue,
+      borderRadius: 50,
+      ...padding(18,36),
     },
     container_primary_disabled: {
       backgroundColor: Colors.lightGray,
       borderColor: Colors.lightGray,
-      fontWeight: 600,
       borderRadius: 4,
     },
     container_secondary: {
-      borderColor: Colors.orange,
-      borderRadius: 4,
+      ...padding(18,36),
+      backgroundColor: 'rgba(255, 255, 255, 0.50)',
+      borderColor: 'rgba(255, 255, 255, 0.50)',
+      borderRadius: 50,
     },
     container_secondary_disabled: {
       borderColor: Colors.lightGray,
@@ -74,22 +74,26 @@ const Button = forwardRef(({
       borderWidth: 0,
       borderRadius: 0,
       ...padding(0),
+      borderBottomWidth:1,
+      borderColor:Colors.darkBlue
     },
     label_: {
       color: Colors.black,
       ...fonts["16_400"],
     },
     label_link: {
-      color: Colors.orange,
+      color: Colors.darkBlue,
+      ...fonts["16_400"],
     },
     label_primary: {
-      color: Colors.black,
+      color: 'white',
+      ...fonts["16_400"],
     },
     label_primary_disabled: {
       color: "white",
     },
     label_secondary: {
-      color: themes[scheme].primaryTextColor,
+      color:'white',
     },
     label_secondary_disabled: {
       color: "gray",
@@ -124,10 +128,10 @@ const Button = forwardRef(({
                           {...args}>
           {children || (
             <Text
-              size={textSize || undefined}
+              size={labelSize || undefined}
               style={{
                 ...s["label_" + variant],
-                ...textStyle,
+                ...labelStyle,
               }}>
               {label}
             </Text>
@@ -149,16 +153,16 @@ const Button = forwardRef(({
                       {...args}>
       {children || (
         <Text
-          size={textSize || undefined}
+          size={labelSize || undefined}
           style={[
             s["label_" + variant],
             s["label_" + variant + (disabled ? "_disabled" : "")],
-            textStyle,
+            labelStyle,
           ]}>
           {label}
         </Text>
       )}
-      {isLoading && <ActivityIndicator color={'#0ebb3f'}  style={{ marginLeft: 10 }} />}
+      {isLoading && <ActivityIndicator color={'# '}  style={{ marginLeft: 10 }} />}
     </TouchableOpacity>
   );
 

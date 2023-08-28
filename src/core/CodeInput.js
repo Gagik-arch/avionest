@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {  useEffect, useState } from "react";
 import {
   TextInput,
   View,
@@ -8,7 +8,7 @@ import {
   Platform,
 } from 'react-native';
 import {Text} from './index';
-import { Colors, margin, ThemeContext, themes } from "../resources";
+import { Colors, margin } from "../resources";
 
 const CodeInput = ({
   columns = 6,
@@ -20,7 +20,6 @@ const CodeInput = ({
   const [value, setValue] = useState('');
   const [focused, setFocused] = useState(true);
   const opacity = useState(new Animated.Value(0))[0];
-  const scheme = useContext(ThemeContext);
 
   useEffect(() => {
     if (focused) {
@@ -68,7 +67,7 @@ const CodeInput = ({
                 <Text
                   numberOfLines={1}
                   textBreakStrategy={'simple'}
-                  style={[s.text,{color:themes[scheme].primaryTextColor}]}>
+                  style={[s.text]}>
                   {value[index]}
                 </Text>
               )}

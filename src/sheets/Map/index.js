@@ -1,4 +1,4 @@
-import { forwardRef, useContext, useEffect, useMemo, useState } from "react";
+import { forwardRef,  useEffect, useMemo, useState } from "react";
 import s from "./style";
 import { Icon, Screen, Text, Button, Checkbox } from "../../core";
 import { View, Animated, Easing } from "react-native";
@@ -10,7 +10,6 @@ import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 export const Map = forwardRef((props, ref) => {
   const snapPoints = useMemo(() => ["25%", "50%", "100%"], []);
   const [sheetIsOnTop, setSheetIsOnTop] = useState(undefined);
-  const scheme = useContext(ThemeContext);
 
   const group1 = [
     {
@@ -30,12 +29,12 @@ export const Map = forwardRef((props, ref) => {
 
   return (
     <BottomSheet
-      backgroundComponent={(p) => <BottomSheetBackground scheme={scheme}
+      backgroundComponent={(p) => <BottomSheetBackground
                                                          sheetIsOnTop={sheetIsOnTop}
                                                          {...p}
       />}
       ref={ref}
-      handleIndicatorStyle={{backgroundColor:themes[scheme].primaryTextColor}}
+      handleIndicatorStyle={{}}
       snapPoints={snapPoints}
       index={-1}
       enablePanDownToClose={true}

@@ -1,8 +1,8 @@
 export const Colors = {
-  lightGray: 'rgba(178, 178, 178, 1)',
-  gray: 'rgba(136, 136, 136, 1)',
+  darkBlue: '#034168',
+  lightBlue: '#19467D4D',
   darkGray: '#666666',
-  black: 'rgba(36, 36, 36, 1)',
+  black: '#030303',
 
   orange:'rgba(255, 150, 79, 1)',
   red: '#FF2D55',

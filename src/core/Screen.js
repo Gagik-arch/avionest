@@ -18,7 +18,7 @@ const Screen = ({
                   header = <></>,
                   footer = <></>,
                   scrollDisable = false,
-                  backgroundColor = "transparent",
+                  backgroundColor = "white",
                   floatingActionButton = null,
                 }) => {
   return (

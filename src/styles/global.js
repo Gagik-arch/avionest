@@ -5,12 +5,12 @@ import { fonts } from "../resources";
  const global = StyleSheet.create({
   divider: {
     height: 1,
-    backgroundColor: Colors.lightGray,
+    backgroundColor: Colors.darkBlue,
     width: '100%',
     ...margin(16, 0),
   },
   app_title:{
-    color:Colors.green,
+    color:Colors.darkBlue,
     ...fonts['24_400'],
   },
   app_subtitle:{
