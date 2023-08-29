@@ -3,7 +3,7 @@ import {StyleSheet, Animated, View, Easing} from 'react-native';
 import {Colors} from '../resources';
 import {Text} from './index';
 
-const Steper = ({step = 0, count = 5}) => {
+const Stepper = ({step = 0, count = 5}) => {
   const width = useState(new Animated.Value(0))[0];
 
   useEffect(() => {
@@ -51,4 +51,4 @@ const s = StyleSheet.create({
   },
 });
 
-export default Steper;
+export default Stepper;

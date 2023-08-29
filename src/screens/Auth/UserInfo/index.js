@@ -39,7 +39,10 @@ export const UserInfo = (props) => {
             <Input placeholder={'Nationality'}/>
             <Input placeholder={'Home base'}/>
             <View style={{flex: 1}}/>
-            <Button label={'Next'} variant={'primary'}/>
+            <Button label={'Next'} variant={'primary'}
+            onPress={()=>{
+                props.navigation.navigate('YourAircraft')
+            }}/>
         </Screen>
     );
 };

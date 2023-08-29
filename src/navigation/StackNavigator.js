@@ -6,6 +6,7 @@ import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {useNavigation} from "@react-navigation/native";
 import NetInfo from "@react-native-community/netinfo";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import {YourAircraft} from "../screens/Auth/YourAircraft";
 
 const Stack = createNativeStackNavigator();
 
@@ -81,6 +82,10 @@ const StackNavigator = () => {
                 />
                 <Stack.Screen name={"UserInfo"}
                               component={UserInfo}
+                              options={{header: () => null}}
+                />
+                <Stack.Screen name={"YourAircraft"}
+                              component={YourAircraft}
                               options={{header: () => null}}
                 />
             </Stack.Group>

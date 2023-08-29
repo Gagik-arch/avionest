@@ -1,6 +1,6 @@
 import React, {useContext, useState} from "react";
 import s from "./style";
-import {Button, Icon, Input, Screen, Text} from "../../../core";
+import {Button, Checkbox, Icon, Input, Screen, Text} from "../../../core";
 import {View} from "react-native";
 import {Colors, margin, onChangeBody, padding, validateFields} from "../../../resources";
 import global from '../../../styles/global'
@@ -28,6 +28,10 @@ export const Signup = (props) => {
             <Input placeholder={'Username'}/>
             <Input placeholder={'Password'} validationKey={'password'}/>
             <Input placeholder={'Confirm password'} validationKey={'password'}/>
+            <Checkbox label={'I have read and agreed to the Terms and Conditions'}
+                      size={16}
+            containerStyle={{...margin(17,0,0,0)}}
+            />
             <View style={{flex: 1}}/>
             <Button label={'Create Account'} variant={'primary'}
                     onPress={()=>{
