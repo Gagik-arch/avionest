@@ -5,15 +5,19 @@ import {View} from "react-native";
 import {Colors, margin, onChangeBody, padding, validateFields} from "../../../resources";
 import global from '../../../styles/global'
 import NavigationHeader from "../../../core/NavigationHeader";
+import Radio from "../../../core/Radio";
 
 export const YourAircraft = (props) => {
     const [body, setBody] = useState({});
     const [isLoading, setIsLoading] = useState(false);
 
-    const onChange = (e) => {
-        onChangeBody(e, body, setBody);
+    const onChangeRadio = (e) => {
+        setBody((prev) => ({...prev, [e.name]: e.label}))
     };
 
+    const onChange = (e) => {
+        // onChangeBody(e, body, setBody);
+    }
     const disableSubmitBtn = () => validateFields(["name", "phoneNumber", "email", "password"], body) || isLoading;
 
     const onSubmit = () => {
@@ -53,7 +57,26 @@ export const YourAircraft = (props) => {
                       }}
             />
             <Input placeholder={'First Name'}/>
-
+            <Text style={[global.app_subtitle, {...margin(32, 0, 12, 0)}]}>Equipment</Text>
+            <View style={s.grid}>
+                <View style={s.column}>
+                    <Radio label={'ADF'} name={'equipment'} onChange={onChangeRadio}
+                           checked={body?.equipment === 'ADF'}
+                    />
+                    <Radio label={'GPS'} name={'equipment'} onChange={onChangeRadio}
+                           checked={body?.equipment === 'GPS'}
+                    />
+                    <Radio label={'VHF'} name={'equipment'} onChange={onChangeRadio}
+                           checked={body?.equipment === 'VHF'}
+                    />
+                </View>
+                <View style={s.column}>
+                    <Radio label={'VOR'} name={'equipment'} onChange={onChangeRadio}
+                           checked={body?.equipment === 'VOR'}/>
+                    <Radio label={'DME'} name={'equipment'} onChange={onChangeRadio}
+                           checked={body?.equipment === 'DME'}/>
+                </View>
+            </View>
             <View style={{flex: 1}}/>
             <Button label={'Next'} variant={'primary'}/>
         </Screen>

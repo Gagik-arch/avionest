@@ -14,8 +14,8 @@ import { fonts } from "../resources";
     ...fonts['24_400'],
   },
   app_subtitle:{
-    color:Colors.green,
-    ...fonts['16_400'],
+    color:Colors.darkBlue,
+    ...fonts['12_400'],
   }
 });
 

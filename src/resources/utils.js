@@ -4,6 +4,7 @@ export const validateFields = (query = [], body) => {
 
 export const onChangeBody = (e, body, setBody) => {
   const bodyCopy = JSON.parse(JSON.stringify(body));
+
   if (e.text === "") {
     delete bodyCopy[e.name];
     setBody(bodyCopy);

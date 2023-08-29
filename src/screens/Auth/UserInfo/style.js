@@ -5,6 +5,8 @@ const s = StyleSheet.create({
   container: {
     ...padding(90,52),
   },
+
+
 });
 
 export default s;

@@ -5,6 +5,13 @@ const s = StyleSheet.create({
     container: {
         ...padding(90,52),
     },
+    grid:{
+        flexDirection:"row"
+    },
+    column:{
+        flex:1,
+        rowGap:9
+    },
 });
 
 export default s;

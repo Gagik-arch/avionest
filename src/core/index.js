@@ -12,6 +12,7 @@ import PageViewer from "./PageViewer";
 import Slider from "./Slider";
 import CodeInput from "./CodeInput";
 import Loader from "./Loader";
+import Radio from "./Radio";
 
 export {
     DropDown,
@@ -28,4 +29,5 @@ export {
     Slider,
     CodeInput,
     Loader,
+    Radio,
 }
