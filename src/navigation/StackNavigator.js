@@ -1,6 +1,7 @@
 import {useEffect} from "react";
 import {
-    ForgotPassword, NoNetwork, Signin, Signup, OTP, NewPassword, Steps, UserInfo,Welcome
+    ForgotPassword, NoNetwork, Signin, Signup, OTP, NewPassword, Steps, UserInfo, Welcome,
+    YourQualifications, PaymentDetails
 } from "../screens";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {useNavigation} from "@react-navigation/native";
@@ -86,6 +87,14 @@ const StackNavigator = () => {
                 />
                 <Stack.Screen name={"YourAircraft"}
                               component={YourAircraft}
+                              options={{header: () => null}}
+                />
+                <Stack.Screen name={"YourQualifications"}
+                              component={YourQualifications}
+                              options={{header: () => null}}
+                />
+                <Stack.Screen name={"PaymentDetails"}
+                              component={PaymentDetails}
                               options={{header: () => null}}
                 />
             </Stack.Group>

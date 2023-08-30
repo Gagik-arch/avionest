@@ -4,6 +4,8 @@ export * from './Auth/ForgotPassword'
 export * from './Auth/OTP'
 export * from './Auth/NewPassword'
 export * from './Auth/UserInfo'
+export * from './Auth/YourQualifications'
+export * from './Auth/PaymentDetails'
 
 export * from './NoNetwork'
 export * from './Steps'

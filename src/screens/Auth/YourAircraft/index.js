@@ -60,25 +60,20 @@ export const YourAircraft = (props) => {
             <Text style={[global.app_subtitle, {...margin(32, 0, 12, 0)}]}>Equipment</Text>
             <View style={s.grid}>
                 <View style={s.column}>
-                    <Radio label={'ADF'} name={'equipment'} onChange={onChangeRadio}
-                           checked={body?.equipment === 'ADF'}
-                    />
-                    <Radio label={'GPS'} name={'equipment'} onChange={onChangeRadio}
-                           checked={body?.equipment === 'GPS'}
-                    />
-                    <Radio label={'VHF'} name={'equipment'} onChange={onChangeRadio}
-                           checked={body?.equipment === 'VHF'}
-                    />
+                    <Radio label={'ADF'} name={'equipment'} onChange={onChangeRadio}/>
+                    <Radio label={'GPS'} name={'equipment'} onChange={onChangeRadio}/>
+                    <Radio label={'VHF'} name={'equipment'} onChange={onChangeRadio}/>
                 </View>
                 <View style={s.column}>
-                    <Radio label={'VOR'} name={'equipment'} onChange={onChangeRadio}
-                           checked={body?.equipment === 'VOR'}/>
-                    <Radio label={'DME'} name={'equipment'} onChange={onChangeRadio}
-                           checked={body?.equipment === 'DME'}/>
+                    <Radio label={'VOR'} name={'equipment'} onChange={onChangeRadio}/>
+                    <Radio label={'DME'} name={'equipment'} onChange={onChangeRadio}/>
                 </View>
             </View>
             <View style={{flex: 1}}/>
-            <Button label={'Next'} variant={'primary'}/>
+            <Button label={'Next'} variant={'primary'}
+            onPress={()=>{
+                props.navigation.navigate('YourQualifications')
+            }}/>
         </Screen>
     );
 };

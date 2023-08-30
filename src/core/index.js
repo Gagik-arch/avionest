@@ -13,6 +13,7 @@ import Slider from "./Slider";
 import CodeInput from "./CodeInput";
 import Loader from "./Loader";
 import Radio from "./Radio";
+import CardInput from "./CardInput";
 
 export {
     DropDown,
@@ -30,4 +31,5 @@ export {
     CodeInput,
     Loader,
     Radio,
+    CardInput,
 }
