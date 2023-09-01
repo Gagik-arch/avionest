@@ -1,1 +1,1 @@
-export * from './PasswordSucceed'
+export * from './WelcomeAvionest'

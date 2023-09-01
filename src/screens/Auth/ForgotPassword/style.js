@@ -3,22 +3,14 @@ import { Colors, margin, padding } from "../../../resources";
 
 const s = StyleSheet.create({
   container:{
-    ...padding(16)
-  },
-  footer:{
-    flexDirection:'row',
-    textAlign:'center',
-    justifyContent:'center',
-    ...padding(20,0)
-  },
-  terms_contigtion_btn:{
-    color:Colors.blue,
-    fontSize:12,
-    ...margin(0,0,0,8)
+    ...padding(16,52)
   },
   frame:{
     justifyContent:'center',
     alignItems:'center',
+  },
+  title:{
+    ...margin(16,0)
   },
 });
 

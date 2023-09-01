@@ -16,6 +16,11 @@ const s = StyleSheet.create({
     row:{
         flexDirection:'row',
         columnGap:27
+    },
+    scan_btn:{
+        flexDirection:'row',
+        justifyContent:'flex-start',
+        ...margin(13,0,50,0)
     }
 });
 

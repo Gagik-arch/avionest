@@ -13,16 +13,26 @@ export const Signin = (props) => {
 
     return (
         <Screen contentContainerStyle={s.container}>
-          <View style={{alignItems:"center"}}>
-              <Image source={plane}/>
-          </View>
-            <Text style={[global.app_title,{...margin(46,0,11,0)}]}>Welcome Back!</Text>
-            <Text>Incorrect email or password </Text>
+            <View style={{alignItems: "center"}}>
+                <Image source={plane}/>
+            </View>
+            <Text style={[global.app_title, {...margin(46, 0, 11, 0)}]}
+            >
+                Welcome Back!
+            </Text>
+            <Text>Hi, please login to continue your journey</Text>
             <Input placeholder={'Username'}/>
-            <Input placeholder={'Password'}/>
+            <Input placeholder={'Password'} validationKey={'password'}/>
+            <View style={{alignItems: 'flex-end',...margin( 8,0)}}>
+                <Button label={'Forgot Password?'}
+                        onPress={() => {
+                            props.navigation.navigate('ForgotPassword')
+                        }}
+                />
+            </View>
             <Button label={'Create Account'}
                     variant={'primary'}
-                    style={{...margin(40,0,0,0)}}
+                    style={{...margin(40, 0, 0, 0)}}
 
             />
             <Text style={{textAlign: 'center', ...margin(14, 0, 10, 0)}}>
