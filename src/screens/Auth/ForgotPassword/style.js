@@ -12,6 +12,11 @@ const s = StyleSheet.create({
   title:{
     ...margin(16,0)
   },
+  top:{
+    justifyContent: "center",
+    alignItems: 'center',
+    ...padding(74, 0)
+  }
 });
 
 export default s;

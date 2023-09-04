@@ -15,6 +15,10 @@ const regex = {
     email: {
         validation: new RegExp("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])(?:[A-z])?\\.)+(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum|mail|ru)\\b"),
         errorMessage: "Invalid email.",
+    }, // @, 0 UPPERCASE, only com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)
+    phone: {
+        validation: new RegExp("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])(?:[A-z])?\\.)+(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum|mail|ru)\\b"),
+        errorMessage: "Invalid email.",
     },
 };
 
@@ -54,6 +58,7 @@ const Input = React.forwardRef(({
                                     onFocus,
                                     enableIconDivider = false,
                                     numberOfLines = 1,
+                                    requiredMessage,
                                     ...props
                                 }, ref) => {
     const [visibility, setVisibility] = useState(validationKey === "password");
@@ -137,16 +142,21 @@ const Input = React.forwardRef(({
         enableIconDivider={enableIconDivider}
         props={props}
         numberOfLines={numberOfLines}
+        requiredMessage={requiredMessage}
+        name={name}
     />);
 
 
     return validationKey ? (<View style={[blockStyles]}>
         {defaultFlow}
-        {!isValid && (
+        {!isValid ? (
             <Text size={"14_400"} style={s.error}>
                 {errorMassage || regex[validationKey]?.errorMessage}
             </Text>
-        )}
+        ) : (requiredMessage && <Text size={"14_400"} style={s.error}>
+            {requiredMessage}
+        </Text>)}
+
         {/*{renderCheck({ isValid, validationKey, errorMassage, defaultValue })}*/}
     </View>) : (defaultFlow);
 });
@@ -177,6 +187,7 @@ const DefaultFlow = React.forwardRef(({
                                           onBlur, onFocus,
                                           enableIconDivider,
                                           numberOfLines,
+    name,
                                           props,
                                       }, ref) => {
 
@@ -217,8 +228,8 @@ const DefaultFlow = React.forwardRef(({
                 onSubmitEditing={onSubmitEditing}
                 focus={focus}
                 editable={!disabled}
-                onBlur={onBlur}
-                onFocus={onFocus}
+                onBlur={e => onBlur &&  onBlur({e, name})}
+                onFocus={e => onFocus && onFocus({e, name})}
                 multiline={numberOfLines > 1}
                 numberOfLines={numberOfLines}
                 {...props}
@@ -270,7 +281,7 @@ const s = StyleSheet.create({
     },
     error: {
         color: Colors.red,
-        ...margin(12, 0, 10, 0),
+        ...margin(5, 0, 10, 0),
     },
     check_container: {
         flexDirection: "row",

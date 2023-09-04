@@ -14,6 +14,8 @@ const Button = forwardRef(({
                              isLoading = false,
                              children,
                              disabled = false,
+                             onPress=()=>{},
+                             onDisabled=()=>{},
                              ...args
                            }, ref) => {
   variant = variant.toLowerCase();
@@ -48,9 +50,10 @@ const Button = forwardRef(({
       ...padding(18,36),
     },
     container_primary_disabled: {
-      backgroundColor: Colors.lightGray,
-      borderColor: Colors.lightGray,
-      borderRadius: 4,
+      backgroundColor: '#DADADA',
+      borderColor: '#DADADA',
+      borderRadius: 50,
+      ...padding(18,36),
     },
     container_secondary: {
       ...padding(18,36),
@@ -117,7 +120,6 @@ const Button = forwardRef(({
         to={{ offset: "100%", color: "rgba(215,39,72,0.75)" }}
         styles={{ borderRadius: 10 }}>
         <TouchableOpacity ref={ref}
-                          disabled={disabled}
                           style={[
                             {
                               ...s.container,
@@ -125,6 +127,13 @@ const Button = forwardRef(({
                             s["container_" + variant],
                             style,
                           ]}
+                          onPress={()=>{
+                            if(disabled){
+                              onDisabled()
+                            }else{
+                              onPress()
+                            }
+                          }}
                           {...args}>
           {children || (
             <Text
@@ -144,12 +153,18 @@ const Button = forwardRef(({
 
   return (
     <TouchableOpacity ref={ref}
-                      disabled={disabled}
                       style={[
                         s.container,
                         s["container_" + variant + (disabled ? "_disabled" : "")],
                         style,
                       ]}
+                      onPress={()=>{
+                        if(disabled){
+                          onDisabled()
+                        }else{
+                          onPress()
+                        }
+                      }}
                       {...args}>
       {children || (
         <Text

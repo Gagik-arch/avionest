@@ -73,10 +73,6 @@ const StackNavigator = () => {
                               component={ForgotPassword}
                               options={{header: () => null}}
                 />
-                <Stack.Screen name={"OTP"}
-                              component={OTP}
-                              options={{header: () => null}}
-                />
                 <Stack.Screen name={"NewPassword"}
                               component={NewPassword}
                               options={{header: () => null}}

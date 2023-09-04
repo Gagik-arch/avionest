@@ -3,37 +3,57 @@ import s from './style'
 import {Modal, View, Image} from "react-native";
 import {Button, Text} from "../../core";
 import global from "../../styles/global";
-import welcomeFrame from '../../../assets/images/welcome-frame.png'
+import checkYourEmail from '../../../assets/images/check-your-email.png'
+import {Colors, margin} from "../../resources";
 
 export const CheckYourEmail = ({
-                                    visibility,
-                                    setVisibility,
-                                }) => {
+                                   visibility,
+                                   setVisibility,
+                                   onSubmit = () => {
+                                   }
+                               }) => {
 
     return (
         <Modal visible={visibility}
                animationType="fade"
         >
             <View style={s.container}>
-                <Image source={welcomeFrame} style={{width: '100%'}}/>
+                <View style={s.top}>
+                    <Image source={checkYourEmail}/>
+                </View>
                 <View style={s.block}>
                     <Text style={[global.app_title, {textAlign: 'center', marginBottom: 25}]}>
-                        Welcome to Avionest!
+                        Check your email
                     </Text>
                     <Text style={s.text}>
-                        Flypark aim to facilitate your journey by allowing
-                        you to prebook parking space in all partnering
-                        airfields in France. With a simple click, plan your
-                        arrival with peace of mind and keep your aircraft
-                        in a safe and covered hangar for the duration of
-                        your stay.
+                        We have sent a password recovery instruction
+                        to your email
                     </Text>
-                    <Button label={'Let’s Go'}
-                            variant={'primary'}
-                            onPress={() => {
-                                setVisibility(false)
+                    <Text style={[{textAlign: 'center'}]}>
+                        To rest your password, please click this link
+                    </Text>
+                    <Button labelSize={'10_600'}
+                            label={'https://your service.com/reset-password/some-key'}
+                            style={{...margin(18, 0, 0, 0) }}
+                            labelStyle={{
+                                textDecorationLine: 'underline',
+                                color: Colors.darkBlue,
+                                textAlign: 'center',
                             }}
                     />
+                    <Button label={'Ok'}
+                            variant={'primary'}
+                            onPress={onSubmit}
+                            style={{
+                                ...margin(74, 0)
+                            }}
+                    />
+                    <View style={{justifyContent: "center", alignItems: 'center'}}>
+                        <Button label={'Go Back'}
+                                variant={'link'}
+                                onPress={() => setVisibility(false)}
+                        />
+                    </View>
                 </View>
             </View>
         </Modal>
