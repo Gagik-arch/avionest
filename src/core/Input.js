@@ -144,16 +144,18 @@ const Input = React.forwardRef(({
         numberOfLines={numberOfLines}
         requiredMessage={requiredMessage}
         name={name}
+        requiredMessage={requiredMessage}
     />);
 
 
-    return validationKey ? (<View style={[blockStyles]}>
+    return validationKey ? (<View style={[{position: 'relative'}, blockStyles]}>
         {defaultFlow}
         {!isValid ? (
             <Text size={"14_400"} style={s.error}>
                 {errorMassage || regex[validationKey]?.errorMessage}
             </Text>
-        ) : (requiredMessage && <Text size={"14_400"} style={s.error}>
+        ) : (requiredMessage && <Text size={"14_400"}
+                                      style={[s.error, {position: 'absolute', top: '100%'}]}>
             {requiredMessage}
         </Text>)}
 
@@ -187,7 +189,8 @@ const DefaultFlow = React.forwardRef(({
                                           onBlur, onFocus,
                                           enableIconDivider,
                                           numberOfLines,
-    name,
+                                          name,
+                                          requiredMessage,
                                           props,
                                       }, ref) => {
 
@@ -195,7 +198,12 @@ const DefaultFlow = React.forwardRef(({
     return (
         <Animated.View
             style={[s.container, {
-                borderColor: validationKey ? (defaultValue ? (isValid ? "#034168" : Colors.red) : "#034168") : "#034168",
+                borderColor: validationKey ?
+                    (
+                        defaultValue ? (isValid ? "#034168" : Colors.red) :
+                            (requiredMessage ? Colors.red : "#034168")
+                    ) :
+                    "#034168",
                 backgroundColor: disabled ? `rgba(0, 0, 0, 0.1)` : "transparent",
             }, containerStyles]}
         >
@@ -228,7 +236,7 @@ const DefaultFlow = React.forwardRef(({
                 onSubmitEditing={onSubmitEditing}
                 focus={focus}
                 editable={!disabled}
-                onBlur={e => onBlur &&  onBlur({e, name})}
+                onBlur={e => onBlur && onBlur({e, name})}
                 onFocus={e => onFocus && onFocus({e, name})}
                 multiline={numberOfLines > 1}
                 numberOfLines={numberOfLines}
@@ -281,7 +289,7 @@ const s = StyleSheet.create({
     },
     error: {
         color: Colors.red,
-        ...margin(5, 0, 10, 0),
+        ...margin(5, 0),
     },
     check_container: {
         flexDirection: "row",

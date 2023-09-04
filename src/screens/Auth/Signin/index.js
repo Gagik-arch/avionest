@@ -12,7 +12,7 @@ export const Signin = (props) => {
     const [body, setBody] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const [requiredMessage, setRequiredMessage] = useState({})
-    const formQuery = ["password", "username"]
+    const formQuery = ["password", "email"]
 
     const onChange = (e) => {
         setRequiredMessage(prev => {
@@ -40,12 +40,13 @@ export const Signin = (props) => {
                 Welcome Back!
             </Text>
             <Text>Hi, please login to continue your journey</Text>
-            <Input placeholder={'Username'}
+            <Input placeholder={'Email'}
                    onFinish={onChange}
-                   name={'username'}
+                   name={'email'}
                    value={body?.username}
                    validationKey={'email'}
-                   requiredMessage={requiredMessage['username']}
+                   requiredMessage={requiredMessage['email']}
+                   blockStyles={margin(0, 0, 16, 0)}
             />
             <Input placeholder={'Password'}
                    validationKey={'password'}
@@ -54,7 +55,14 @@ export const Signin = (props) => {
                    value={body?.password}
                    requiredMessage={requiredMessage['password']}
             />
-            <Button label={'Create Account'}
+            <View style={[{alignItems: 'flex-end'}, margin(8, 0, 0, 0)]}>
+                <Button label={'Forgot password?'}
+                        onPress={() => {
+                            props.navigation.navigate('ForgotPassword')
+                        }}
+                />
+            </View>
+            <Button label={'Login'}
                     variant={'primary'}
                     disabled={disableSubmitBtn()}
                     onPress={() => {
