@@ -11,12 +11,14 @@ const s = StyleSheet.create({
         height: '100%',
         justifyContent: 'center'
     },
-    value: {},
     input: {
         color: 'transparent',
         fontSize: 0,
     },
-
+    error: {
+        color: Colors.red,
+        ...margin(5, 0),
+    },
 });
 
 export default s;

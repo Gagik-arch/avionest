@@ -8,7 +8,7 @@ const s = StyleSheet.create({
     btn_underlined: {
         borderBottomWidth: 1,
         borderColor: '#034168',
-        ...padding(16,0)
+        ...padding(18,0)
     },
     btn_text: {
         color: "rgba(136, 136, 136, 1)",

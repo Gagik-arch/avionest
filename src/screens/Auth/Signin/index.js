@@ -64,9 +64,10 @@ export const Signin = (props) => {
             </View>
             <Button label={'Login'}
                     variant={'primary'}
-                    disabled={disableSubmitBtn()}
+                    // disabled={disableSubmitBtn()}
                     onPress={() => {
-                        // props.navigation.navigate('Signup')
+                        console.log(23423423)
+                        props.navigation.navigate('Home')
                     }}
                     onDisabled={onDisable}
                     style={{...margin(40, 0, 0, 0)}}

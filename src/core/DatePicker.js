@@ -14,6 +14,7 @@ const DatePicker = ({
                       name,
                       children,
                       icon = null,
+                        variant='underlined'
                     }) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
@@ -39,14 +40,15 @@ const DatePicker = ({
       <Button
         onPress={showDatePicker}
         style={[s.button]}
-        variant={"outlined"}
+        variant={variant}
       >
-        <Text size={"16_400"} style={{
+        <Text size={"14_400"}
+              style={{
           color: Colors.darkGray,
         }}>
           {date?.[mode === "date" ? "toLocaleString" : "toLocaleTimeString"](undefined, options) || label}
         </Text>
-        {icon || <Icon type={"ChevronDown"} size={20} />}
+        {/*{icon || <Icon type={"ChevronDown"} size={20} />}*/}
       </Button>
 
       {isDatePickerVisible ? (

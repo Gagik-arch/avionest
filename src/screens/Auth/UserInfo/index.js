@@ -5,6 +5,7 @@ import {View} from "react-native";
 import {Colors, margin, onChangeBody, padding, validateFields} from "../../../resources";
 import global from '../../../styles/global'
 import NavigationHeader from "../../../core/NavigationHeader";
+import DatePicker from "../../../core/DatePicker";
 
 export const UserInfo = (props) => {
     const [body, setBody] = useState({});
@@ -35,7 +36,7 @@ export const UserInfo = (props) => {
             <Text style={{...margin(12, 0, 80, 0)}}>Create your Account</Text>
             <Input placeholder={'First Name'}/>
             <Input placeholder={'Surname'}/>
-            <Input placeholder={'Date of birth'}/>
+            <DatePicker label={'Date of birth'}/>
             <Input placeholder={'Nationality'}/>
             <Input placeholder={'Home base'}/>
             <View style={{flex: 1}}/>

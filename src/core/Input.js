@@ -142,7 +142,6 @@ const Input = React.forwardRef(({
         enableIconDivider={enableIconDivider}
         props={props}
         numberOfLines={numberOfLines}
-        requiredMessage={requiredMessage}
         name={name}
         requiredMessage={requiredMessage}
     />);
@@ -157,7 +156,8 @@ const Input = React.forwardRef(({
         ) : (requiredMessage && <Text size={"14_400"}
                                       style={[s.error, {position: 'absolute', top: '100%'}]}>
             {requiredMessage}
-        </Text>)}
+        </Text>
+        )}
 
         {/*{renderCheck({ isValid, validationKey, errorMassage, defaultValue })}*/}
     </View>) : (defaultFlow);
@@ -281,7 +281,7 @@ const s = StyleSheet.create({
         boxSizing: "border-box",
         borderRadius: 0,
         width: "100%",
-        ...padding(12, 0),
+        ...padding(10, 0),
 
     },
     input: {

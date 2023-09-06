@@ -54,6 +54,8 @@ export const ForgotPassword = (props) => {
                         // props.navigation.navigate("CheckYourEmail")
                         setVisibility(true)
                     }}
+                    onDisabled={onDisable}
+                    disabled={disableSubmitBtn()}
                     style={{
                         ...margin(74, 0)
                     }}
@@ -62,7 +64,7 @@ export const ForgotPassword = (props) => {
                 <Button label={'Go Back'}
                         variant={'link'}
                         onPress={() => props.navigation.goBack()}
-                        onDisabled={onDisable}
+
                 />
             </View>
             <CheckYourEmail visibility={visibility}

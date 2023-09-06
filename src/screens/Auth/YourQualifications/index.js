@@ -6,6 +6,7 @@ import {Colors, margin, onChangeBody, padding, validateFields} from "../../../re
 import global from '../../../styles/global'
 import NavigationHeader from "../../../core/NavigationHeader";
 import Radio from "../../../core/Radio";
+import DatePicker from "../../../core/DatePicker";
 
 export const YourQualifications = (props) => {
     // const [body, setBody] = useState({});
@@ -49,35 +50,11 @@ export const YourQualifications = (props) => {
                                        style={{color: isSelected ? 'white' : '#787777'}}>{item.title}</Text>
                       }}
             />
+            <DatePicker label={'Lssue date'}/>
+            <Input placeholder={'License number'}/>
+            <DatePicker label={'Valid until'}/>
             <DropDown variant={'underlined'}
-                      placeholder={'Lssue date'}
-                      data={Array.from({length: 100}, (_, k) => ({title: 'Color' + k, id: 'Color' + k}))}
-                      label={(e) => e.title}
-                      renderItem={({item, isSelected}) => {
-                          return <Text size={'14_400'}
-                                       style={{color: isSelected ? 'white' : '#787777'}}>{item.title}</Text>
-                      }}
-            />
-            <DropDown variant={'underlined'}
-                      placeholder={'License number'}
-                      data={Array.from({length: 100}, (_, k) => ({title: 'Color' + k, id: 'Color' + k}))}
-                      label={(e) => e.title}
-                      renderItem={({item, isSelected}) => {
-                          return <Text size={'14_400'}
-                                       style={{color: isSelected ? 'white' : '#787777'}}>{item.title}</Text>
-                      }}
-            />
-            <DropDown variant={'underlined'}
-                      placeholder={'Valid until'}
-                      data={Array.from({length: 100}, (_, k) => ({title: 'Color' + k, id: 'Color' + k}))}
-                      label={(e) => e.title}
-                      renderItem={({item, isSelected}) => {
-                          return <Text size={'14_400'}
-                                       style={{color: isSelected ? 'white' : '#787777'}}>{item.title}</Text>
-                      }}
-            />
-            <DropDown variant={'underlined'}
-                      placeholder={'Lssuing country'}
+                      placeholder={'Issuing country'}
                       data={Array.from({length: 100}, (_, k) => ({title: 'Color' + k, id: 'Color' + k}))}
                       label={(e) => e.title}
                       renderItem={({item, isSelected}) => {

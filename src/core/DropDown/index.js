@@ -37,7 +37,7 @@ const DropDown = ({
                     setVisibility(true)
                 }}
             >
-                <Text size={"16_400"}
+                <Text size={"14_400"}
                       style={[s.btn_text]}
                 >
                     {selected ? label(selected) : placeholder}
