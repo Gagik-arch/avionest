@@ -1,6 +1,6 @@
 const env = {
-  APP_URL: 'http://ec2-54-241-49-80.us-west-1.compute.amazonaws.com:8080',
-  GOOGLE_MAP_KEY: 'AIzaSyB-hyA2DFmhDG1o8B-YQtYTkgna0x1scl8',
+  APP_URL: '',
+  GOOGLE_MAP_KEY: 'AIzaSyBg4w4s6nm3PAI3FiKlKiQCnn-PBy0dRG0',
 };
 
 export default env;

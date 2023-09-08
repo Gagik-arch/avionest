@@ -8,7 +8,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import {useEffect} from "react";
 import SplashScreen from "react-native-splash-screen";
+import {enableLatestRenderer} from 'react-native-maps';
 
+enableLatestRenderer();
 export default () => {
 
   useEffect(() => {

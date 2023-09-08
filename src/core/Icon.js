@@ -5,7 +5,6 @@ import * as Icons from '../../assets/icons';
 const Icon = ({
                   type = 'Clock',
                   size = 28,
-                  color = '#030303',
                   ...props
               }) => {
     if (!type && !Icons.hasOwnProperty(type)) return null;

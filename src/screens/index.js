@@ -12,4 +12,5 @@ export * from './Steps'
 export * from './Welcome'
 
 export * from './Home/Location'
+export * from './Home/Aeroclub'
 

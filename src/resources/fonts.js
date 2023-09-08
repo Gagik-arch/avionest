@@ -69,4 +69,8 @@ export const fonts = StyleSheet.create({
     fontSize:10,
     fontWeight:400
   },
+  '8_400':{
+    fontSize:8,
+    fontWeight:400
+  },
 });

@@ -1,7 +1,7 @@
 import {useEffect} from "react";
 import {
-    ForgotPassword, NoNetwork, Signin, Signup,  NewPassword, Steps, UserInfo, Welcome,
-    YourQualifications, PaymentDetails,YourAircraft
+    ForgotPassword, NoNetwork, Signin, Signup, NewPassword, Steps, UserInfo, Welcome,
+    YourQualifications, PaymentDetails, YourAircraft, Aeroclub
 } from "../screens";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {useNavigation} from "@react-navigation/native";
@@ -94,6 +94,10 @@ const StackNavigator = () => {
             </Stack.Group>
             <Stack.Screen name={"Home"}
                           component={DrawerNavigation}
+                          options={{header: () => null}}
+            />
+            <Stack.Screen name={"Aeroclub"}
+                          component={Aeroclub}
                           options={{header: () => null}}
             />
         </Stack.Navigator>

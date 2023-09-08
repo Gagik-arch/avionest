@@ -1,25 +1,29 @@
-import { StyleSheet } from "react-native";
-import { Colors, margin, padding } from "../../../resources";
+import {StyleSheet} from "react-native";
+import {Colors, margin, padding} from "../../../resources";
 
 const s = StyleSheet.create({
     container: {
         ...padding(16),
     },
-    header:{
-        backgroundColor:Colors.darkBlue,
+    header: {
+        backgroundColor: Colors.darkBlue,
     },
-    top:{
-        flexDirection:'row',
+    top: {
+        flexDirection: 'row',
     },
-    top_btn:{
-        flex:1,
-      ...padding(14,12),
-        columnGap:8
+    top_btn: {
+        flex: 1,
+        ...padding(14, 12),
+        columnGap: 8
     },
-    divider:{
-width:1,
-        backgroundColor:'#D9D9D9'
-    }
+    divider: {
+        width: 1,
+        backgroundColor: '#D9D9D9'
+    },
+    map: {
+        borderWidth:1,
+flex:1
+    },
 });
 
 export default s;
