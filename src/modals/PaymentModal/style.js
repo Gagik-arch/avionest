@@ -9,10 +9,17 @@ const s = StyleSheet.create({
         alignItems: 'center'
     },
     block: {
-        // ...padding(50),
         borderRadius: 27,
         backgroundColor: 'white',
-        borderWidth: 1,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 5,
+        },
+        shadowOpacity: 0.36,
+        shadowRadius: 6.68,
+
+        elevation: 11,
     },
     title: {
         textAlign: 'center',

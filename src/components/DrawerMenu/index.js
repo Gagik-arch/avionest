@@ -19,6 +19,9 @@ export const DrawerMenu = (props) => {
             <Tab icon={<Icon type={'User'} fill={Colors.darkBlue} size={20}/>}
                  label={'Profile'}
                  right={<Icon type={'ChevronRight'} stroke={'#B2B2B2'} size={20}/>}
+                 onPress={() => {
+                     props.navigation.navigate('Profile')
+                 }}
             />
             <Tab icon={<Icon type={'Lock'} stroke={Colors.darkBlue} size={20}/>}
                  label={'Settings'}
@@ -34,7 +37,7 @@ export const DrawerMenu = (props) => {
             <Tab icon={<Icon type={'File'} fill={Colors.darkBlue} size={20}/>}
                  label={'Payment'}
                  right={<Icon type={'ChevronRight'} stroke={'#B2B2B2'} size={20}/>}
-                 onPress={()=>{
+                 onPress={() => {
                      props.navigation.navigate('Payments')
                  }}
             />
