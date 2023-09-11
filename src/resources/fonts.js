@@ -13,6 +13,10 @@ export const fonts = StyleSheet.create({
     fontSize:20,
     fontWeight:600
   },
+  '20_400':{
+    fontSize:20,
+    fontWeight:400
+  },
   '18_400':{
     fontSize:18,
     fontWeight:400

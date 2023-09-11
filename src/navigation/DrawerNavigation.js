@@ -1,5 +1,5 @@
 import {createDrawerNavigator} from "@react-navigation/drawer";
-import {Location} from "../screens";
+import {Location, Payments} from "../screens";
 import {DrawerMenu} from "../components";
 
 const Drawer = createDrawerNavigator();
@@ -15,7 +15,10 @@ const DrawerNavigator = () => {
                            component={Location}
                            options={{header: () => null}}
             />
-
+            <Drawer.Screen name={"Payments"}
+                          component={Payments}
+                          options={{header: () => null}}
+            />
         </Drawer.Navigator>
     );
 };

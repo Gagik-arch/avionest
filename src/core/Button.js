@@ -9,7 +9,7 @@ const Button = forwardRef(({
                                label,
                                style,
                                labelStyle = {},
-                               labelSize = null,
+                               labelSize = undefined,
                                variant = "",
                                isLoading = false,
                                children,
@@ -95,7 +95,6 @@ const Button = forwardRef(({
         },
         label_: {
             color: Colors.black,
-            ...fonts["16_400"],
         },
         label_link: {
             color: Colors.darkBlue,
@@ -156,7 +155,7 @@ const Button = forwardRef(({
                                   {...args}>
                     {children || (
                         <Text
-                            size={labelSize || undefined}
+                            size={labelSize }
                             style={{
                                 ...s["label_" + variant],
                                 ...labelStyle,
@@ -186,7 +185,7 @@ const Button = forwardRef(({
                           }}
                           {...args}>
             {children || (
-                <Text size={labelSize || undefined}
+                <Text size={labelSize }
                       style={[
                           // s["label_" + variant],
                           s["label_" + variant + (disabled ? "_disabled" : "")],

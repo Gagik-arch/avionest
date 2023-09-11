@@ -1,13 +1,14 @@
 import {useEffect} from "react";
 import {
     ForgotPassword, NoNetwork, Signin, Signup, NewPassword, Steps, UserInfo, Welcome,
-    YourQualifications, PaymentDetails, YourAircraft, Aeroclub
+    YourQualifications, PaymentDetails, YourAircraft, Aeroclub, Payments
 } from "../screens";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {useNavigation} from "@react-navigation/native";
 import NetInfo from "@react-native-community/netinfo";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import DrawerNavigation from './DrawerNavigation'
+
 const Stack = createNativeStackNavigator();
 
 const StackNavigator = () => {
@@ -91,6 +92,7 @@ const StackNavigator = () => {
                               component={PaymentDetails}
                               options={{header: () => null}}
                 />
+
             </Stack.Group>
             <Stack.Screen name={"Home"}
                           component={DrawerNavigation}
