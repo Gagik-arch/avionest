@@ -14,6 +14,7 @@ import CodeInput from "./CodeInput";
 import Loader from "./Loader";
 import Radio from "./Radio";
 import CardInput from "./CardInput";
+import Switch from "./Switch";
 
 export {
     DropDown,
@@ -32,4 +33,5 @@ export {
     Loader,
     Radio,
     CardInput,
+    Switch,
 }

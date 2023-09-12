@@ -13,6 +13,8 @@ import Grid from './grid.svg';
 import Lock from './lock.svg';
 import User from './user.svg';
 import ChevronRight from './chevron-right.svg';
+import Plane from './plane.svg';
+import Calendar from './calendar.svg';
 
 export {
   EyeOff,
@@ -29,4 +31,6 @@ export {
   Lock,
   User,
   ChevronRight,
+  Plane,
+  Calendar,
 };

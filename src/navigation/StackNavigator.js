@@ -8,6 +8,8 @@ import {useNavigation} from "@react-navigation/native";
 import NetInfo from "@react-native-community/netinfo";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import DrawerNavigation from './DrawerNavigation'
+import {Colors} from "../resources";
+import {Button, Icon} from "../core";
 
 const Stack = createNativeStackNavigator();
 
@@ -97,6 +99,25 @@ const StackNavigator = () => {
             <Stack.Screen name={"Home"}
                           component={DrawerNavigation}
                           options={{header: () => null}}
+                          // options={{
+                          //     title: null,
+                          //     headerStyle: {
+                          //         backgroundColor: Colors.darkBlue,
+                          //     },
+                          //     headerTintColor: '#fff',
+                          //     headerTitleStyle: {
+                          //         fontWeight: 'bold',
+                          //     },
+                          //     headerRight: (props)=>{
+                          //         return (
+                          //             <Button onPress={()=>{
+                          //
+                          //             }}>
+                          //                 <Icon type={'Bars'} fill={'#fff'}/>
+                          //             </Button>
+                          //         )
+                          //     }
+                          // }}
             />
             <Stack.Screen name={"Aeroclub"}
                           component={Aeroclub}

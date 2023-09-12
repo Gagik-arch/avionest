@@ -14,4 +14,5 @@ export * from './Welcome'
 export * from './Home/Location'
 export * from './Home/Aeroclub'
 export * from './Home/Payments'
+export * from './Home/MyBookings'
 

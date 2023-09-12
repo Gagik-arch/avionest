@@ -20,6 +20,10 @@ const Switch = ({
                     },
                     value = false,
                     name,
+                    switchActiveStyle = {},
+                    switchStyle = {},
+                    style = {},
+    activeStyle={}
                 }) => {
     const [active, setActive] = useState(value);
 
@@ -45,9 +49,10 @@ const Switch = ({
             style={[
                 s.container,
                 {justifyContent: active ? "flex-end" : "flex-start"},
-                active ? s.container_active : null,
+                style,
+                active ? (activeStyle || s.container_active) : null,
             ]}>
-            <View style={[s.switch, active && s.switch_active]}/>
+            <View style={[s.switch, active ? (switchActiveStyle || s.switch_active): switchStyle]}/>
         </TouchableOpacity>
     );
 };

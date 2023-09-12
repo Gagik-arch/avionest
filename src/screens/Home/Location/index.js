@@ -14,16 +14,17 @@ export const Location = (props) => {
     });
 
     return (
-        <Screen header={<NavigationHeader style={s.header}
-                                          title={<></>}
-                                          buttons={
-                                              <Button onPress={() => {
-                                                  props.navigation.openDrawer();
-                                              }}>
-                                                  <Icon type={'Bars'} fill={'white'}/>
-                                              </Button>
-                                          }
-                                          {...props}/>}
+        <Screen
+            header={<NavigationHeader style={s.header}
+                                      title={<></>}
+                                      buttons={
+                                          <Button onPress={() => {
+                                              props.navigation.openDrawer();
+                                          }}>
+                                              <Icon type={'Bars'} fill={'white'}/>
+                                          </Button>
+                                      }
+                                      {...props}/>}
         >
             <View style={s.top}>
                 <Button style={s.top_btn}>

@@ -1,8 +1,7 @@
 import {View} from "react-native";
-import {Button, Icon, Text} from "../../core";
+import {Button, Icon, Text,Switch} from "../../core";
 import s from './style'
 import {Colors} from "../../resources";
-import Switch from "../../core/Switch";
 
 export const DrawerMenu = (props) => {
 
@@ -45,6 +44,9 @@ export const DrawerMenu = (props) => {
                  label={'My bookings'}
                  right={<Icon type={'ChevronRight'} stroke={'#B2B2B2'} size={20}/>}
                  containerStyle={s.tab_container}
+                 onPress={() => {
+                     props.navigation.navigate('MyBookings')
+                 }}
             />
             <Tab icon={<Icon type={'Circle'} fill={'transparent'} stroke={Colors.darkBlue} size={20}/>}
                  label={'Sign Out'}
