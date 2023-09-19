@@ -15,6 +15,8 @@ import User from './user.svg';
 import ChevronRight from './chevron-right.svg';
 import Plane from './plane.svg';
 import Calendar from './calendar.svg';
+import Calendar2 from './calendar2.svg';
+import Search from './search.svg';
 
 export {
   EyeOff,
@@ -33,4 +35,6 @@ export {
   ChevronRight,
   Plane,
   Calendar,
+  Calendar2,
+  Search,
 };

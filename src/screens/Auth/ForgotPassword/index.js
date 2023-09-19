@@ -4,7 +4,7 @@ import {Screen, Text, Button, NavigationHeader, Icon, Input} from "../../../core
 import {margin, onChangeBody, onRequiredFieldNotAvailable, padding, validateFields,} from "../../../resources";
 import {Image, View} from 'react-native'
 import global from "../../../styles/global";
-import forgotPasswordFrame from '../../../../assets/images/forgot-password-frame.png'
+import forgotPasswordFrame from '../../../../assets/images/forgot_password_frame.png'
 import {CheckYourEmail} from "../../../modals";
 
 export const ForgotPassword = (props) => {

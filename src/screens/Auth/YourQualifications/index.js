@@ -50,9 +50,9 @@ export const YourQualifications = (props) => {
                                        style={{color: isSelected ? 'white' : '#787777'}}>{item.title}</Text>
                       }}
             />
-            <DatePicker label={'Lssue date'}/>
+            <DatePicker placeholder={'Lssue date'}/>
             <Input placeholder={'License number'}/>
-            <DatePicker label={'Valid until'}/>
+            <DatePicker placeholder={'Valid until'}/>
             <DropDown variant={'underlined'}
                       placeholder={'Issuing country'}
                       data={Array.from({length: 100}, (_, k) => ({title: 'Color' + k, id: 'Color' + k}))}

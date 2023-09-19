@@ -36,7 +36,7 @@ export const UserInfo = (props) => {
             <Text style={{...margin(12, 0, 80, 0)}}>Create your Account</Text>
             <Input placeholder={'First Name'}/>
             <Input placeholder={'Surname'}/>
-            <DatePicker label={'Date of birth'}/>
+            <DatePicker placeholder={'Date of birth'}/>
             <Input placeholder={'Nationality'}/>
             <Input placeholder={'Home base'}/>
             <View style={{flex: 1}}/>

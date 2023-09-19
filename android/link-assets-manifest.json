@@ -1,0 +1,169 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/Inter/Inter-Black.ttf",
+      "sha1": "283fa65b96dc1f2d71c6504afb9610447bdcdf1b"
+    },
+    {
+      "path": "assets/fonts/Inter/Inter-Bold.ttf",
+      "sha1": "48747b7a60086f97af0d373febcbd1f1bee87f17"
+    },
+    {
+      "path": "assets/fonts/Inter/Inter-Light.ttf",
+      "sha1": "dd9ec1ae67dd85143bacf7a3cb37e9f0ac979843"
+    },
+    {
+      "path": "assets/fonts/Inter/Inter-Medium.ttf",
+      "sha1": "a418a8ba73bbcfa8c131c426ab836d78457afa9b"
+    },
+    {
+      "path": "assets/fonts/Inter/Inter-Regular.ttf",
+      "sha1": "7237d9cf55f177702066a28a4dde1e4c7e8ab576"
+    },
+    {
+      "path": "assets/fonts/Inter/Inter-SemiBold.ttf",
+      "sha1": "431007da316de60d85174aeec9b8389b5c73e7d6"
+    },
+    {
+      "path": "assets/fonts/Inter/Inter-Thin.ttf",
+      "sha1": "297919d59c9ba4fa17251cdb9f06c26ca906e593"
+    },
+    {
+      "path": "assets/images/a.jpg",
+      "sha1": "5f2dde33d1f7b8a730944c88d2dd129c3c2ac55d"
+    },
+    {
+      "path": "assets/images/b.jpg",
+      "sha1": "e7072c9bff8519917fcd40bac319578cc83a6f54"
+    },
+    {
+      "path": "assets/images/c.jpg",
+      "sha1": "abb1378f523b0fc3ed5361fd5185edb9dbc129a6"
+    },
+    {
+      "path": "assets/images/check_your_email.png",
+      "sha1": "69d26ef438eca541fe7e898afe71923b6766c732"
+    },
+    {
+      "path": "assets/images/clouds.png",
+      "sha1": "f8c840cd5a3c1db5f932631a4ece98dccf9c7138"
+    },
+    {
+      "path": "assets/images/d.jpg",
+      "sha1": "b3ec96b564a16151b8c1166f3bf3a6da3e7a3bbf"
+    },
+    {
+      "path": "assets/images/forgot_password_frame.png",
+      "sha1": "5f80c6e72c06fe5653be5150bc1f55052988c5dd"
+    },
+    {
+      "path": "assets/images/launch_screen.png",
+      "sha1": "b8f706e944cc6a61371feadc1392f82170f37bcb"
+    },
+    {
+      "path": "assets/images/logo.png",
+      "sha1": "69c21e7fe152b7e64731573af88cbf31cb0699ef"
+    },
+    {
+      "path": "assets/images/mastercard.png",
+      "sha1": "33f5e3c2ee2a6f6d5dfd6cda73cd8057530a6c33"
+    },
+    {
+      "path": "assets/images/plane.png",
+      "sha1": "c7c3ed55aad4cd5c7cf8d71decd039284e801c58"
+    },
+    {
+      "path": "assets/images/step_1.png",
+      "sha1": "70a4fa4db7642c5825a152951fec24831f1aefaa"
+    },
+    {
+      "path": "assets/images/step_2.png",
+      "sha1": "d2699e4bce8372cd89d62da5ec705f4ec388319f"
+    },
+    {
+      "path": "assets/images/step_3.png",
+      "sha1": "b8325efad21edeaba56b80d3fb1d9766d5b74957"
+    },
+    {
+      "path": "assets/images/success.png",
+      "sha1": "c7212438d8646618d8a7ce17edb0152a7cc339b0"
+    },
+    {
+      "path": "assets/images/visa.png",
+      "sha1": "bf261c61ebe16b9972b882b3290f4f6dfba25b5b"
+    },
+    {
+      "path": "assets/images/welcome_frame.png",
+      "sha1": "53bf041039b29f27f6c7d2a609457edd733a41d8"
+    },
+    {
+      "path": "assets/icons/arrow_left.svg",
+      "sha1": "436729edaa16f9874db87b742f3dd4a841d0775b"
+    },
+    {
+      "path": "assets/icons/bars.svg",
+      "sha1": "a699d5080e54aa7cde017f0e8974191e1fac4ee5"
+    },
+    {
+      "path": "assets/icons/bell.svg",
+      "sha1": "7b0ebc311fc0c588ad64a2799b83aa354b87374c"
+    },
+    {
+      "path": "assets/icons/calendar.svg",
+      "sha1": "c8b94bc8fd1a3f48da402debc7395ac9405f8704"
+    },
+    {
+      "path": "assets/icons/chevron-right.svg",
+      "sha1": "ea3711cbd992c598d193d77ca5cf5d69043d67c0"
+    },
+    {
+      "path": "assets/icons/circle.svg",
+      "sha1": "37e15fee6e5006cd9a2e3097eae250df46668249"
+    },
+    {
+      "path": "assets/icons/eye-off.svg",
+      "sha1": "5654050a83051edc36fe70ee22e918aaa30e6a28"
+    },
+    {
+      "path": "assets/icons/eye.svg",
+      "sha1": "5fd7a50d870f414b55c25164bd6d824f1db21f83"
+    },
+    {
+      "path": "assets/icons/file.svg",
+      "sha1": "eb8f5c78902a92e7697aea2712e510043adf50b6"
+    },
+    {
+      "path": "assets/icons/grid.svg",
+      "sha1": "c837fd80b981e65aa3be95d69b45b2147c8ad5a7"
+    },
+    {
+      "path": "assets/icons/index.js",
+      "sha1": "0c9314248de3729ca4447cb3a7d77c76de4162ad"
+    },
+    {
+      "path": "assets/icons/lock.svg",
+      "sha1": "6ef4d08ea6e295644be9b83be0633c8cdf5c0ac0"
+    },
+    {
+      "path": "assets/icons/mark.svg",
+      "sha1": "0c09a469812238022aa973e4e41117d21f903bb2"
+    },
+    {
+      "path": "assets/icons/plane.svg",
+      "sha1": "db9e45bed614c218366293ac1e3f25ed651967c8"
+    },
+    {
+      "path": "assets/icons/scan.svg",
+      "sha1": "feb2034121680050800227c1086a00955e2fec0e"
+    },
+    {
+      "path": "assets/icons/user.svg",
+      "sha1": "edb531771622ae1d4b4584ff5b343cb009d001da"
+    },
+    {
+      "path": "assets/icons/x.svg",
+      "sha1": "6c14dba6646ea4ab1139815245c2bf4efb0441f9"
+    }
+  ]
+}

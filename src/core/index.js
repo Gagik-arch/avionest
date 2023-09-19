@@ -15,6 +15,7 @@ import Loader from "./Loader";
 import Radio from "./Radio";
 import CardInput from "./CardInput";
 import Switch from "./Switch";
+import ColorPicker from "./ColorPicker";
 
 export {
     DropDown,
@@ -34,4 +35,5 @@ export {
     Radio,
     CardInput,
     Switch,
+    ColorPicker,
 }

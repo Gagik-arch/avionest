@@ -2,7 +2,7 @@ import React, {useContext, useState} from "react";
 import s from "./style";
 import {Button, Icon, Input, NavigationHeader, Screen, Text} from "../../../core";
 import global from "../../../styles/global";
-import forgotPasswordFrame from '../../../../assets/images/forgot-password-frame.png'
+import forgotPasswordFrame from '../../../../assets/images/forgot_password_frame.png'
 import {Image, View} from "react-native";
 import {margin} from "../../../resources";
 import {VerificationSuccessful} from "../../../modals";

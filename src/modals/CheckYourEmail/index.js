@@ -3,7 +3,7 @@ import s from './style'
 import {Modal, View, Image} from "react-native";
 import {Button, Text} from "../../core";
 import global from "../../styles/global";
-import checkYourEmail from '../../../assets/images/check-your-email.png'
+import checkYourEmail from '../../../assets/images/check_your_email.png'
 import {Colors, margin} from "../../resources";
 
 export const CheckYourEmail = ({

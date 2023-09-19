@@ -42,7 +42,7 @@ export const Profile = (props) => {
                    name={'phone'}
                    value={body.phone}
             />
-            <DatePicker label={'Date'}
+            <DatePicker placeholder={'Date'}
                         onChange={onChange}
                         name={'date'}
                         date={body.date}

@@ -12,12 +12,12 @@ export const onChangeBody = (e, body, setBody) => {
     }
     if (e.isValid !== undefined) {
         if (e.isValid) {
-            bodyCopy[e.name] = e.text;
+            bodyCopy[e.name] = e.value;
         } else {
             delete bodyCopy[e.name];
         }
     } else {
-        bodyCopy[e.name] = e.text;
+        bodyCopy[e.name] = e.value;
     }
     setBody(bodyCopy);
 };

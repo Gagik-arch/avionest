@@ -2,10 +2,10 @@ import React, {useState} from 'react'
 import s from './style'
 import {Screen, Text, Button} from '../../../core'
 import {View, Image} from "react-native";
-import a from '../../../../assets/images/1.jpg'
-import b from '../../../../assets/images/2.jpg'
-import c from '../../../../assets/images/3.jpg'
-import d from '../../../../assets/images/4.jpg'
+import a from '../../../../assets/images/a.jpg'
+import b from '../../../../assets/images/b.jpg'
+import c from '../../../../assets/images/c.jpg'
+import d from '../../../../assets/images/d.jpg'
 import {Colors, margin} from "../../../resources";
 import {Slider} from '../../../components'
 

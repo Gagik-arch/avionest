@@ -3,7 +3,7 @@ import s from './style'
 import {Modal, View, Image} from "react-native";
 import {Button, Text} from "../../core";
 import global from "../../styles/global";
-import welcomeFrame from '../../../assets/images/welcome-frame.png'
+import welcomeFrame from '../../../assets/images/welcome_frame.png'
 
 export const WelcomeAvionest = ({
                                     visibility,

@@ -99,19 +99,19 @@ const Input = React.forwardRef(({
             if (onFinish) {
                 clearTimeout(typingTimer.current);
                 return (typingTimer.current = setTimeout(() => {
-                    onFinish({text, isValid: _isValid, name});
+                    onFinish({value:text, isValid: _isValid, name});
                 }, doneTypingInterval));
             }
-            return onChange && onChange({text, name, isValid: _isValid});
+            return onChange && onChange({value:text, name, isValid: _isValid});
         }
         // [--- handled when user finished typing >>>
         if (onFinish) {
             clearTimeout(typingTimer.current);
             return (typingTimer.current = setTimeout(() => {
-                onFinish({text, name});
+                onFinish({value:text, name});
             }, doneTypingInterval));
         }
-        return onChange && onChange({text, name});
+        return onChange && onChange({value:text, name});
     };
 
     const defaultFlow = (<DefaultFlow
@@ -282,7 +282,7 @@ const s = StyleSheet.create({
         borderRadius: 0,
         width: "100%",
         ...padding(10, 0),
-
+    //
     },
     input: {
         fontSize: 14, fontWeight: "400", color: "white", padding: 4, flex: 1,
