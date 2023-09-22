@@ -7,43 +7,58 @@ import global from '../../../styles/global'
 
 export const Signup = (props) => {
     const [body, setBody] = useState({});
-    const [isLoading, setIsLoading] = useState(false);
+    const [terms, setTerms] = useState(false);
 
     const onChange = (e) => {
         onChangeBody(e, body, setBody);
     };
 
-    const disableSubmitBtn = () => validateFields(["name", "phoneNumber", "email", "password"], body) || isLoading;
-
-    const onSubmit = () => {
-        setIsLoading(true);
-
-    };
+    const disableSubmitBtn = () => validateFields(["email", "username", "password", "confirm_password"], body) || !terms;
 
     return (
         <Screen contentContainerStyle={s.container}>
             <Text style={global.app_title}>Welcome!</Text>
             <Text style={{...margin(12, 0, 80, 0)}}>Create your Account</Text>
-            <Input placeholder={'Email address'}/>
-            <Input placeholder={'Username'}/>
-            <Input placeholder={'Password'} validationKey={'password'}/>
-            <Input placeholder={'Confirm password'} validationKey={'password'}/>
+            <Input placeholder={'Email address'}
+                   name={'email'}
+                   validationKey={'email'}
+                   onChange={onChange}
+            />
+            <Input placeholder={'Username'}
+                   name={'username'}
+                   onChange={onChange}
+            />
+            <Input placeholder={'Password'}
+                   validationKey={'password'}
+                   name={'password'}
+                   onChange={onChange}
+            />
+            <Input placeholder={'Confirm password'}
+                   validationKey={'password'}
+                   name={'confirm_password'}
+                   onChange={onChange}
+            />
             <Checkbox label={'I have read and agreed to the Terms and Conditions'}
                       size={16}
-            containerStyle={{...margin(17,0,0,0)}}
+                      containerStyle={{...margin(17, 0, 0, 0)}}
+                      name={'terms'}
+                      onChange={(e)=>{
+                          setTerms(e.value)
+                      }}
             />
             <View style={{flex: 1}}/>
             <Button label={'Create Account'} variant={'primary'}
-                    onPress={()=>{
-                        props.navigation.navigate('UserInfo')
+                    onPress={() => {
+                        props.navigation.navigate('UserInfo', body)
                     }}
+                    // disabled={disableSubmitBtn()}
             />
             <Text style={{textAlign: 'center', ...margin(14, 0, 10, 0)}}>
                 Already have an account?
             </Text>
             <Button label={'Sign In to your account'}
                     labelStyle={{color: Colors.darkBlue, fontSize: 12}}
-                    onPress={()=>{
+                    onPress={() => {
                         props.navigation.navigate('Signin')
                     }}
             />

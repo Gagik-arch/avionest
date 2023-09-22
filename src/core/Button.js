@@ -103,9 +103,11 @@ const Button = forwardRef(({
         label_primary: {
             color: 'white',
             ...fonts["16_400"],
+
         },
         label_primary_disabled: {
             color: "white",
+            ...fonts["16_400"],
         },
         label_secondary: {
             color: 'white',
@@ -187,7 +189,6 @@ const Button = forwardRef(({
             {children || (
                 <Text size={labelSize }
                       style={[
-                          // s["label_" + variant],
                           s["label_" + variant + (disabled ? "_disabled" : "")],
                           labelStyle,
                       ]}>

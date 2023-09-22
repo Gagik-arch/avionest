@@ -23,7 +23,7 @@ const Checkbox = ({
         <TouchableOpacity style={[s.container,containerStyle]}
                           onPress={() => {
                               _setChecked(!_checked);
-                              onChange({checked, name});
+                              onChange({value:!_checked, name});
                           }}>
             <View style={[
                 {

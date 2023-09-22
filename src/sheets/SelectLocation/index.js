@@ -16,7 +16,7 @@ export const SelectLocation = forwardRef((props, ref) => {
     const onChange = (e) => {
         onChangeBody(e, body, setBody)
     }
-    console.log(body)
+
     return (
         <BottomSheet ref={ref}
                      handleIndicatorStyle={{backgroundColor: '#E5E5EB', width: 60}}
@@ -31,9 +31,11 @@ export const SelectLocation = forwardRef((props, ref) => {
                     <Input placeholder={'2972 Westheimer Rd. Santa Ana, Illinois 85486 '}
                            containerStyles={s.input_container}
                            renderButtons={() => {
-                               return <Button>
-                                   <Icon type={'Search'} size={18}/>
-                               </Button>
+                               return (
+                                   <Button>
+                                       <Icon type={'Search'} size={18}/>
+                                   </Button>
+                               )
                            }}
                            name={'code'}
                            onFinish={onChange}
@@ -50,7 +52,7 @@ export const SelectLocation = forwardRef((props, ref) => {
                                     setBody(prev => ({...prev, [e.name]: e.value}))
                                 }}
                                 date={body.date}
-                                textStyle={{color:Colors.darkBlue}}
+                                textStyle={{color: Colors.darkBlue}}
                                 icon={<Icon type={'Calendar2'} size={20}/>}
                     />
                     <Text size={'14_400'} style={{...margin(20, 0, 0, 0)}}>Check In Time</Text>
@@ -65,10 +67,10 @@ export const SelectLocation = forwardRef((props, ref) => {
                                     setBody(prev => ({...prev, [e.name]: e.value}))
                                 }}
                                 date={body.date}
-                                textStyle={{color:Colors.darkBlue}}
+                                textStyle={{color: Colors.darkBlue}}
                                 icon={<Icon type={'Calendar2'} size={20}/>}
                     />
-                    <Button variant={'primary'} label={'Confirm'} style={{...margin(18,0,0,0)}}/>
+                    <Button variant={'primary'} label={'Confirm'} style={{...margin(18, 0, 0, 0)}}/>
                 </BottomSheetScrollView>
             </View>
         </BottomSheet>

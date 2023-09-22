@@ -24,8 +24,8 @@ class Api {
     const token = await AsyncStorage.getItem("token");
 
     url = this.cleanReq
-      ? this.URL + url
-      : env.APP_URL+ this.URL + url;
+      ? this.URL + '/api/v1' + url
+      : env.APP_URL+ this.URL + '/api/v1' + url;
 
     const config = {
       method,
@@ -48,7 +48,7 @@ class Api {
       }
       config.data = body;
     }
-
+    console.log(url,config)
     return axios(url, config).then(response => response);
   };
 }
