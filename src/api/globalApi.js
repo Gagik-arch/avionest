@@ -4,6 +4,9 @@ class GlobalApi extends Api {
   getCountries(body) {
     return this.get({url: '/countries', body});
   }
+  getAircrafts(text) {
+    return this.get({url: '/sources/aircraft-info-filtered/'+ text});
+  }
 
 }
 

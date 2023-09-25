@@ -6,7 +6,7 @@ import s from './style'
 const Radio = ({
                    checked = false,
                    name,
-                   size = 18,
+                   size = 14,
                    label,
                    children,
                    onChange = () => {

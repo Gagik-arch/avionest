@@ -5,15 +5,22 @@ import Button from "../Button";
 import Icon from "../Icon";
 import {Colors} from "../../resources";
 import Color from 'react-native-wheel-color-picker'
+import Text from "../Text";
 
 const ColorPicker = ({
-                         value = '#FF0000',
+                         value,
+                         placeholder = 'Color',
                          onChange = () => {
                          },
                          name,
                      }) => {
     const [visibility, setVisibility] = useState(false)
+    const [_value, _setValue] = useState(value)
     let ref = useRef()
+
+    useEffect(() => {
+        _setValue(value)
+    }, [value])
 
     useEffect(() => {
         function handleBackButtonClick() {
@@ -28,19 +35,25 @@ const ColorPicker = ({
     }, []);
 
     const onColorChangeComplete = (e) => {
+        _setValue(e)
         onChange({value: e, name})
     }
 
     return (
         <>
-            <Button label={'Color'}
-                    style={s.container}
+            <Button style={s.container}
                     labelSize={'14_400'}
                     labelStyle={{color: '#787777'}}
                     onPress={() => {
                         setVisibility(true)
                     }}
-            />
+            >
+                <Text>
+                    {_value || placeholder}
+                </Text>
+                <View style={[s.square,{backgroundColor:_value}]}/>
+
+            </Button>
 
             <Modal visible={visibility}>
                 <View style={s.block}>
@@ -52,7 +65,7 @@ const ColorPicker = ({
                         </Button>
                     </View>
                     <View style={{flex: 1}}>
-                        <Color color={value}
+                        <Color color={_value}
                                ref={r => {
                                    ref = r
                                }}

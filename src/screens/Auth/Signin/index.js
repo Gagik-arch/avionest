@@ -66,7 +66,6 @@ export const Signin = (props) => {
                     variant={'primary'}
                     // disabled={disableSubmitBtn()}
                     onPress={() => {
-                        console.log(23423423)
                         props.navigation.navigate('Home')
                     }}
                     onDisabled={onDisable}

@@ -21,6 +21,7 @@ const DropDown = ({
                       },
                       placeholder = '',
                       name,
+                      requiredMessage
                   }) => {
     const [selected, setSelected] = useState(value);
     const [visibility, setVisibility] = useState(false);
@@ -30,7 +31,7 @@ const DropDown = ({
     }, [value]);
 
     return (
-        <>
+        <View style={[{position: 'relative'}]}>
             <Button
                 style={[s['btn_' + variant], btnStyle]}
                 onPress={() => {
@@ -44,7 +45,12 @@ const DropDown = ({
                 </Text>
                 {icon}
             </Button>
-
+            {(requiredMessage && <Text size={"12_500"}
+                                       style={[s.error]}
+                >
+                    {requiredMessage}
+                </Text>
+            )}
             <Modal visible={visibility}
                    animationType="slide"
                    transparent={true}
@@ -90,7 +96,7 @@ const DropDown = ({
                     </View>
                 </TouchableOpacity>
             </Modal>
-        </>
+        </View>
     );
 };
 

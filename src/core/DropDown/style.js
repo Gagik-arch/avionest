@@ -1,5 +1,5 @@
 import {StyleSheet} from "react-native";
-import {padding} from "../../resources";
+import {Colors, margin, padding} from "../../resources";
 
 const s = StyleSheet.create({
     btn_: {
@@ -43,7 +43,11 @@ const s = StyleSheet.create({
     },
     item:{
         ...padding(6),
-    }
+    },
+    error: {
+        color: Colors.red,
+        ...margin(4, 0,0,0),
+    },
 });
 
 export  default s

@@ -99,19 +99,19 @@ const Input = React.forwardRef(({
             if (onFinish) {
                 clearTimeout(typingTimer.current);
                 return (typingTimer.current = setTimeout(() => {
-                    onFinish({value:text, isValid: _isValid, name});
+                    onFinish({value: text, isValid: _isValid, name});
                 }, doneTypingInterval));
             }
-            return onChange && onChange({value:text, name, isValid: _isValid});
+            return onChange && onChange({value: text, name, isValid: _isValid});
         }
         // [--- handled when user finished typing >>>
         if (onFinish) {
             clearTimeout(typingTimer.current);
             return (typingTimer.current = setTimeout(() => {
-                onFinish({value:text, name});
+                onFinish({value: text, name});
             }, doneTypingInterval));
         }
-        return onChange && onChange({value:text, name});
+        return onChange && onChange({value: text, name});
     };
 
     const defaultFlow = (<DefaultFlow
@@ -147,20 +147,22 @@ const Input = React.forwardRef(({
     />);
 
 
-    return validationKey ? (<View style={[{position: 'relative'}, blockStyles]}>
-        {defaultFlow}
-        {!isValid ? (
-            <Text size={"14_400"} style={s.error}>
-                {errorMassage || regex[validationKey]?.errorMessage}
-            </Text>
-        ) : (requiredMessage && <Text size={"14_400"}
-                                      style={[s.error, {position: 'absolute', top: '100%'}]}>
-            {requiredMessage}
-        </Text>
-        )}
-
-        {/*{renderCheck({ isValid, validationKey, errorMassage, defaultValue })}*/}
-    </View>) : (defaultFlow);
+    return (
+        <View style={[{position: 'relative'}, blockStyles]}>
+            {defaultFlow}
+            {(validationKey && !isValid) ?
+                (<Text size={"14_400"} style={s.error}>
+                    {errorMassage || regex[validationKey]?.errorMessage}
+                </Text>) :
+                (requiredMessage && <Text size={"12_500"}
+                                          style={[s.error, ]}
+                    >
+                        {requiredMessage}
+                    </Text>
+                )}
+            {/*{renderCheck({ isValid, validationKey, errorMassage, defaultValue })}*/}
+        </View>
+    )
 });
 
 const DefaultFlow = React.forwardRef(({
@@ -282,14 +284,14 @@ const s = StyleSheet.create({
         borderRadius: 0,
         width: "100%",
         ...padding(10, 0),
-    //
+        //
     },
     input: {
         fontSize: 14, fontWeight: "400", color: "white", padding: 4, flex: 1,
     },
     error: {
         color: Colors.red,
-        ...margin(5, 0),
+        ...margin(4, 0,0,0),
     },
     check_container: {
         flexDirection: "row",

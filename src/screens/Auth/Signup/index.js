@@ -23,20 +23,24 @@ export const Signup = (props) => {
                    name={'email'}
                    validationKey={'email'}
                    onChange={onChange}
+                   value={body?.email}
             />
             <Input placeholder={'Username'}
                    name={'username'}
                    onChange={onChange}
+                   value={body?.username}
             />
             <Input placeholder={'Password'}
                    validationKey={'password'}
                    name={'password'}
                    onChange={onChange}
+                   value={body?.password}
             />
             <Input placeholder={'Confirm password'}
                    validationKey={'password'}
                    name={'confirm_password'}
                    onChange={onChange}
+                   value={body?.confirm_password}
             />
             <Checkbox label={'I have read and agreed to the Terms and Conditions'}
                       size={16}
@@ -45,13 +49,14 @@ export const Signup = (props) => {
                       onChange={(e)=>{
                           setTerms(e.value)
                       }}
+                      checked={terms}
             />
             <View style={{flex: 1}}/>
             <Button label={'Create Account'} variant={'primary'}
                     onPress={() => {
                         props.navigation.navigate('UserInfo', body)
                     }}
-                    // disabled={disableSubmitBtn()}
+                    disabled={disableSubmitBtn()}
             />
             <Text style={{textAlign: 'center', ...margin(14, 0, 10, 0)}}>
                 Already have an account?

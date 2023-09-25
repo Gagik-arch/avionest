@@ -3,10 +3,14 @@ import { Colors, margin, padding } from "../../resources";
 
 const s = StyleSheet.create({
     container: {
-        justifyContent:'flex-start',
+        justifyContent:'space-between',
         borderBottomWidth:1,
         borderColor:Colors.darkBlue,
-        ...padding(16,0)
+        ...padding(16,0),
+    },
+    square:{
+        width:20,
+        height:20,
     },
     block:{
         height:'100%',
