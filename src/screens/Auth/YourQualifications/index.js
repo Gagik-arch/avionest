@@ -137,7 +137,12 @@ export const YourQualifications = (props) => {
             <DropDown variant={'underlined'}
                       placeholder={'License type'}
                       data={['LAPL(A)', 'PPL(A)', 'CPL(A)', 'ATPL(A)']}
-                      label={(e) => e}
+                      label={(e) => {
+                          return e
+                      }}
+                      value={body?.license_type}
+                      name={'license_type'}
+                      onChange={onChange}
                       renderItem={({item, isSelected}) => {
                           return (
                               <Text size={'14_400'}

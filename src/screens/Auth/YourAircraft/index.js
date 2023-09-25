@@ -13,7 +13,7 @@ export const YourAircraft = (props) => {
     const [isLoading, setIsLoading] = useState(false);
     const [requiredMessage, setRequiredMessage] = useState({})
 
-    const formQuery = ["first_name", "last_name", "date_of_birth", "country_id", "home_base",'registration_number']
+    const formQuery = ["aircraft_id", 'color_id','equipment']
 
     const onChangeCheckbox = (e) => {
         setBody((prev) => {
@@ -64,7 +64,7 @@ export const YourAircraft = (props) => {
             <ColorPicker onChange={onChange} name={'color_id'}/>
             <Input placeholder={'Registration number'}
                    name={'registration_number'}
-                   value={body?.aircraft_id.number}
+                   value={body?.aircraft_id?.number}
                    onChange={onChange}
                    disabled={true}
                    requiredMessage={requiredMessage['registration_number']}
