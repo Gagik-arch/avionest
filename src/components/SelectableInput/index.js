@@ -11,12 +11,15 @@ export const SelectableInput = ({
                                 }) => {
     const [isLoading, setIsLoading] = useState(false)
     const [data, setData] = useState([])
+    const [_value, _setValue] = useState('')
 
     return (
         <View>
             <Input variant={'underlined'}
                    placeholder={'Select your aircraft'}
+                   value={_value}
                    onChange={(e) => {
+                       _setValue(e.value)
                        if (e.value.length > 2) {
                            setIsLoading(true)
                            globalApi.getAircrafts(e.value)
@@ -55,8 +58,10 @@ export const SelectableInput = ({
                                                                 onPress={() => {
                                                                     onChange({value: item, name})
                                                                     setData([])
+                                                                    _setValue(item.aircraft)
                                                                 }}
                                               >
+                                                  <Text>{item.number}</Text>
                                                   <Text>{item.aircraft}</Text>
                                               </TouchableOpacity>
                                           )

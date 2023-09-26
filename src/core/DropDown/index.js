@@ -26,9 +26,9 @@ const DropDown = ({
     const [selected, setSelected] = useState(value);
     const [visibility, setVisibility] = useState(false);
 
-    useEffect(() => {
-        setSelected(value);
-    }, [value]);
+    // useEffect(() => {
+    //     setSelected(value);
+    // }, [value]);
 
     return (
         <View style={[{position: 'relative'}]}>
@@ -76,7 +76,7 @@ const DropDown = ({
                                           key={index}
                                           onPress={() => {
                                               setVisibility(false)
-                                              setSelected({...item, index})
+                                              setSelected({value:item, index})
                                               onChange({value: item, name})
                                           }}
                                           style={[

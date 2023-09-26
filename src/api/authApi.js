@@ -2,14 +2,12 @@ import Api from './index';
 
 class AuthApi extends Api {
   signin(body) {
-    return this.post({url: '/login', body});
+    return this.post({url: '/sign-in', body});
   }
   signup(body) {
-    return this.post({url: '/createUser', body});
+    return this.post({url: '/sign-up', body});
   }
-  logout() {
-    return this.post({url: '/logout'});
-  }
+
 }
 
 const authApi = new AuthApi();

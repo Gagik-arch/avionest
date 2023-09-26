@@ -24,7 +24,7 @@ const CardInput = ({
     const onTextChange = text => {
         text = text.toLowerCase().replace(/[^0-9]/g, '');
         _setValue(text);
-        onChange?.()
+        onChange?.({name, value: text})
         if (text.length === 16) {
             onFinish?.({name, value: text});
         }

@@ -1,7 +1,7 @@
 import {useEffect} from "react";
 import {
     ForgotPassword, NoNetwork, Signin, Signup, NewPassword, Steps, UserInfo, Welcome,
-    YourQualifications, PaymentDetails, YourAircraft, Aeroclub, Payments
+    YourQualifications, PaymentDetails, YourAircraft, Aeroclub
 } from "../screens";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {useNavigation} from "@react-navigation/native";

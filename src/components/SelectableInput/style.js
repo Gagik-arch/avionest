@@ -25,7 +25,9 @@ const s = StyleSheet.create({
     },
     list:{
         ...padding(16,0),
-        borderColor:'rgba(0,0,0,0.2)'
+        borderColor:'rgba(0,0,0,0.2)',
+        flexDirection:"row",
+        justifyContent:'space-between'
     },
 });
 

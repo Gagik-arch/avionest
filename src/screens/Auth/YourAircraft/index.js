@@ -10,10 +10,9 @@ import Radio from "../../../core/Radio";
 
 export const YourAircraft = (props) => {
     const [body, setBody] = useState(props.route.params);
-    const [isLoading, setIsLoading] = useState(false);
     const [requiredMessage, setRequiredMessage] = useState({})
 
-    const formQuery = ["aircraft_id", 'color_id','equipment']
+    const formQuery = ["aircraft_id", 'color_id','equipments']
 
     const onChangeCheckbox = (e) => {
         setBody((prev) => {
@@ -73,29 +72,29 @@ export const YourAircraft = (props) => {
             <View style={s.grid}>
                 <View style={s.column}>
                     <Radio label={'ADF'}
-                           name={'equipment'}
+                           name={'equipments'}
                            onChange={onChangeCheckbox}
                            checked={body?.equipment ==='ADF' }
                     />
                     <Radio label={'GPS'}
-                           name={'equipment'}
+                           name={'equipments'}
                            onChange={onChangeCheckbox}
                            checked={body?.equipment ==='GPS' }
                     />
                     <Radio label={'VHF'}
-                           name={'equipment'}
+                           name={'equipments'}
                            onChange={onChangeCheckbox}
                            checked={body?.equipment ==='VHF' }
                     />
                 </View>
                 <View style={s.column}>
                     <Radio label={'VOR'}
-                           name={'equipment'}
+                           name={'equipments'}
                            onChange={onChangeCheckbox}
                            checked={body?.equipment ==='VOR' }
                     />
                     <Radio label={'DME'}
-                           name={'equipment'}
+                           name={'equipments'}
                            onChange={onChangeCheckbox}
                            checked={body?.equipment ==='DME' }
                     />

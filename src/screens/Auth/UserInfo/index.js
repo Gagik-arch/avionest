@@ -90,7 +90,7 @@ export const UserInfo = (props) => {
                 <DropDown variant={'underlined'}
                           placeholder={body?.country_id || 'Nationality'}
                           data={countries}
-                          label={(e) => e.name}
+                          label={(e) => e.value.name}
                           renderItem={({item, isSelected}) => {
                               return <Text size={'14_400'}
                                            style={{color: isSelected ? 'white' : '#787777'}}>{item.name}</Text>

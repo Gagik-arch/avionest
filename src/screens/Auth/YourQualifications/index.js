@@ -117,7 +117,6 @@ export const YourQualifications = (props) => {
         setRequiredMessage(result)
     }
 
-    console.log(body)
     return (
         <Screen contentContainerStyle={s.container}
                 header={
@@ -138,7 +137,7 @@ export const YourQualifications = (props) => {
                       placeholder={'License type'}
                       data={['LAPL(A)', 'PPL(A)', 'CPL(A)', 'ATPL(A)']}
                       label={(e) => {
-                          return e
+                          return e.value
                       }}
                       value={body?.license_type}
                       name={'license_type'}
@@ -168,6 +167,7 @@ export const YourQualifications = (props) => {
                         value={body?.license_number}
             />
             <DatePicker placeholder={'Valid until'}
+                        name={'valid_until_date'}
                         date={body?.valid_until_date}
                         onChange={onChange}
                         requiredMessage={requiredMessage['valid_until_date']}
@@ -176,7 +176,9 @@ export const YourQualifications = (props) => {
             <DropDown variant={'underlined'}
                       placeholder={body?.issuing_country_id || 'Issuing country'}
                       data={europeanCountries}
-                      label={(e) => e.name}
+                      label={(e) => {
+                          return e.value
+                      }}
                       renderItem={({item, isSelected}) => {
                           return <Text size={'14_400'}
                                        style={{color: isSelected ? 'white' : '#787777'}}>{item}</Text>

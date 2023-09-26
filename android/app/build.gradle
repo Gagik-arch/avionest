@@ -101,11 +101,19 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
+    aaptOptions {
+        noCompress "tflite"
+    }
 }
 
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
+
+    implementation "com.getbouncer:cardscan-ui:2.1.0004"
+    implementation "com.getbouncer:scan-payment-full:2.1.0004"
+    implementation "com.getbouncer:scan-camerax:2.1.0004"
+    implementation "com.getbouncer:tensorflow-lite:2.1.0004"
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}")
     debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {

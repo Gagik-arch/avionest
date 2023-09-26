@@ -9,7 +9,7 @@ const DatePicker = ({
                         placeholder,
                         onChange = () => {
                         },
-                        date,
+                        date ,
                         mode = "date",
                         name,
                         icon = null,
@@ -21,6 +21,7 @@ const DatePicker = ({
                         requiredMessage = null
                     }) => {
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+    const [value, setValue] = useState(date)
 
     const showDatePicker = () => setDatePickerVisibility(true);
 
@@ -28,13 +29,15 @@ const DatePicker = ({
 
     const options = mode === "date" ? {
         year: "numeric",
-        month: "short",
+        month: "numeric",
         day: "numeric",
     } : {
         hour: "2-digit",
         minute: "2-digit",
         hour12: false,
     };
+
+    const text = value?.[mode === "date" ? "toLocaleDateString" : "toLocaleTimeString"]('en-US', options)
 
     return (
         <View style={[containerStyle, {position: "relative"}]}>
@@ -47,7 +50,7 @@ const DatePicker = ({
                       style={[{
                           color: Colors.darkGray,
                       }, textStyle]}>
-                    {date?.[mode === "date" ? "toLocaleString" : "toLocaleTimeString"]('en-US', options) || placeholder}
+                    {text || placeholder}
                 </Text>
                 {icon}
                 {/*{icon || <Icon type={"ChevronDown"} size={20} />}*/}
@@ -66,7 +69,8 @@ const DatePicker = ({
                     onChange={({nativeEvent, type}) => {
                         hideDatePicker();
                         if (type === "set") {
-                            onChange({value: new Date(nativeEvent.timestamp), name});
+                            setValue(new Date(nativeEvent.timestamp))
+                            onChange({value: new Date(nativeEvent.timestamp), name, text});
                         }
                     }}
                 />
