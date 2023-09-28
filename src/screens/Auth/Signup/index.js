@@ -4,6 +4,7 @@ import {Button, Checkbox, Icon, Input, Screen, Text} from "../../../core";
 import {View} from "react-native";
 import {Colors, margin, onChangeBody, padding, validateFields} from "../../../resources";
 import global from '../../../styles/global'
+import Toast from "react-native-toast-message";
 
 export const Signup = (props) => {
     const [body, setBody] = useState({});
@@ -64,8 +65,16 @@ export const Signup = (props) => {
             <Button label={'Sign In to your account'}
                     labelStyle={{color: Colors.darkBlue, fontSize: 12}}
                     onPress={() => {
+                        if(body?.password !== body.confirm_password){
+                            Toast.show({
+                                type: 'error',
+                                text1: 'Password and confirm password don\'t match!',
+                            });
+                            return
+                        }
                         props.navigation.navigate('Signin')
                     }}
+
             />
         </Screen>
     );

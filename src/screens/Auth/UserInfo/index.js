@@ -78,10 +78,10 @@ export const UserInfo = (props) => {
                    value={body?.last_name}
             />
             <DatePicker placeholder={'Date of birth'}
-                        date={body?.date_of_birth}
+                        // date={body?.date_of_birth}
                         name={'date_of_birth'}
                         onChange={(e) => {
-                            onChange({...e, value: e.value.toLocaleDateString().split('.').join('/')})
+                            onChange({...e, value: e.text})
                         }}
                         requiredMessage={requiredMessage['date_of_birth']}
             />

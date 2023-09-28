@@ -8,8 +8,8 @@ const doneTypingInterval = 240; //time in ms (260 seconds)
 const regex = {
     //min 8 character, 1 number, 1 UPPERCASE, 1 lowercase, 1 special character
     password: {
-        // validation: new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$"),
-        validation: new RegExp("^(?=.*[a-z])"),
+        validation: new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$"),
+        // validation: new RegExp("^(?=.*[a-z])"),
         errorMessage: "Password must be at least 8 characters long, contains 1 UPPERCASE 1 lowercase 1 special charecter.",
     }, // @, 0 UPPERCASE, only com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)
     email: {
@@ -146,7 +146,6 @@ const Input = React.forwardRef(({
         requiredMessage={requiredMessage}
     />);
 
-
     return (
         <View style={[{position: 'relative'}, blockStyles]}>
             {defaultFlow}
@@ -155,11 +154,12 @@ const Input = React.forwardRef(({
                     {errorMassage || regex[validationKey]?.errorMessage}
                 </Text>) :
                 (requiredMessage && <Text size={"12_500"}
-                                          style={[s.error, ]}
+                                          style={[s.error,]}
                     >
                         {requiredMessage}
                     </Text>
-                )}
+                )
+            }
             {/*{renderCheck({ isValid, validationKey, errorMassage, defaultValue })}*/}
         </View>
     )
@@ -291,7 +291,7 @@ const s = StyleSheet.create({
     },
     error: {
         color: Colors.red,
-        ...margin(4, 0,0,0),
+        ...margin(4, 0, 0, 0),
     },
     check_container: {
         flexDirection: "row",

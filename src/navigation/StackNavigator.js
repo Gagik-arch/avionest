@@ -47,9 +47,9 @@ const StackNavigator = () => {
 
     return (
         <Stack.Navigator initialRouteName={"Steps"}
-            // screenOptions={{
-            //     navigationBarColor: "white"
-            // }}
+            screenOptions={{
+                navigationBarColor: "white"
+            }}
         >
             <Stack.Group>
                 <Stack.Screen name={"Steps"}

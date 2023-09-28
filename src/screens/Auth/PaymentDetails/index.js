@@ -21,13 +21,11 @@ export const PaymentDetails = (props) => {
     const disableSubmitBtn = () => validateFields(formQuery, body) || isLoading;
 
     const onSubmit = () => {
-
-        console.log(body)
         setIsLoading(true)
         authApi.signup(body)
-            .then(res=>{
-                setModalVisibility(true)
+            .then((res)=>{
                 console.log(res.data)
+                setModalVisibility(true)
             })
             .catch(e=>{
                 console.log(e)
@@ -105,7 +103,8 @@ export const PaymentDetails = (props) => {
                    requiredMessage={requiredMessage.card_postal}
             />
             <View style={{flex: 1}}/>
-            <Button label={'Next'} variant={'primary'}
+            <Button label={'Next'}
+                    variant={'primary'}
                     onPress={onSubmit}
                     disabled={disableSubmitBtn()}
                     onDisabled={onDisable}

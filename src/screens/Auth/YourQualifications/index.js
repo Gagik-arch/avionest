@@ -1,8 +1,8 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import s from "./style";
-import {Button, DropDown, Icon, Input, Screen, Text} from "../../../core";
-import {ActivityIndicator, View} from "react-native";
-import {Colors, margin, onChangeBody, onRequiredFieldNotAvailable, padding, validateFields} from "../../../resources";
+import {Button, DropDown, Icon, Screen, Text} from "../../../core";
+import {View} from "react-native";
+import {margin, onChangeBody, onRequiredFieldNotAvailable, validateFields} from "../../../resources";
 import global from '../../../styles/global'
 import NavigationHeader from "../../../core/NavigationHeader";
 import Radio from "../../../core/Radio";
@@ -69,7 +69,14 @@ export const YourQualifications = (props) => {
     const [requiredMessage, setRequiredMessage] = useState({})
     const [countries, setCountries] = useState([]);
 
-    const formQuery = ["first_name", "last_name", "date_of_birth", "country_id", "home_base"]
+    const formQuery = [
+        "license_type",
+        "issue_date",
+        "license_number",
+        "valid_until_date",
+        "issuing_country_id",
+        'additional_qualifications',
+    ]
 
     useEffect(() => {
         setIsLoading(true)
@@ -136,9 +143,7 @@ export const YourQualifications = (props) => {
             <DropDown variant={'underlined'}
                       placeholder={'License type'}
                       data={['LAPL(A)', 'PPL(A)', 'CPL(A)', 'ATPL(A)']}
-                      label={(e) => {
-                          return e.value
-                      }}
+                      label={(e) => e.value}
                       value={body?.license_type}
                       name={'license_type'}
                       onChange={onChange}
@@ -153,32 +158,30 @@ export const YourQualifications = (props) => {
                       }}
             />
             <DatePicker placeholder={'Lssue date'}
-                        date={body?.issue_date}
+                        // date={body?.issue_date}
                         name={'issue_date'}
-                        onChange={onChange}
+                        onChange={(e) => onChange({name: e.name, value: e.text})}
                         requiredMessage={requiredMessage['issue_date']}
                         value={body?.issue_date}
             />
             <DatePicker placeholder={'License number'}
-                        date={body?.license_number}
+                        // date={body?.license_number}
                         name={'license_number'}
-                        onChange={onChange}
+                        onChange={(e) => onChange({name: e.name, value: e.text})}
                         requiredMessage={requiredMessage['license_number']}
                         value={body?.license_number}
             />
             <DatePicker placeholder={'Valid until'}
                         name={'valid_until_date'}
-                        date={body?.valid_until_date}
-                        onChange={onChange}
+                        // date={body?.valid_until_date}
+                        onChange={(e) => onChange({name: e.name, value: e.text})}
                         requiredMessage={requiredMessage['valid_until_date']}
                         value={body?.valid_until_date}
             />
             <DropDown variant={'underlined'}
                       placeholder={body?.issuing_country_id || 'Issuing country'}
                       data={europeanCountries}
-                      label={(e) => {
-                          return e.value
-                      }}
+                      label={(e) => e.value}
                       renderItem={({item, isSelected}) => {
                           return <Text size={'14_400'}
                                        style={{color: isSelected ? 'white' : '#787777'}}>{item}</Text>

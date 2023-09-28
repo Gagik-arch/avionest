@@ -4,11 +4,13 @@ import {Modal, View, Image} from "react-native";
 import {Button, Text} from "../../core";
 import global from "../../styles/global";
 import welcomeFrame from '../../../assets/images/welcome_frame.png'
+import {useNavigation} from "@react-navigation/native";
 
 export const WelcomeAvionest = ({
                                     visibility,
                                     setVisibility,
                                 }) => {
+const navigation = useNavigation()
 
     return (
         <Modal visible={visibility}
@@ -33,6 +35,7 @@ export const WelcomeAvionest = ({
                             variant={'primary'}
                             onPress={() => {
                                 setVisibility(false)
+                                navigation.navigate('Signin')
                             }}
                     />
                 </View>
