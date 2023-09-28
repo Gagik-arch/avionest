@@ -5,11 +5,13 @@ import {Profile} from "../screens/Home/Profile";
 import {Button, Icon} from "../core";
 import {Colors, padding} from "../resources";
 import {useNavigation} from "@react-navigation/native";
+import {SafeAreaView} from "react-native-safe-area-context";
 
 const Drawer = createDrawerNavigator();
 
 const DrawerNavigator = () => {
-const navigation = useNavigation()
+    const navigation = useNavigation()
+
     return (
         <Drawer.Navigator initialRouteName={"Location"}
                           screenOptions={{drawerPosition: "right",}}

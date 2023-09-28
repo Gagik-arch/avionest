@@ -1,4 +1,4 @@
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import {SafeAreaProvider, SafeAreaView} from "react-native-safe-area-context";
 import {  StatusBar } from "react-native";
 import { StackNavigator } from "./src/navigation";
 import Toast from "react-native-toast-message";
@@ -23,13 +23,13 @@ export default () => {
         <StatusBar backgroundColor={'white'}
                    barStyle={"dark-content" }
         />
-        <BottomSheetModalProvider>
-          <NavigationContainer>
-            <StackNavigator />
-          </NavigationContainer>
-        </BottomSheetModalProvider>
+          <BottomSheetModalProvider>
+            <NavigationContainer>
+              <StackNavigator />
+            </NavigationContainer>
+          </BottomSheetModalProvider>
 
-        <Toast />
+          <Toast />
 
       </SafeAreaProvider>
     </Provider>

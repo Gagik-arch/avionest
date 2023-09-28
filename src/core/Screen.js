@@ -14,7 +14,7 @@ const Screen = ({
                   children,
                   style = {},
                   contentContainerStyle = {},
-                  edges = [ 'top',"left", "right"],
+                  edges = [ 'top',"left", "right",'bottom'],
                   header = <></>,
                   footer = <></>,
                   scrollDisable = false,
@@ -34,7 +34,6 @@ const Screen = ({
         Platform.OS === "ios" ? "padding" : StatusBar.height + 20
       }
     >
-      {header}
       <SafeAreaView
         edges={edges}
         style={{
@@ -42,6 +41,7 @@ const Screen = ({
           backgroundColor,
           ...style,
         }}>
+          {header}
         <View style={[s.container]}>
           {scrollDisable ? (
             <View

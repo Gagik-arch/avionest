@@ -7,10 +7,11 @@ import {Colors, margin, onChangeBody, padding, themes} from "../../resources";
 import {Group} from "../../components";
 import BottomSheet, {BottomSheetScrollView} from "@gorhom/bottom-sheet";
 import DatePicker from "../../core/DatePicker";
+import {useNavigation} from "@react-navigation/native";
 
 export const SelectLocation = forwardRef((props, ref) => {
     const snapPoints = useMemo(() => ["50%"], []);
-
+    const navigation = useNavigation()
     const [body, setBody] = useState({})
 
     const onChange = (e) => {
@@ -70,7 +71,12 @@ export const SelectLocation = forwardRef((props, ref) => {
                                 textStyle={{color: Colors.darkBlue}}
                                 icon={<Icon type={'Calendar2'} size={20}/>}
                     />
-                    <Button variant={'primary'} label={'Confirm'} style={{...margin(18, 0, 0, 0)}}/>
+                    <Button variant={'primary'}
+                            label={'Confirm'}
+                            style={{...margin(18, 0, 0, 0)}}
+                            onPress={() => {
+                                navigation.navigate('Aeroclub')
+                            }}/>
                 </BottomSheetScrollView>
             </View>
         </BottomSheet>

@@ -114,6 +114,10 @@
       "sha1": "c8b94bc8fd1a3f48da402debc7395ac9405f8704"
     },
     {
+      "path": "assets/icons/calendar2.svg",
+      "sha1": "16c89eb721444919b359299da20259886c286b17"
+    },
+    {
       "path": "assets/icons/chevron-right.svg",
       "sha1": "ea3711cbd992c598d193d77ca5cf5d69043d67c0"
     },
@@ -139,7 +143,7 @@
     },
     {
       "path": "assets/icons/index.js",
-      "sha1": "0c9314248de3729ca4447cb3a7d77c76de4162ad"
+      "sha1": "30b9e847b88c76956910387b56407590987f5175"
     },
     {
       "path": "assets/icons/lock.svg",
@@ -156,6 +160,10 @@
     {
       "path": "assets/icons/scan.svg",
       "sha1": "feb2034121680050800227c1086a00955e2fec0e"
+    },
+    {
+      "path": "assets/icons/search.svg",
+      "sha1": "c7fbc74ec85c33b1ba6d0a315561660934e88f0f"
     },
     {
       "path": "assets/icons/user.svg",

@@ -5,6 +5,7 @@ import {PixelRatio, View} from "react-native";
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import env from "../../../env";
 import {SelectLocation} from "../../../sheets";
+import {SafeAreaView} from "react-native-safe-area-context";
 
 export const Location = (props) => {
     const sheetRef = useRef()
@@ -60,7 +61,6 @@ export const Location = (props) => {
                        title={'region.name'}
                        description={'description'}
                        onPress={() => {
-                           // props.navigation.navigate('Aeroclub')
                            sheetRef.current.snapToIndex(0)
                        }}
                    >
