@@ -49,11 +49,10 @@ const DatePicker = ({
                       style={[{
                           color: Colors.darkGray,
                       }, textStyle]}>
-                    {text(value) || placeholder}
+                    {value && text(value) || placeholder}
                 </Text>
                 {icon}
                 {/*{icon || <Icon type={"ChevronDown"} size={20} />}*/}
-
             </Button>
             {requiredMessage && <Text size={"12_500"}
                                       style={[s.error]}

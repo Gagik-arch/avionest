@@ -15,16 +15,16 @@ export const Signin = (props) => {
     const formQuery = ["password", "email"]
 
     const onChange = (e) => {
-        setRequiredMessage(prev => {
-            delete prev[e.name]
-            return prev
-        })
+        const copyBody = {...requiredMessage}
+        delete copyBody[e.name]
+        setRequiredMessage(copyBody)
         onChangeBody(e, body, setBody)
     }
     const disableSubmitBtn = () => validateFields(formQuery, body) || isLoading;
 
     const onDisable = () => {
         const result = {}
+
         onRequiredFieldNotAvailable(formQuery, body, (item) => {
             result[item] = `${item.toUpperCaseFirstChar()} is required`
         })
@@ -64,7 +64,7 @@ export const Signin = (props) => {
             </View>
             <Button label={'Login'}
                     variant={'primary'}
-                    // disabled={disableSubmitBtn()}
+                    disabled={disableSubmitBtn()}
                     onPress={() => {
                         props.navigation.navigate('Home')
                     }}

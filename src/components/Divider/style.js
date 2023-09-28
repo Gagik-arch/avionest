@@ -10,6 +10,7 @@ const s =  StyleSheet.create({
     flex:1,
     height:1,
     backgroundColor:'rgba(178, 178, 178, 1)',
+
   }
 });
 

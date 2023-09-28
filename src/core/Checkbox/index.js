@@ -11,7 +11,8 @@ const Checkbox = ({
                       children,
                       onChange = () => {
                       },
-    containerStyle={}
+                      containerStyle = {},
+                      labelStyle = {}
                   }) => {
     const [_checked, _setChecked] = useState(checked);
 
@@ -20,10 +21,10 @@ const Checkbox = ({
     }, [checked]);
 
     return (
-        <TouchableOpacity style={[s.container,containerStyle]}
+        <TouchableOpacity style={[s.container, containerStyle]}
                           onPress={() => {
                               _setChecked(!_checked);
-                              onChange({value:!_checked, name});
+                              onChange({value: !_checked, name});
                           }}>
             <View style={[
                 {
@@ -35,7 +36,7 @@ const Checkbox = ({
             ]}>
                 {_checked ? <Check stroke={'white'} width={size - 4}/> : null}
             </View>
-            {label && <Text>{label}</Text>}
+            {label && <Text style={labelStyle}>{label}</Text>}
             {children}
         </TouchableOpacity>
     );
@@ -44,8 +45,8 @@ const Checkbox = ({
 const s = StyleSheet.create({
     container: {
         flexDirection: "row",
-        alignItems:'center',
-        columnGap:6
+        alignItems: 'center',
+        columnGap: 6
     },
     box: {
         borderRadius: 2,

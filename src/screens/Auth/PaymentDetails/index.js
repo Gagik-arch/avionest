@@ -16,6 +16,10 @@ export const PaymentDetails = (props) => {
     const formQuery = ["card_name", "card_number", "card_date", "card_cvv", "card_postal"]
 
     const onChange = (e) => {
+        setRequiredMessage(prev => {
+            delete prev[e.name]
+            return prev
+        })
         onChangeBody(e, body, setBody);
     }
     const disableSubmitBtn = () => validateFields(formQuery, body) || isLoading;
@@ -66,7 +70,7 @@ export const PaymentDetails = (props) => {
                    name={'card_name'}
                    onFinish={onChange}
                    value={body?.card_name}
-                   requiredMessage={requiredMessage.card_name}
+                   requiredMessage={requiredMessage?.card_name}
             />
             <CardInput placeholder={'Card Number'}
                        name={'card_number'}
@@ -80,7 +84,7 @@ export const PaymentDetails = (props) => {
                            name={'card_date'}
                            onFinish={onChange}
                            value={body?.card_date}
-                           requiredMessage={requiredMessage.card_date}
+                           requiredMessage={requiredMessage?.card_date}
                     />
                 </View>
                 <View style={{flex: 1}}>
