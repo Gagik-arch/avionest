@@ -24,8 +24,8 @@ class Api {
     const token = await AsyncStorage.getItem("token");
 
     url = this.cleanReq
-      ? this.URL + '/api' + url
-      : env.APP_URL+ this.URL + '/api' + url;
+      ? this.URL + '/api/v1' + url
+      : env.APP_URL+ this.URL + '/api/v1' + url;
 
     const config = {
       method,

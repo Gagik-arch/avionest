@@ -38,6 +38,7 @@ const Image = ({uri, style = {}}) => {
         </RN.View>
     );
 };
+
 const s = StyleSheet.create({
     container: {
         width: "100%",
