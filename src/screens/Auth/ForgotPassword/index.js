@@ -6,6 +6,7 @@ import {Image, View} from 'react-native'
 import global from "../../../styles/global";
 import forgotPasswordFrame from '../../../../assets/images/forgot_password_frame.png'
 import {CheckYourEmail} from "../../../modals";
+import authApi from "../../../api/authApi";
 
 export const ForgotPassword = (props) => {
     const [visibility, setVisibility] = useState(false)
@@ -31,13 +32,27 @@ export const ForgotPassword = (props) => {
         setRequiredMessage(result)
     }
 
+    const onSubmit = ()=>{
+        setIsLoading(true)
+        authApi.forgotPassword(body)
+            .then(res=>{
+
+            })
+            .catch(e=>{
+                console.log(e)
+            })
+            .then(()=>{
+                setIsLoading(false)
+            })
+    }
+
     return (
         <Screen contentContainerStyle={s.container}>
             <View style={s.top}>
                 <Image source={forgotPasswordFrame}/>
             </View>
             <Text style={[global.app_title, s.title]}>ForgotPassword</Text>
-            <Text style={{lineHeight: 20}}>
+            <Text style={{lineHeight: 20,marginBottom:47}}>
                 Enter your email address below and we'll send you an email with instructions on how to change your
                 password
             </Text>
@@ -50,10 +65,7 @@ export const ForgotPassword = (props) => {
             />
             <Button variant={"primary"}
                     label={"Request email"}
-                    onPress={() => {
-                        // props.navigation.navigate("CheckYourEmail")
-                        setVisibility(true)
-                    }}
+                    onPress={onSubmit}
                     onDisabled={onDisable}
                     disabled={disableSubmitBtn()}
                     style={{

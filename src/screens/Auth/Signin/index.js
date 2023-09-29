@@ -7,6 +7,9 @@ import global from "../../../styles/global";
 import {
     Colors, margin, onChangeBody, validateFields, onRequiredFieldNotAvailable
 } from "../../../resources";
+import authApi from "../../../api/authApi";
+import Toast from "react-native-toast-message";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const Signin = (props) => {
     const [body, setBody] = useState({});
@@ -20,6 +23,7 @@ export const Signin = (props) => {
         setRequiredMessage(copyBody)
         onChangeBody(e, body, setBody)
     }
+
     const disableSubmitBtn = () => validateFields(formQuery, body) || isLoading;
 
     const onDisable = () => {
@@ -29,6 +33,36 @@ export const Signin = (props) => {
             result[item] = `${item.toUpperCaseFirstChar()} is required`
         })
         setRequiredMessage(result)
+    }
+
+    const onSubmit = () => {
+        setIsLoading(true)
+        authApi.signin(body)
+            .then(res => {
+                Promise.all([
+                    AsyncStorage.setItem('token', res.data.tokens.accessToken),
+                    AsyncStorage.setItem('user', JSON.stringify(res.data))
+                ])
+                    .then(() => {
+                        props.navigation.navigate('Home')
+
+                    })
+                    .catch(e => {
+                        Toast.show({
+                            type: 'error',
+                            text1: `Something went wrong! <Signin>`,
+                        });
+                    })
+                    .then(() => {
+                        setIsLoading(false)
+                    })
+            })
+            .catch(e => {
+                Toast.show({
+                    type: 'error',
+                    text1: `${e} <Signin>`,
+                });
+            })
     }
 
     return (
@@ -44,12 +78,12 @@ export const Signin = (props) => {
                    onFinish={onChange}
                    name={'email'}
                    value={body?.username}
-                   validationKey={'email'}
+                // validationKey={'email'}
                    requiredMessage={requiredMessage['email']}
                    blockStyles={margin(0, 0, 16, 0)}
             />
             <Input placeholder={'Password'}
-                   validationKey={'password'}
+                // validationKey={'password'}
                    onFinish={onChange}
                    name={'password'}
                    value={body?.password}
@@ -65,10 +99,9 @@ export const Signin = (props) => {
             <Button label={'Login'}
                     variant={'primary'}
                     disabled={disableSubmitBtn()}
-                    onPress={() => {
-                        props.navigation.navigate('Home')
-                    }}
+                    onPress={onSubmit}
                     onDisabled={onDisable}
+                    isLoading={isLoading}
                     style={{...margin(40, 0, 0, 0)}}
             />
             <Text style={{textAlign: 'center', ...margin(14, 0, 10, 0)}}>

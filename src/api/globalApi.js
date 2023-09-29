@@ -1,6 +1,9 @@
 import Api from './index';
 
 class GlobalApi extends Api {
+  constructor() {
+    super('/v1');
+  }
   getCountries(body) {
     return this.get({url: '/countries', body});
   }

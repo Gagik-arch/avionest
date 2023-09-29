@@ -1,16 +1,17 @@
 import {View} from "react-native";
-import {Button, Icon, Text, Switch} from "../../core";
+import {Button, Icon, Text, Switch, Loader} from "../../core";
 import s from './style'
 import {Colors} from "../../resources";
 import {SafeAreaView} from "react-native-safe-area-context";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import Toast from "react-native-toast-message";
+import {useState} from "react";
 
 export const DrawerMenu = (props) => {
+    const [isLoading, setIsLoading] = useState(false);
 
     return (
-
         <SafeAreaView>
-
-
             <View style={s.container}>
                 <View style={{width: '100%', alignItems: 'flex-end'}}>
                     <Button style={s.b}
@@ -56,8 +57,25 @@ export const DrawerMenu = (props) => {
                 <Tab icon={<Icon type={'Circle'} fill={'transparent'} stroke={Colors.darkBlue} size={20}/>}
                      label={'Sign Out'}
                      right={<Icon type={'ChevronRight'} stroke={'#B2B2B2'} size={20}/>}
+                     onPress={() => {
+                         AsyncStorage.clear()
+                             .then(() => {
+                                 props.navigation.navigate('Signin')
+                             })
+                             .catch(() => {
+                                 Toast.show({
+                                     type: 'error',
+                                     text1: `Something went wrong! <Logout>`,
+                                 });
+                             })
+                             .then(() => {
+                                 setIsLoading(false)
+                             })
+
+                     }}
                 />
             </View>
+            <Loader visible={isLoading}/>
         </SafeAreaView>
     )
 }

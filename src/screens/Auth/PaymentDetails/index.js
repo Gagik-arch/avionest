@@ -32,7 +32,7 @@ export const PaymentDetails = (props) => {
                 setModalVisibility(true)
             })
             .catch(e=>{
-                console.log(e)
+                console.log(123132,e)
             })
             .then(()=>{
                 setIsLoading(false)

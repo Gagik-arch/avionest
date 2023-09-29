@@ -88,7 +88,6 @@ export const Signup = (props) => {
                     disabled={disableSubmitBtn()}
                     onPress={() => {
                         props.navigation.navigate('UserInfo', body)
-
                     }}
                     onDisabled={onDisable}
             />
