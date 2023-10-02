@@ -8,8 +8,14 @@ import {Group} from "../../components";
 import BottomSheet, {BottomSheetScrollView} from "@gorhom/bottom-sheet";
 import DatePicker from "../../core/DatePicker";
 import {useNavigation} from "@react-navigation/native";
+import globalApi from "../../api/globalApi";
+import moment from "moment/moment";
 
-export const SelectLocation = forwardRef((props, ref) => {
+export const SelectLocation = forwardRef(({
+                                              setAirfields,
+                                              onClose,
+                                              setRegion,
+                                          }, ref) => {
     const snapPoints = useMemo(() => ["50%"], []);
     const navigation = useNavigation()
     const [body, setBody] = useState({})
@@ -42,40 +48,102 @@ export const SelectLocation = forwardRef((props, ref) => {
                            onFinish={onChange}
                            value={body.code}
                     />
-                    <Text size={'14_400'} style={{...margin(20, 0, 0, 0)}}>Check In Date</Text>
-                    <DatePicker name={'date'}
-                                placeholder={'Date'}
-                                style={{
-                                    borderColor: '#EBEBEB',
-                                    ...padding(14, 4)
-                                }}
-                                onChange={(e) => {
-                                    setBody(prev => ({...prev, [e.name]: e.value}))
-                                }}
-                                date={body.date}
-                                textStyle={{color: Colors.darkBlue}}
-                                icon={<Icon type={'Calendar2'} size={20}/>}
-                    />
-                    <Text size={'14_400'} style={{...margin(20, 0, 0, 0)}}>Check In Time</Text>
-                    <DatePicker name={'date'}
-                                placeholder={'Date'}
-                                mode={'time'}
-                                style={{
-                                    borderColor: '#EBEBEB',
-                                    ...padding(14, 4)
-                                }}
-                                onChange={(e) => {
-                                    setBody(prev => ({...prev, [e.name]: e.value}))
-                                }}
-                                date={body.date}
-                                textStyle={{color: Colors.darkBlue}}
-                                icon={<Icon type={'Calendar2'} size={20}/>}
-                    />
+                    <View style={{flexDirection: "row", columnGap: 16}}>
+                        <View style={{flex: 1, ...margin(20, 0, 0, 0)}}>
+                            <Text size={'14_400'}>Check In Date</Text>
+                            <DatePicker name={'startDate'}
+                                        placeholder={'From Date'}
+                                        style={{
+                                            borderColor: '#EBEBEB',
+                                            ...padding(14, 4)
+                                        }}
+                                        onChange={(e) => {
+                                            setBody(prev => ({...prev, [e.name]: e.value}))
+                                        }}
+                                        date={body.startDate}
+                                        textStyle={{color: Colors.darkBlue}}
+                                        icon={<Icon type={'Calendar2'} size={20}/>}
+                            />
+                        </View>
+                        <View style={{flex: 1, ...margin(20, 0, 0, 0)}}>
+                            <Text size={'14_400'}>Check In Time</Text>
+                            <DatePicker name={'startDate'}
+                                        placeholder={'From Time'}
+                                        mode={'time'}
+                                        style={{
+                                            borderColor: '#EBEBEB',
+                                            ...padding(14, 4)
+                                        }}
+                                        onChange={(e) => {
+                                            setBody(prev => ({...prev, [e.name]: e.value}))
+                                        }}
+                                        date={body.startDate}
+                                        textStyle={{color: Colors.darkBlue}}
+                                        icon={<Icon type={'Calendar2'} size={20}/>}
+                            />
+                        </View>
+                    </View>
+                    <View style={{flexDirection: "row", columnGap: 16}}>
+                        <View style={{flex: 1, ...margin(20, 0, 0, 0)}}>
+                            <Text size={'14_400'}>Check In Date</Text>
+                            <DatePicker name={'endDate'}
+                                        placeholder={'To Date'}
+                                        style={{
+                                            borderColor: '#EBEBEB',
+                                            ...padding(14, 4)
+                                        }}
+                                        onChange={(e) => {
+                                            setBody(prev => ({...prev, [e.name]: e.value}))
+                                        }}
+                                        date={body.startDate}
+                                        textStyle={{color: Colors.darkBlue}}
+                                        icon={<Icon type={'Calendar2'} size={20}/>}
+                            />
+                        </View>
+                        <View style={{flex: 1, ...margin(20, 0, 0, 0)}}>
+                            <Text size={'14_400'}>Check In Time</Text>
+                            <DatePicker name={'endDate'}
+                                        placeholder={'To Time'}
+                                        mode={'time'}
+                                        style={{
+                                            borderColor: '#EBEBEB',
+                                            ...padding(14, 4)
+                                        }}
+                                        onChange={(e) => {
+                                            setBody(prev => ({...prev, [e.name]: e.value}))
+                                        }}
+                                        date={body.to_date}
+                                        textStyle={{color: Colors.darkBlue}}
+                                        icon={<Icon type={'Calendar2'} size={20}/>}
+                            />
+                        </View>
+                    </View>
                     <Button variant={'primary'}
                             label={'Confirm'}
                             style={{...margin(18, 0, 0, 0)}}
                             onPress={() => {
-                                navigation.navigate('Aeroclub')
+                                globalApi.getAirfieldByRange(
+                                    moment(body.startDate).format('YYYY-MM-DD HH:MM'),
+                                    moment(body.endDate).format('YYYY-MM-DD HH:MM'),
+                                )
+                                    .then(res => {
+                                        setAirfields(res.data.airfields)
+                                        if (res.data.airfields.length > 0) {
+                                            setRegion({
+                                                latitude: +res.data.airfields[0].latitude,
+                                                longitude: +res.data.airfields[0].longitude,
+                                                latitudeDelta: 0.0922,
+                                                longitudeDelta: 0.0421,
+                                            })
+                                        }
+                                        onClose()
+                                    })
+                                    .catch(e => {
+                                        console.log(e)
+                                    })
+                                    .then(() => {
+
+                                    })
                             }}/>
                 </BottomSheetScrollView>
             </View>

@@ -9,6 +9,9 @@ class GlobalApi extends Api {
     return this.get({url: '/sources/aircraft-info-filtered/'+ text});
   }
 
+  getAirfieldByRange(startDate,endDate){
+    return this.get({url:`/airfields/free-by-range?startDate=${startDate}&endDate=${endDate}`})
+  }
 }
 
 const globalApi = new GlobalApi();

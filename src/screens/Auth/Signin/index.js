@@ -12,7 +12,10 @@ import Toast from "react-native-toast-message";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const Signin = (props) => {
-    const [body, setBody] = useState({});
+    const [body, setBody] = useState({
+        // 'email':'asdd88ii8d88a@mail.com',
+        // 'password':'123456789'
+    });
     const [isLoading, setIsLoading] = useState(false);
     const [requiredMessage, setRequiredMessage] = useState({})
     const formQuery = ["password", "email"]
@@ -36,7 +39,9 @@ export const Signin = (props) => {
     }
 
     const onSubmit = () => {
+
         setIsLoading(true)
+
         authApi.signin(body)
             .then(res => {
                 Promise.all([
@@ -58,6 +63,7 @@ export const Signin = (props) => {
                     })
             })
             .catch(e => {
+                console.log(e)
                 Toast.show({
                     type: 'error',
                     text1: `${e} <Signin>`,
