@@ -2,27 +2,28 @@ import React, {useState} from "react";
 import s from "./style";
 import {Button, ColorPicker, DropDown, Icon, Input, Screen, Text} from "../../../core";
 import {SelectableInput} from "../../../components";
-import {View} from "react-native";
-import {Colors, margin, onChangeBody, onRequiredFieldNotAvailable, padding, validateFields} from "../../../resources";
+import {FlatList, View} from "react-native";
+import {margin, onChangeBody, onRequiredFieldNotAvailable, validateFields} from "../../../resources";
 import global from '../../../styles/global'
 import NavigationHeader from "../../../core/NavigationHeader";
 import Radio from "../../../core/Radio";
+import {useSelector} from "react-redux";
 
 export const YourAircraft = (props) => {
     const [body, setBody] = useState(props.route.params);
     const [requiredMessage, setRequiredMessage] = useState({})
-
-    const formQuery = ["aircraft_id", 'color_id','equipments']
-
+    const { data} = useSelector(state => state.global)
+    const formQuery = ["aircraft_id", 'first_color_id', 'second_color_id', 'equipments']
+    console.log(data)
     const onChangeCheckbox = (e) => {
         setBody((prev) => {
-            let copy = prev[e.name] ? [...prev[e.name]] : []
-            if (copy.includes(e.label)) {
-                copy = copy.filter(item => item !== e.label)
+            let copy = prev?.[e.name] ? [...prev[e.name]] : []
+            if (copy.includes(e.id)) {
+                copy = copy.filter(item => item !== e.id)
             } else {
-                copy.push(e.label)
+                copy.push(e.id)
             }
-            return {...prev,[e.name] : copy}
+            return {...prev, [e.name]: copy}
         })
     };
 
@@ -60,45 +61,26 @@ export const YourAircraft = (props) => {
                 Select from the list below the type of aircraft you are currently using
             </Text>
             <SelectableInput onChange={onChange} name={'aircraft_id'}/>
-            <ColorPicker onChange={onChange} name={'color_id'}/>
+            <ColorPicker onChange={onChange} name={'first_color_id'} placeholder={'First color'}/>
+            <ColorPicker onChange={onChange} name={'second_color_id'} placeholder={'Second color'}/>
             <Input placeholder={'Registration number'}
                    name={'registration_number'}
-                   value={body?.aircraft_id?.number}
+                   value={body?.aircraft_id?.aircraft}
                    onChange={onChange}
                    disabled={true}
                    requiredMessage={requiredMessage['registration_number']}
             />
             <Text style={[global.app_subtitle, {...margin(32, 0, 12, 0)}]}>Equipment</Text>
             <View style={s.grid}>
-                <View style={s.column}>
-                    <Radio label={'ADF'}
-                           name={'equipments'}
-                           onChange={onChangeCheckbox}
-                           checked={body?.equipment ==='ADF' }
-                    />
-                    <Radio label={'GPS'}
-                           name={'equipments'}
-                           onChange={onChangeCheckbox}
-                           checked={body?.equipment ==='GPS' }
-                    />
-                    <Radio label={'VHF'}
-                           name={'equipments'}
-                           onChange={onChangeCheckbox}
-                           checked={body?.equipment ==='VHF' }
-                    />
-                </View>
-                <View style={s.column}>
-                    <Radio label={'VOR'}
-                           name={'equipments'}
-                           onChange={onChangeCheckbox}
-                           checked={body?.equipment ==='VOR' }
-                    />
-                    <Radio label={'DME'}
-                           name={'equipments'}
-                           onChange={onChangeCheckbox}
-                           checked={body?.equipment ==='DME' }
-                    />
-                </View>
+                <FlatList data={data?.equipmentTypes}
+                          numColumns={2}
+                          renderItem={({item}) => <Radio label={item.title}
+                                                         name={'equipments'}
+                                                         onChange={(e) => onChangeCheckbox({name: e.name, id: item.id})}
+                                                         checked={body?.equipment === 'ADF'}
+                                                         containerStyle={{flex: 1,marginBottom:8}}
+                          />}
+                />
             </View>
             <View style={{flex: 1}}/>
             <Button label={'Next'}
@@ -107,7 +89,7 @@ export const YourAircraft = (props) => {
                     onDisabled={onDisable}
                     style={{...margin(10, 0, 0, 0)}}
                     onPress={() => {
-                        props.navigation.navigate('YourQualifications',body)
+                        props.navigation.navigate('YourQualifications', body)
                     }}/>
         </Screen>
     );

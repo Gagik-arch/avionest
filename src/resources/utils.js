@@ -22,8 +22,9 @@ export const onChangeBody = (e, body, setBody) => {
 };
 
 export const onRequiredFieldNotAvailable = (
-    formQuery, body,
-    onSchedule
+    formQuery,
+    body,
+    onSchedule,
 ) => {
     let result = []
     for (let i = 0; i < formQuery.length; i++) {

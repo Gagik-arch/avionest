@@ -1,38 +1,58 @@
 import React, {useState} from 'react'
 import s from './style'
-import {Screen, Text, Button} from '../../../core'
+import {Screen, Text, Button, NavigationHeader, Icon} from '../../../core'
 import {View, Image} from "react-native";
 import a from '../../../../assets/images/a.jpg'
 import b from '../../../../assets/images/b.jpg'
 import c from '../../../../assets/images/c.jpg'
 import d from '../../../../assets/images/d.jpg'
+import smallPlane from '../../../../assets/images/plane.png'
 import {Colors, margin} from "../../../resources";
 import {Slider} from '../../../components'
 
-export const Aeroclub = () => {
+export const Aeroclub = (props) => {
     const [selected, setSelected] = useState(0)
     const images = [a, b, c, d]
-    const breadcrumbs = [
-        'Short term parking fee <24hrs-7euros/hr',
-        'Long term parking fee >24hrs-32euros/day',
+    const plans = [
+        {label: 'Short term parking fee <24hrs-7euros/hr', id: 1},
+        {label: 'Long term parking fee >24hrs-32euros/day', id: 2},
     ]
 
     return (
-        <Screen>
+        <Screen header={<NavigationHeader style={s.header}
+                                          title={<></>}
+                                          buttons={
+                                              <Button onPress={() => {
+                                                  props.navigation.openDrawer();
+                                              }}>
+                                                  <Icon type={'Bars'} fill={'white'}/>
+                                              </Button>
+                                          }
+                                          backHandler={<>
+                                              <Button onPress={() => {
+                                                  props.navigation.goBack();
+                                              }} style={{...margin(0,10,0,0)}}>
+                                                  <Icon type={'ArrowLeft'} fill={'white'}/>
+                                              </Button>
+                                              <Icon type={'Plane'} fill={'white'}/>
+                                          </>
+                                          }
+                                          {...props}/>}>
             <Slider data={images}/>
             <View style={{rowGap: 6}}>
-                {breadcrumbs.map((item, index) => {
+                {plans.map((item, index) => {
                     return (
                         <Button key={index}
                                 style={[s.breadcrumbs,
                                     {
                                         backgroundColor: index === selected ?
-                                            Colors.darkBlue : '#F5F5F5'
+                                            Colors.darkBlue : '#D9D9D9'
                                     }
                                 ]}
                                 onPress={() => {
                                     setSelected(index)
-                                }}>
+                                }}
+                        >
                             <View style={{
                                 width: 14,
                                 height: 14,
@@ -51,7 +71,7 @@ export const Aeroclub = () => {
                             <Text size={'14_400'} style={{
                                 color: index === selected ? 'white' :
                                     Colors.darkBlue
-                            }}>Long term parking fee >24hrs-32euros/day</Text>
+                            }}>{item.label}</Text>
                         </Button>
                     )
                 })}

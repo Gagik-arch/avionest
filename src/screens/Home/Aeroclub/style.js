@@ -5,7 +5,9 @@ const s = StyleSheet.create({
     container: {
         ...padding(16),
     },
-
+    header: {
+        backgroundColor: Colors.darkBlue,
+    },
     breadcrumbs: {
         justifyContent: 'flex-start',
         alignItems: 'center',

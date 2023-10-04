@@ -1,14 +1,17 @@
-import React, {useState} from "react";
-import {Image, View} from "react-native";
+import React, {useRef, useState} from "react";
+import {Image, TouchableOpacity, View} from "react-native";
 import s from "./style";
 import PagerView from "react-native-pager-view";
 
 export const Slider = ({data}) => {
     const [selected, setSelected] = useState(0)
+const ref=useRef()
 
     return (
         <View style={s.pager_view_container}>
-            <PagerView style={s.pager_view} initialPage={selected}
+            <PagerView style={s.pager_view}
+                       ref={ref}
+                       initialPage={selected}
                        onPageSelected={({nativeEvent}) => {
                            setSelected(nativeEvent.position)
                        }}>
@@ -22,7 +25,12 @@ export const Slider = ({data}) => {
                 {
                     data.map((_, index) => {
                         return (
-                            <View key={index} style={[
+                            <TouchableOpacity key={index}
+                                              onPress={()=> {
+                                                  ref.current?.setPage(index)
+                                                  setSelected(index)
+                                              }}
+                                              style={[
                                 s.marker,
                                 {
                                     backgroundColor: selected === index ?

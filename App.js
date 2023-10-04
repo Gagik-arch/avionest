@@ -13,10 +13,6 @@ import {enableLatestRenderer} from 'react-native-maps';
 enableLatestRenderer();
 export default () => {
 
-  useEffect(() => {
-    SplashScreen.hide();
-  }, []);
-
   return (
     <Provider store={store}>
       <SafeAreaProvider>

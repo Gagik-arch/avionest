@@ -10,6 +10,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import DrawerNavigation from './DrawerNavigation'
 import {Colors} from "../resources";
 import {Button, Icon} from "../core";
+import SplashScreen from "react-native-splash-screen";
 
 const Stack = createNativeStackNavigator();
 
@@ -35,8 +36,12 @@ const StackNavigator = () => {
                             }
                         }).catch(() => {
                         navigation.reset({index: 0, routes: [{name: "Steps"}]});
-                    });
+                    })
+                        .then(() => {
+                            SplashScreen.hide();
+                        });
                 } else {
+                    SplashScreen.hide();
                     navigation.reset({index: 0, routes: [{name: "NoNetwork"}]});
                 }
             }
@@ -47,9 +52,9 @@ const StackNavigator = () => {
 
     return (
         <Stack.Navigator initialRouteName={"Steps"}
-            screenOptions={{
-                navigationBarColor: "white"
-            }}
+                         screenOptions={{
+                             navigationBarColor: "white"
+                         }}
         >
             <Stack.Group>
                 <Stack.Screen name={"Steps"}
@@ -99,30 +104,27 @@ const StackNavigator = () => {
             <Stack.Screen name={"Home"}
                           component={DrawerNavigation}
                           options={{header: () => null}}
-                          // options={{
-                          //     title: null,
-                          //     headerStyle: {
-                          //         backgroundColor: Colors.darkBlue,
-                          //     },
-                          //     headerTintColor: '#fff',
-                          //     headerTitleStyle: {
-                          //         fontWeight: 'bold',
-                          //     },
-                          //     headerRight: (props)=>{
-                          //         return (
-                          //             <Button onPress={()=>{
-                          //
-                          //             }}>
-                          //                 <Icon type={'Bars'} fill={'#fff'}/>
-                          //             </Button>
-                          //         )
-                          //     }
-                          // }}
+                // options={{
+                //     title: null,
+                //     headerStyle: {
+                //         backgroundColor: Colors.darkBlue,
+                //     },
+                //     headerTintColor: '#fff',
+                //     headerTitleStyle: {
+                //         fontWeight: 'bold',
+                //     },
+                //     headerRight: (props)=>{
+                //         return (
+                //             <Button onPress={()=>{
+                //
+                //             }}>
+                //                 <Icon type={'Bars'} fill={'#fff'}/>
+                //             </Button>
+                //         )
+                //     }
+                // }}
             />
-            <Stack.Screen name={"Aeroclub"}
-                          component={Aeroclub}
-                          options={{header: () => null}}
-            />
+
         </Stack.Navigator>
     );
 };

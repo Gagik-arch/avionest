@@ -1,37 +1,24 @@
 import React, {useContext, useEffect, useState} from "react";
 import s from "./style";
 import {Button, DropDown, Icon, Input, Screen, Text} from "../../../core";
-import {ActivityIndicator, View} from "react-native";
-import {Colors, margin, onChangeBody, onRequiredFieldNotAvailable, padding, validateFields} from "../../../resources";
+import {ActivityIndicator} from "react-native";
+import {margin, onChangeBody, onRequiredFieldNotAvailable, validateFields} from "../../../resources";
 import global from '../../../styles/global'
 import NavigationHeader from "../../../core/NavigationHeader";
 import DatePicker from "../../../core/DatePicker";
-import globalApi from "../../../api/globalApi";
-import axios from "axios";
-import Toast from "react-native-toast-message";
+import { getAuthSources} from "../../../store/asyncThunks/global";
+import {useDispatch, useSelector} from "react-redux";
 
 export const UserInfo = (props) => {
     const [body, setBody] = useState(props.route.params);
-    const [countries, setCountries] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
     const [requiredMessage, setRequiredMessage] = useState({})
+    const {isLoading, data} = useSelector(state => state.global)
+    const dispatch = useDispatch()
 
     const formQuery = ["first_name", "last_name", "date_of_birth", "country_id", "home_base"]
 
     useEffect(() => {
-        setIsLoading(true)
-        globalApi.getCountries()
-            .then(res => {
-                setCountries(res.data.countries)
-            })
-            .catch(e => {
-                Toast.show({
-                    type: 'error', text1: e || 'An error occurred.',
-                });
-            })
-            .then(() => {
-                setIsLoading(false)
-            })
+        dispatch(getAuthSources())
     }, [])
 
     const onChange = (e) => {
@@ -78,7 +65,6 @@ export const UserInfo = (props) => {
                    value={body?.last_name}
             />
             <DatePicker placeholder={'Date of birth'}
-                        // date={body?.date_of_birth}
                         name={'date_of_birth'}
                         onChange={(e) => {
                             onChange({...e, value: e.text})
@@ -89,7 +75,7 @@ export const UserInfo = (props) => {
                 <ActivityIndicator/> :
                 <DropDown variant={'underlined'}
                           placeholder={body?.country_id || 'Nationality'}
-                          data={countries}
+                          data={data?.countries}
                           label={(e) => e.value.name}
                           renderItem={({item, isSelected}) => {
                               return <Text size={'14_400'}

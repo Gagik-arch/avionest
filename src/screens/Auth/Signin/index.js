@@ -39,9 +39,7 @@ export const Signin = (props) => {
     }
 
     const onSubmit = () => {
-
         setIsLoading(true)
-
         authApi.signin(body)
             .then(res => {
                 Promise.all([
@@ -84,7 +82,7 @@ export const Signin = (props) => {
                    onFinish={onChange}
                    name={'email'}
                    value={body?.username}
-                // validationKey={'email'}
+                   validationKey={'email'}
                    requiredMessage={requiredMessage['email']}
                    blockStyles={margin(0, 0, 16, 0)}
             />

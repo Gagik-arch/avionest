@@ -111,7 +111,14 @@ export const PaymentDetails = (props) => {
                         <Input placeholder={'MM/YY'}
                                maxLength={5}
                                name={'card_date'}
-                               onFinish={onChange}
+                               onChange={(e) => {
+                                   onChange({
+                                       name: e.name,
+                                       value: e.value.length ===2 ?
+                                          e.value + '/' :
+                                           e.value
+                                   })
+                               }}
                                value={body?.card_date}
                                requiredMessage={requiredMessage?.card_date}
                         />

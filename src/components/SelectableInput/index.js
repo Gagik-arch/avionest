@@ -56,9 +56,10 @@ export const SelectableInput = ({
                                                   {borderBottomWidth: index < data.length ? 1 : 0}
                                               ]}
                                                                 onPress={() => {
+                                                                    console.log(item)
                                                                     onChange({value: item, name})
                                                                     setData([])
-                                                                    _setValue(item.aircraft)
+                                                                    _setValue(item.number)
                                                                 }}
                                               >
                                                   <Text>{item.number}</Text>

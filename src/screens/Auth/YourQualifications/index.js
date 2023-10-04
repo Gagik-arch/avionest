@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import s from "./style";
 import {Button, DropDown, Icon, Screen, Text} from "../../../core";
-import {View} from "react-native";
+import {FlatList, View} from "react-native";
 import {margin, onChangeBody, onRequiredFieldNotAvailable, validateFields} from "../../../resources";
 import global from '../../../styles/global'
 import NavigationHeader from "../../../core/NavigationHeader";
@@ -9,98 +9,27 @@ import Radio from "../../../core/Radio";
 import DatePicker from "../../../core/DatePicker";
 import globalApi from "../../../api/globalApi";
 import Toast from "react-native-toast-message";
-
-const europeanCountries = [
-    'Albania',
-    'Andorra',
-    'Armenia',
-    'Austria',
-    'Azerbaijan',
-    'Belarus',
-    'Belgium',
-    'Bosnia and Herzegovina',
-    'Bulgaria',
-    'Croatia',
-    'Cyprus',
-    'Czech Republic',
-    'Denmark',
-    'Estonia',
-    'Finland',
-    'France',
-    'Georgia',
-    'Germany',
-    'Greece',
-    'Hungary',
-    'Iceland',
-    'Ireland',
-    'Italy',
-    'Kosovo',
-    'Latvia',
-    'Liechtenstein',
-    'Lithuania',
-    'Luxembourg',
-    'Macedonia',
-    'Malta',
-    'Moldova',
-    'Monaco',
-    'Montenegro',
-    'The Netherlands',
-    'Norway',
-    'Poland',
-    'Portugal',
-    'Romania',
-    'Russia',
-    'San Marino',
-    'Serbia',
-    'Slovakia',
-    'Slovenia',
-    'Spain',
-    'Sweden',
-    'Switzerland',
-    'Turkey',
-    'Ukraine',
-    'United Kingdom',
-    'Vatican City',
-]
+import {useDispatch, useSelector} from "react-redux";
+import {globalReducer} from "../../../store/reducers";
+import {getCountries} from "../../../store/asyncThunks/global";
 
 export const YourQualifications = (props) => {
     const [body, setBody] = useState(props.route.params);
-    const [isLoading, setIsLoading] = useState(false);
     const [requiredMessage, setRequiredMessage] = useState({})
-    const [countries, setCountries] = useState([]);
+    const { data} = useSelector(state => state.global)
 
     const formQuery = [
-        "license_type",
-        "issue_date",
-        "license_number",
-        "valid_until_date",
-        "issuing_country_id",
-        'additional_qualifications',
+        "license_type", "issue_date", "license_number", "valid_until_date",
+        "issuing_country_id", 'additional_qualifications',
     ]
-
-    useEffect(() => {
-        setIsLoading(true)
-        globalApi.getCountries()
-            .then(res => {
-                setCountries(res.data.countries)
-            })
-            .catch(e => {
-                Toast.show({
-                    type: 'error', text1: e || 'An error occurred.',
-                });
-            })
-            .then(() => {
-                setIsLoading(false)
-            })
-    }, [])
 
     const onChangeCheckbox = (e) => {
         setBody((prev) => {
-            let copy = prev[e.name] ? [...prev[e.name]] : []
-            if (copy.includes(e.label)) {
-                copy = copy.filter(item => item !== e.label)
+            let copy = prev?.[e.name] ? [...prev[e.name]] : []
+            if (copy.includes(e.id)) {
+                copy = copy.filter(item => item !== e.id)
             } else {
-                copy.push(e.label)
+                copy.push(e.id)
             }
             return {...prev, [e.name]: copy}
         })
@@ -158,14 +87,14 @@ export const YourQualifications = (props) => {
                       }}
             />
             <DatePicker placeholder={'Lssue date'}
-                        // date={body?.issue_date}
+                // date={body?.issue_date}
                         name={'issue_date'}
                         onChange={(e) => onChange({name: e.name, value: e.text})}
                         requiredMessage={requiredMessage['issue_date']}
                         value={body?.issue_date}
             />
             <DatePicker placeholder={'License number'}
-                        // date={body?.license_number}
+                // date={body?.license_number}
                         name={'license_number'}
                         onChange={(e) => onChange({name: e.name, value: e.text})}
                         requiredMessage={requiredMessage['license_number']}
@@ -173,14 +102,14 @@ export const YourQualifications = (props) => {
             />
             <DatePicker placeholder={'Valid until'}
                         name={'valid_until_date'}
-                        // date={body?.valid_until_date}
+                // date={body?.valid_until_date}
                         onChange={(e) => onChange({name: e.name, value: e.text})}
                         requiredMessage={requiredMessage['valid_until_date']}
                         value={body?.valid_until_date}
             />
             <DropDown variant={'underlined'}
                       placeholder={body?.issuing_country_id || 'Issuing country'}
-                      data={europeanCountries}
+                      data={data.countries}
                       label={(e) => e.value}
                       renderItem={({item, isSelected}) => {
                           return <Text size={'14_400'}
@@ -194,30 +123,15 @@ export const YourQualifications = (props) => {
             />
             <Text style={[global.app_subtitle, {...margin(32, 0, 12, 0)}]}>Additional Qualifications</Text>
             <View style={s.grid}>
-                <View style={s.column}>
-                    <Radio label={'Night flight'}
-                           name={'additional_qualifications'}
-                           onChange={onChangeCheckbox}
-                           checked={body?.additional_qualifications === 'Night flight'}
-                    />
-                    <Radio label={'Mountain'}
-                           name={'additional_qualifications'}
-                           onChange={onChangeCheckbox}
-                           checked={body?.additional_qualifications === 'Mountain'}
-                    />
-                </View>
-                <View style={s.column}>
-                    <Radio label={'IFR'}
-                           name={'additional_qualifications'}
-                           onChange={onChangeCheckbox}
-                           checked={body?.additional_qualifications === 'IFR'}
-                    />
-                    <Radio label={'Seaplane'}
-                           name={'additional_qualifications'}
-                           onChange={onChangeCheckbox}
-                           checked={body?.additional_qualifications === 'Seaplane'}
-                    />
-                </View>
+                <FlatList data={data?.additionalQualificationTypes}
+                          numColumns={2}
+                          renderItem={({item}) => <Radio label={item.title}
+                                                         name={'equipments'}
+                                                         onChange={(e) => onChangeCheckbox({name: e.name, id: item.id})}
+                                                         checked={body?.equipment === 'ADF'}
+                                                         containerStyle={{flex: 1,marginBottom:8}}
+                          />}
+                />
             </View>
             <Button label={'Next'}
                     variant={'primary'}
