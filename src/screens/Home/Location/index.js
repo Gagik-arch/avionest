@@ -1,10 +1,12 @@
 import React, {useRef, useState} from 'react'
 import s from './style'
-import {Button, Icon, NavigationHeader, Screen, Text} from "../../../core";
-import {PixelRatio, View} from "react-native";
+import {Button, Icon, NavigationHeader, Screen, Switch, Text} from "../../../core";
+import {View} from "react-native";
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import env from "../../../env";
 import {SelectLocation} from "../../../sheets";
+import {onChangeBody} from "../../../resources";
+import longPressGestureHandler from "react-native-gesture-handler/src/web_hammer/LongPressGestureHandler";
 
 export const Location = (props) => {
     const sheetRef = useRef()
@@ -15,46 +17,71 @@ export const Location = (props) => {
         latitudeDelta: 10,
         longitudeDelta: 10,
     });
+    const [body, setBody] = useState({space_type:'outdoor'})
 
     const openDrawer = () => props.navigation.openDrawer();
 
     const onPressMarker = () => props.navigation.navigate('Aeroclub')
 
+    const onChange = (e) => {
+        setBody(prev => ({...prev, [e.name]: e.value}))
+    }
 
     return (
         <>
             <Screen header={<NavigationHeader style={s.header}
                                               title={<></>}
-                                              buttons={<Button onPress={openDrawer}>
-                                                  <Icon type={'Bars'} fill={'white'}/>
-                                              </Button>}
+                                              buttons={<View
+                                                  style={{flexDirection: "row", columnGap: 10, alignItems: "center"}}>
+                                                  <Switch style={{borderColor: "white"}}
+                                                          name={'space_type'}
+                                                          value={body?.space_type === 'hangar'}
+                                                          containerStyle={{columnGap: 8}}
+                                                          onChange={(e) => {
+                                                              onChange({
+                                                                  value: e.value ?  'hangar' :  'outdoor' ,
+                                                                  name: e.name
+                                                              })
+                                                          }}
+                                                  >
+                                                      {(e) => {
+                                                          return (
+                                                              <Text style={{color: 'white'}} size={'16_500'}>
+                                                                  {e?.value ? 'hangar'.toUpperCaseFirstChar() : 'outdoor'.toUpperCaseFirstChar()}
+                                                              </Text>
+                                                          )
+                                                      }}
+                                                  </Switch>
+                                                  <Button onPress={openDrawer}>
+                                                      <Icon type={'Bars'} fill={'white'}/>
+                                                  </Button>
+                                              </View>}
                                               {...props}/>
             }>
                 <View style={s.top}>
-                    <Button style={s.top_btn}>
+                    <Button style={[s.top_btn, {backgroundColor: body?.availability === 'no-space' ? 'rgba(0,0,0,0.07)' : '#fff'}]}
+                            onPress={() => onChange({value: 'no-space', name: 'availability'})}
+                    >
                         <Icon type={'Mark'} size={16} fill={'#F4909E'}/>
                         <Text size={'10_400'} style={s.top_btn_text}>No space available</Text>
                     </Button>
                     <View style={s.divider}/>
-                    <Button style={s.top_btn}>
+                    <Button
+                        style={[s.top_btn, {backgroundColor: body?.availability === 'available' ? 'rgba(0,0,0,0.07)' : '#fff'}]}
+                        onPress={() => onChange({value: 'available', name: 'availability'})}
+                    >
                         <Icon type={'Mark'} size={16} fill={'#67E0D4'}/>
                         <Text size={'10_400'} style={s.top_btn_text}>Available space</Text>
                     </Button>
                     <View style={s.divider}/>
-                    <Button style={s.top_btn}>
+                    <Button
+                        style={[s.top_btn, {backgroundColor: body?.availability === 'half-space' ? 'rgba(0,0,0,0.07)' : '#fff'}]}
+                        onPress={() => onChange({value: 'half-space', name: 'availability'})}
+                    >
                         <Icon type={'Mark'} size={16} fill={'#FFDF7A'}/>
                         <Text size={'10_400'} style={s.top_btn_text}>50% space available</Text>
                     </Button>
                     <View style={s.divider}/>
-                    <Button style={s.top_btn}>
-                        <Icon type={'Mark'} size={16} fill={'blue'}/>
-                        <Text size={'10_400'} style={s.top_btn_text}>Hangar space</Text>
-                    </Button>
-                    <View style={s.divider}/>
-                    <Button style={s.top_btn}>
-                        <Icon type={'Mark'} size={16} fill={'green'}/>
-                        <Text size={'10_400'} style={s.top_btn_text}>Outdoor space</Text>
-                    </Button>
                 </View>
                 <MapView key={env.GOOGLE_MAP_KEY}
                          provider={PROVIDER_GOOGLE}
