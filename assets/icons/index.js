@@ -17,6 +17,8 @@ import Plane from './plane.svg';
 import Calendar from './calendar.svg';
 import Calendar2 from './calendar2.svg';
 import Search from './search.svg';
+import Trash from './trash.svg';
+import Edit from './edit.svg';
 
 export {
   EyeOff,
@@ -37,4 +39,6 @@ export {
   Calendar,
   Calendar2,
   Search,
+  Trash,
+  Edit,
 };

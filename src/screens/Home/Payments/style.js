@@ -12,13 +12,20 @@ const s = StyleSheet.create({
     container_list: {
         justifyContent: 'space-between',
         ...padding(15, 17, 15, 60),
-        borderTopWidth: 1,
-        borderBottomWidth: 1,
-        borderColor: '#99999926',
+        backgroundColor:"#fff"
     },
     block_list: {
         flexDirection: 'row',
         columnGap: 40,
+    },
+    swipeable_btn: {
+        justifyContent: 'center',
+        height: '100%',
+        ...padding(0, 8)
+    },
+    swipe_container: {
+        flexDirection: "row",
+        // columnGap: 16,
     },
 });
 

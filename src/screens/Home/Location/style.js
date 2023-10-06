@@ -13,16 +13,21 @@ const s = StyleSheet.create({
     },
     top_btn: {
         flex: 1,
-        ...padding(14, 12),
-        columnGap: 8
+        ...padding(10, 12),
+        columnGap: 8,
+        flexDirection: 'column'
     },
     divider: {
         width: 1,
         backgroundColor: '#D9D9D9'
     },
     map: {
-        borderWidth:1,
-flex:1
+        borderWidth: 1,
+        flex: 1
+    },
+    top_btn_text: {
+        marginTop:6,
+        textAlign:'center'
     },
 });
 

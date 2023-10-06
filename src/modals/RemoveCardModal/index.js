@@ -6,6 +6,8 @@ import {Button, Text} from "../../core";
 export const PaymentModal = ({
                                  visibility,
                                  setVisibility,
+    onCancel,
+    onRemove
                              }) => {
 
     return (
@@ -29,8 +31,9 @@ export const PaymentModal = ({
                                 style={s.btn}
                                 labelSize={'20_400'}
                                 labelStyle={s.btn_text}
-                                onPress={() => {
+                                onPress={()=>{
                                     setVisibility(false)
+                                    onCancel?.()
                                 }}
                         />
                         <View style={s.divider} />
@@ -38,6 +41,7 @@ export const PaymentModal = ({
                                 style={s.btn}
                                 labelStyle={s.btn_text}
                                 labelSize={'20_400'}
+                                onPress={onRemove}
                         />
                     </View>
                 </View>

@@ -33,17 +33,27 @@ export const Location = (props) => {
                 <View style={s.top}>
                     <Button style={s.top_btn}>
                         <Icon type={'Mark'} size={16} fill={'#F4909E'}/>
-                        <Text size={'10_400'}>No space available</Text>
+                        <Text size={'10_400'} style={s.top_btn_text}>No space available</Text>
                     </Button>
                     <View style={s.divider}/>
                     <Button style={s.top_btn}>
                         <Icon type={'Mark'} size={16} fill={'#67E0D4'}/>
-                        <Text size={'10_400'}>Available space</Text>
+                        <Text size={'10_400'} style={s.top_btn_text}>Available space</Text>
                     </Button>
                     <View style={s.divider}/>
                     <Button style={s.top_btn}>
                         <Icon type={'Mark'} size={16} fill={'#FFDF7A'}/>
-                        <Text size={'10_400'}>50% space available</Text>
+                        <Text size={'10_400'} style={s.top_btn_text}>50% space available</Text>
+                    </Button>
+                    <View style={s.divider}/>
+                    <Button style={s.top_btn}>
+                        <Icon type={'Mark'} size={16} fill={'blue'}/>
+                        <Text size={'10_400'} style={s.top_btn_text}>Hangar space</Text>
+                    </Button>
+                    <View style={s.divider}/>
+                    <Button style={s.top_btn}>
+                        <Icon type={'Mark'} size={16} fill={'green'}/>
+                        <Text size={'10_400'} style={s.top_btn_text}>Outdoor space</Text>
                     </Button>
                 </View>
                 <MapView key={env.GOOGLE_MAP_KEY}
