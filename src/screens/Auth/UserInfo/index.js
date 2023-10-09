@@ -1,11 +1,10 @@
 import React, {useContext, useEffect, useState} from "react";
 import s from "./style";
 import {Button, DropDown, Icon, Input, Screen, Text} from "../../../core";
-import {ActivityIndicator, Platform} from "react-native";
-import {margin, onChangeBody, onRequiredFieldNotAvailable, validateFields} from "../../../resources";
+import {ActivityIndicator, Platform, View,Image} from "react-native";
+import {margin, onChangeBody,generateYears, onRequiredFieldNotAvailable, validateFields} from "../../../resources";
 import global from '../../../styles/global'
 import NavigationHeader from "../../../core/NavigationHeader";
-import DatePicker from "../../../core/DatePicker";
 import {getAuthSources} from "../../../store/asyncThunks/global";
 import {useDispatch, useSelector} from "react-redux";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -24,15 +23,6 @@ export const UserInfo = (props) => {
         dispatch(getAuthSources())
     }, [])
 
-    const generateYears = () => {
-        const currentYear = new Date().getFullYear()
-        const result = []
-        for (let i = currentYear - 100; i <= currentYear; i++) {
-            result.push(i)
-        }
-        return result;
-    }
-
     const onChange = (e) => {
         setRequiredMessage(prev => {
             delete prev[e.name]
@@ -40,7 +30,6 @@ export const UserInfo = (props) => {
         })
         onChangeBody(e, body, setBody);
     };
-
     const disableSubmitBtn = () => validateFields(formQuery, body);
 
     const onDisable = () => {
@@ -87,8 +76,12 @@ export const UserInfo = (props) => {
                       }}
                       requiredMessage={requiredMessage['date_of_birth']}
                       onChange={(e) => {
+                          let date = new Date()
+                          date.setFullYear(e.value)
+                          date.setDate(1)
+                          date.setMonth(0)
                           setDatePickerVisibility(true)
-                          onChange({value: new Date(`${e.value} 01 01`), name: e.name})
+                          onChange({value: date, name: e.name})
                       }}
             />
             {isDatePickerVisible && <DateTimePicker mode={'date'}
@@ -112,8 +105,13 @@ export const UserInfo = (props) => {
                           data={data?.countries}
                           label={(e) => e.value.name}
                           renderItem={({item, isSelected}) => {
-                              return <Text size={'14_400'}
-                                           style={{color: isSelected ? 'white' : '#787777'}}>{item.name}</Text>
+                              return <View style={{flexDirection:"row",columnGap:10,alignItems:'center'}}>
+                                  <Image source={{uri:`http://192.168.77.129:9026/sources/flags/${item.code.toLowerCase()}.png`}}
+                                         style={{width:30,height:'100%'}}
+                                  />
+                                  <Text size={'14_400'}
+                                        style={{color: isSelected ? 'white' : '#787777'}}>{item.name}</Text>
+                              </View>
                           }}
                           name={'country_id'}
                           requiredMessage={requiredMessage['country_id']}

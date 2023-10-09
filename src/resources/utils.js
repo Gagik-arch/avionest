@@ -39,3 +39,11 @@ export const onRequiredFieldNotAvailable = (
         return result;
     }
 }
+export const generateYears = () => {
+    const currentYear = new Date().getFullYear()
+    const result = []
+    for (let i = currentYear - 100; i <= currentYear; i++) {
+        result.push(i)
+    }
+    return result;
+}
