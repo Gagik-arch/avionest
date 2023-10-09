@@ -92,7 +92,8 @@ const DropDown = ({
                                       >
                                           {renderItem({item, index, separators, isSelected: selected?.index === index})}
                                       </TouchableOpacity>
-                                  )}/>
+                                  )
+                        }/>
                     </View>
                 </TouchableOpacity>
             </Modal>

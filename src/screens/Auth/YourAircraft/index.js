@@ -12,7 +12,7 @@ import {useSelector} from "react-redux";
 export const YourAircraft = (props) => {
     const [body, setBody] = useState(props.route.params);
     const [requiredMessage, setRequiredMessage] = useState({})
-    const { data} = useSelector(state => state.global)
+    const {data} = useSelector(state => state.global)
     const formQuery = ["aircraft_id", 'first_color_id', 'second_color_id', 'equipments']
     console.log(data)
     const onChangeCheckbox = (e) => {
@@ -61,8 +61,13 @@ export const YourAircraft = (props) => {
                 Select from the list below the type of aircraft you are currently using
             </Text>
             <SelectableInput onChange={onChange} name={'aircraft_id'}/>
-            <ColorPicker onChange={onChange} name={'first_color_id'} placeholder={'First color'}/>
-            <ColorPicker onChange={onChange} name={'second_color_id'} placeholder={'Second color'}/>
+            <View style={{flexDirection: "row"}}>
+                <ColorPicker onChange={onChange} name={'first_color_id'} placeholder={'First color'}
+                             containerStyle={{flex: 1}}/>
+                <View style={{width: 20}}/>
+                <ColorPicker onChange={onChange} name={'second_color_id'} placeholder={'Second color'}
+                             containerStyle={{flex: 1}}/>
+            </View>
             <Input placeholder={'Registration number'}
                    name={'registration_number'}
                    value={body?.aircraft_id?.aircraft}
@@ -78,7 +83,7 @@ export const YourAircraft = (props) => {
                                                          name={'equipments'}
                                                          onChange={(e) => onChangeCheckbox({name: e.name, id: item.id})}
                                                          checked={body?.equipment === 'ADF'}
-                                                         containerStyle={{flex: 1,marginBottom:8}}
+                                                         containerStyle={{flex: 1, marginBottom: 8}}
                           />}
                 />
             </View>

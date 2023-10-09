@@ -13,6 +13,7 @@ const ColorPicker = ({
                          onChange = () => {
                          },
                          name,
+                         containerStyle={},
                      }) => {
     const [visibility, setVisibility] = useState(false)
     const [_value, _setValue] = useState(value)
@@ -41,7 +42,7 @@ const ColorPicker = ({
 
     return (
         <>
-            <Button style={s.container}
+            <Button style={[s.container,containerStyle]}
                     labelSize={'14_400'}
                     labelStyle={{color: '#787777'}}
                     onPress={() => {

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import s from "./style";
-import {Button, DropDown, Icon, Screen, Text} from "../../../core";
+import {Button, DropDown, Icon, Input, Screen, Text} from "../../../core";
 import {FlatList, View} from "react-native";
 import {margin, onChangeBody, onRequiredFieldNotAvailable, validateFields} from "../../../resources";
 import global from '../../../styles/global'
@@ -11,7 +11,7 @@ import globalApi from "../../../api/globalApi";
 import Toast from "react-native-toast-message";
 import {useDispatch, useSelector} from "react-redux";
 import {globalReducer} from "../../../store/reducers";
-import {getCountries} from "../../../store/asyncThunks/global";
+import {getAuthSources, getCountries} from "../../../store/asyncThunks/global";
 
 export const YourQualifications = (props) => {
     const [body, setBody] = useState(props.route.params);
@@ -52,7 +52,7 @@ export const YourQualifications = (props) => {
         })
         setRequiredMessage(result)
     }
-
+    console.log(body)
     return (
         <Screen contentContainerStyle={s.container}
                 header={
@@ -93,12 +93,11 @@ export const YourQualifications = (props) => {
                         requiredMessage={requiredMessage['issue_date']}
                         value={body?.issue_date}
             />
-            <DatePicker placeholder={'License number'}
-                // date={body?.license_number}
-                        name={'license_number'}
-                        onChange={(e) => onChange({name: e.name, value: e.text})}
-                        requiredMessage={requiredMessage['license_number']}
-                        value={body?.license_number}
+            <Input placeholder={'License number'}
+                   name={'license_number'}
+                   onChange={onChange}
+                   requiredMessage={requiredMessage['license_number']}
+                   value={body?.license_number}
             />
             <DatePicker placeholder={'Valid until'}
                         name={'valid_until_date'}
@@ -107,18 +106,19 @@ export const YourQualifications = (props) => {
                         requiredMessage={requiredMessage['valid_until_date']}
                         value={body?.valid_until_date}
             />
+
             <DropDown variant={'underlined'}
                       placeholder={body?.issuing_country_id || 'Issuing country'}
                       data={data.countries}
-                      label={(e) => e.value}
+                      label={(e) => e.value.name}
                       renderItem={({item, isSelected}) => {
                           return <Text size={'14_400'}
-                                       style={{color: isSelected ? 'white' : '#787777'}}>{item}</Text>
+                                       style={{color: isSelected ? 'white' : '#787777'}}>{item.name}</Text>
                       }}
                       name={'issuing_country_id'}
                       requiredMessage={requiredMessage['issuing_country_id']}
                       onChange={(e) => {
-                          onChange({value: e.value, name: e.name})
+                          onChange({value: e.value.id, name: e.name})
                       }}
             />
             <Text style={[global.app_subtitle, {...margin(32, 0, 12, 0)}]}>Additional Qualifications</Text>
@@ -126,7 +126,7 @@ export const YourQualifications = (props) => {
                 <FlatList data={data?.additionalQualificationTypes}
                           numColumns={2}
                           renderItem={({item}) => <Radio label={item.title}
-                                                         name={'equipments'}
+                                                         name={'additional_qualifications'}
                                                          onChange={(e) => onChangeCheckbox({name: e.name, id: item.id})}
                                                          checked={body?.equipment === 'ADF'}
                                                          containerStyle={{flex: 1,marginBottom:8}}

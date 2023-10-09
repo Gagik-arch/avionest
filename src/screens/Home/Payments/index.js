@@ -12,9 +12,12 @@ import NavigationHeader from "../../../core/NavigationHeader";
 
 export const Payments = (props) => {
 
+    const onEdit = () => {
+        props.navigation.navigate('PaymentDetails')
+    }
 
     return (
-        <Screen  header={
+        <Screen header={
             <NavigationHeader title={<></>}
                               backHandler={<Button onPress={() => {
                                   props.navigation.goBack()
@@ -30,10 +33,12 @@ export const Payments = (props) => {
             <CardList name={'Master Card'}
                       number={'2123123555554568'}
                       image={mastercardImage}
+                      onEdit={onEdit}
             />
             <CardList name={'Visa'}
                       number={'2123123555555645'}
                       image={visaImage}
+                      onEdit={onEdit}
             />
             <Button label={'Add Payment method'}
                     variant={'primary'}
@@ -49,6 +54,8 @@ const CardList = ({
                       number,
                       image,
                       onPress = () => {
+                      },
+                      onEdit = () => {
                       }
                   }) => {
     const [visibility, setVisibility] = useState(false)
@@ -77,7 +84,8 @@ const CardList = ({
                 >
                     <Icon type={'Trash'} stroke={'red'}/>
                 </TouchableOpacity>
-                <TouchableOpacity style={[s.swipeable_btn, {transform: [{scale: scaleEdit}]}]}>
+                <TouchableOpacity style={[s.swipeable_btn, {transform: [{scale: scaleEdit}]}]}
+                                  onPress={onEdit}>
                     <Icon type={'Edit'} stroke={'green'}/>
                 </TouchableOpacity>
             </View>
@@ -94,7 +102,6 @@ const CardList = ({
             />
             <Swipeable ref={swipRef}
                        onSwipeableClose={() => {
-                           console.log(123)
                        }}
                        containerStyle={{
                            borderTopWidth: 1,

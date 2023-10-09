@@ -7,7 +7,8 @@ import global from '../../../styles/global'
 import NavigationHeader from "../../../core/NavigationHeader";
 import {WelcomeAvionest} from "../../../modals";
 import authApi from "../../../api/authApi";
-import {StripeProvider, CardField, useStripe} from '@stripe/stripe-react-native'
+import {StripeProvider,  useStripe,resetPaymentSheetCustomer} from '@stripe/stripe-react-native'
+import Toast from "react-native-toast-message";
 
 export const PaymentDetails = (props) => {
     const [body, setBody] = useState(props.route.params);
@@ -15,7 +16,6 @@ export const PaymentDetails = (props) => {
     const [modalVisibility, setModalVisibility] = useState(false)
     const [requiredMessage, setRequiredMessage] = useState({})
     const formQuery = ["card_name", "card_number", "card_date", "card_cvv", "card_postal"]
-    // const { confirmPayment } = useStripe();
 
     const onChange = (e) => {
         setRequiredMessage(prev => {
@@ -30,10 +30,13 @@ export const PaymentDetails = (props) => {
         setIsLoading(true)
         authApi.signup(body)
             .then((res) => {
-                console.log(res.data)
                 setModalVisibility(true)
             })
             .catch(e => {
+                Toast.show({
+                    type: "error",
+                    text1: e?.response?.data || "An error occurred.",
+                });
                 console.log(123132, e)
             })
             .then(() => {
@@ -66,28 +69,6 @@ export const PaymentDetails = (props) => {
                                           {...props} />
                     }
             >
-                {/*<CardField*/}
-                {/*    postalCodeEnabled={true}*/}
-                {/*    placeholders={{*/}
-                {/*        number: '4242 4242 4242 4242',*/}
-                {/*    }}*/}
-                {/*    cardStyle={{*/}
-                {/*        backgroundColor: '#FFFFFF',*/}
-                {/*        textColor: '#000000',*/}
-                {/*    }}*/}
-                {/*    style={{*/}
-                {/*        width: '100%',*/}
-                {/*        height: 50,*/}
-                {/*        flexDirection:"column",*/}
-                {/*        marginVertical: 30,*/}
-                {/*    }}*/}
-                {/*    onCardChange={(cardDetails) => {*/}
-                {/*        console.log('cardDetails', cardDetails);*/}
-                {/*    }}*/}
-                {/*    onFocus={(focusedField) => {*/}
-                {/*        console.log('focusField', focusedField);*/}
-                {/*    }}*/}
-                {/*/>*/}
                 <Text style={global.app_title}>Payment Details</Text>
                 <Button style={s.scan_btn}
                         onPress={() => {
