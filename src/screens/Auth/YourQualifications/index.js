@@ -16,7 +16,7 @@ import {getAuthSources, getCountries} from "../../../store/asyncThunks/global";
 export const YourQualifications = (props) => {
     const [body, setBody] = useState(props.route.params);
     const [requiredMessage, setRequiredMessage] = useState({})
-    const { data} = useSelector(state => state.global)
+    const {data} = useSelector(state => state.global)
 
     const formQuery = [
         "license_type", "issue_date", "license_number", "valid_until_date",
@@ -73,7 +73,6 @@ export const YourQualifications = (props) => {
                       placeholder={'License type'}
                       data={['LAPL(A)', 'PPL(A)', 'CPL(A)', 'ATPL(A)']}
                       label={(e) => e.value}
-                      value={body?.license_type}
                       name={'license_type'}
                       onChange={onChange}
                       renderItem={({item, isSelected}) => {
@@ -129,7 +128,7 @@ export const YourQualifications = (props) => {
                                                          name={'additional_qualifications'}
                                                          onChange={(e) => onChangeCheckbox({name: e.name, id: item.id})}
                                                          checked={body?.equipment === 'ADF'}
-                                                         containerStyle={{flex: 1,marginBottom:8}}
+                                                         containerStyle={{flex: 1, marginBottom: 8}}
                           />}
                 />
             </View>

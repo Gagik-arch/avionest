@@ -20,6 +20,10 @@ class Api {
     return this.#configureRequest({ url,  method: "delete", headers });
   }
 
+  put({ url = "", body, headers }) {
+    return this.#configureRequest({ url,body,  method: "put", headers });
+  }
+
   #configureRequest = async ({ url, method = "get", body, headers = {} }) => {
     const token = await AsyncStorage.getItem("token");
 

@@ -1,7 +1,7 @@
 import Api from './index';
 
 class AuthApi extends Api {
-  signin(body) {
+  login(body) {
     return this.post({url: '/login', body});
   }
 
@@ -11,6 +11,9 @@ class AuthApi extends Api {
 
   forgotPassword(body) {
     return this.post({url: '/forgot-password', body});
+  }
+  updateUser(body) {
+    return this.put({url: '/users',body});
   }
 }
 

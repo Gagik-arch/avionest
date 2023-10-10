@@ -1,24 +1,25 @@
 import React, {useState} from "react";
 import s from "./style";
-import {Button, Icon, Input, NavigationHeader, Screen, Text} from "../../../core";
+import {Button, Input, Screen, Text} from "../../../core";
 import plane from '../../../../assets/images/plane.png'
 import {Image, View} from "react-native";
 import global from "../../../styles/global";
+import {useDispatch, useSelector} from "react-redux";
+import {login} from "../../../store/asyncThunks/auth";
 import {
     Colors, margin, onChangeBody, validateFields, onRequiredFieldNotAvailable
 } from "../../../resources";
-import authApi from "../../../api/authApi";
-import Toast from "react-native-toast-message";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 export const Signin = (props) => {
     const [body, setBody] = useState({
         // 'email':'asdd88ii8d88a@mail.com',
         // 'password':'123456789'
     });
-    const [isLoading, setIsLoading] = useState(false);
     const [requiredMessage, setRequiredMessage] = useState({})
     const formQuery = ["password", "email"]
+    const dispatch = useDispatch()
+    const {isLoading} = useSelector(state => state.auth)
 
     const onChange = (e) => {
         const copyBody = {...requiredMessage}
@@ -39,34 +40,7 @@ export const Signin = (props) => {
     }
 
     const onSubmit = () => {
-        setIsLoading(true)
-        authApi.signin(body)
-            .then(res => {
-                Promise.all([
-                    AsyncStorage.setItem('token', res.data.tokens.accessToken),
-                    AsyncStorage.setItem('user', JSON.stringify(res.data))
-                ])
-                    .then(() => {
-                        props.navigation.navigate('Home')
-
-                    })
-                    .catch(e => {
-                        Toast.show({
-                            type: 'error',
-                            text1: `Something went wrong! <Signin>`,
-                        });
-                    })
-                    .then(() => {
-                        setIsLoading(false)
-                    })
-            })
-            .catch(e => {
-                console.log(e)
-                Toast.show({
-                    type: 'error',
-                    text1: `${e} <Signin>`,
-                });
-            })
+        dispatch(login({body, navigation: props.navigation}))
     }
 
     return (

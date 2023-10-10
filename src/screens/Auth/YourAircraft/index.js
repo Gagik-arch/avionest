@@ -14,7 +14,7 @@ export const YourAircraft = (props) => {
     const [requiredMessage, setRequiredMessage] = useState({})
     const {data} = useSelector(state => state.global)
     const formQuery = ["aircraft_id", 'first_color_id', 'second_color_id', 'equipments']
-    console.log(data)
+
     const onChangeCheckbox = (e) => {
         setBody((prev) => {
             let copy = prev?.[e.name] ? [...prev[e.name]] : []

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useCallback, useEffect, useState} from 'react'
 import s from './style'
 import {Button, DropDown, Icon, Input, NavigationHeader, Screen, Text} from "../../../core";
 import global from "../../../styles/global";
@@ -15,14 +15,23 @@ import {useDispatch, useSelector} from "react-redux";
 import moment from "moment";
 import {getAuthSources} from "../../../store/asyncThunks/global";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import {login, updateUser} from "../../../store/asyncThunks/auth";
+import Toast from "react-native-toast-message";
 
 export const Profile = (props) => {
-    const [body, setBody] = useState({});
+    const {auth, global} = useSelector(state => state)
+    const date = auth?.data?.user?.date_of_birth ?
+        moment(auth?.data?.user?.date_of_birth).format('YYYY/MM/DD') :
+        undefined
+
+    const [body, setBody] = useState({
+        ...auth?.data?.user,
+        date_of_birth: date
+    });
     const [requiredMessage, setRequiredMessage] = useState({})
-    const {isLoading, data} = useSelector(state => state.global)
     const dispatch = useDispatch()
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-    const formQuery = ["first_name", "last_name", "date_of_birth", "country_id", "home_base"]
+    const formQuery = ["country_id", "first_name", "last_name", "email", "date_of_birth"]
 
     useEffect(() => {
         dispatch(getAuthSources())
@@ -36,7 +45,17 @@ export const Profile = (props) => {
         onChangeBody(e, body, setBody);
     };
 
-    const disableSubmitBtn = () => validateFields(formQuery, body);
+    const hasNotChangedUserData = useCallback(() => {
+        return Object.keys(body).every((key) => {
+            const authClone = {...auth?.data?.user}
+            authClone.date_of_birth = date
+            return body[key] === authClone[key]
+        })
+    }, [body, auth])
+
+    const disableSubmitBtn = () => {
+        return validateFields(formQuery, body) || hasNotChangedUserData() || auth.isLoading
+    };
 
     const onDisable = () => {
         const result = {}
@@ -44,8 +63,17 @@ export const Profile = (props) => {
             result[item] = `${item.toUpperCaseFirstChar()} is required`
         })
         setRequiredMessage(result)
+        if(hasNotChangedUserData()){
+            Toast.show({
+                type: 'error',
+                text1: `You must change your personal information.`,
+            });
+        }
     }
-    console.log(body)
+
+    const onSubmit = () => {
+        dispatch(updateUser({body, navigation: props.navigation}))
+    }
 
     return (
         <Screen contentContainerStyle={s.container}
@@ -61,21 +89,21 @@ export const Profile = (props) => {
                                           }
                                           {...props}/>}
         >
-            <Input placeholder={'Username'}
+            <Input placeholder={'First name'}
                    onChange={onChange}
-                   name={'username'}
-                   value={body?.username}
+                   name={'first_name'}
+                   value={body?.first_name}
+            />
+            <Input placeholder={'Last name'}
+                   onChange={onChange}
+                   name={'last_name'}
+                   value={body?.last_name}
             />
             <Input placeholder={'Email'}
                    validationKey={'email'}
                    onChange={onChange}
                    name={'email'}
                    value={body?.email}
-            />
-            <Input placeholder={'Mobule number'}
-                   onChange={onChange}
-                   name={'phone'}
-                   value={body?.phone}
             />
             <DropDown variant={'underlined'}
                       placeholder={body?.date_of_birth || 'Date of birth'}
@@ -99,21 +127,22 @@ export const Profile = (props) => {
             {isDatePickerVisible && <DateTimePicker mode={'date'}
                                                     value={body.date_of_birth}
                                                     display={Platform.OS === "ios" ? "spinner" : "default"}
-                                                    onChange={({nativeEvent, type}) => {
+                                                    onChange={({_, type}) => {
                                                         setDatePickerVisibility(false)
                                                         if (type === "set") {
-                                                            moment(body.date_of_birth).format('YYYY/MM/DD')
+
                                                             onChange({
-                                                                value: new Date(nativeEvent.timestamp),
+                                                                value: moment(body.date_of_birth).format('YYYY/MM/DD'),
                                                                 name: 'date_of_birth',
                                                             });
                                                         }
                                                     }}
             />}
             <DropDown variant={'underlined'}
-                      placeholder={body?.country_id || 'Nationality'}
-                      data={data?.countries}
-                      label={(e) => e.value.name}
+                      placeholder={'Nationality'}
+                      data={global.data?.countries}
+                      value={global?.data?.countries?.findIndex(item => item.id === auth?.data?.user?.country_id)}
+                      label={(e) => e?.value?.name}
                       renderItem={({item, isSelected}) => {
                           return <View style={{flexDirection: "row", columnGap: 10, alignItems: 'center'}}>
                               <Image
@@ -130,12 +159,6 @@ export const Profile = (props) => {
                           onChange({value: e.value.id, name: e.name})
                       }}
             />
-
-            <Button style={s.log_out_btn}
-                    label={'Sign out'}
-                    labelStyle={{color: Colors.red}}
-                    labelSize={'14_400'}
-            />
             <View style={{flex: 1}}/>
 
             <Button label={'Next'}
@@ -143,8 +166,7 @@ export const Profile = (props) => {
                     disabled={disableSubmitBtn()}
                     onDisabled={onDisable}
                     style={{...margin(10, 0, 0, 0)}}
-                    onPress={() => {
-                    }}
+                    onPress={onSubmit}
             />
         </Screen>
     )

@@ -1,8 +1,8 @@
 import React, {useContext, useEffect, useState} from "react";
 import s from "./style";
 import {Button, DropDown, Icon, Input, Screen, Text} from "../../../core";
-import {ActivityIndicator, Platform, View,Image} from "react-native";
-import {margin, onChangeBody,generateYears, onRequiredFieldNotAvailable, validateFields} from "../../../resources";
+import {ActivityIndicator, Platform, View, Image} from "react-native";
+import {margin, onChangeBody, generateYears, onRequiredFieldNotAvailable, validateFields} from "../../../resources";
 import global from '../../../styles/global'
 import NavigationHeader from "../../../core/NavigationHeader";
 import {getAuthSources} from "../../../store/asyncThunks/global";
@@ -100,31 +100,48 @@ export const UserInfo = (props) => {
             />}
             {isLoading ?
                 <ActivityIndicator/> :
-                <DropDown variant={'underlined'}
-                          placeholder={body?.country_id || 'Nationality'}
-                          data={data?.countries}
-                          label={(e) => e.value.name}
-                          renderItem={({item, isSelected}) => {
-                              return <View style={{flexDirection:"row",columnGap:10,alignItems:'center'}}>
-                                  <Image source={{uri:`http://192.168.77.129:9026/sources/flags/${item.code.toLowerCase()}.png`}}
-                                         style={{width:30,height:'100%'}}
-                                  />
-                                  <Text size={'14_400'}
-                                        style={{color: isSelected ? 'white' : '#787777'}}>{item.name}</Text>
-                              </View>
-                          }}
-                          name={'country_id'}
-                          requiredMessage={requiredMessage['country_id']}
-                          onChange={(e) => {
-                              onChange({value: e.value.id, name: e.name})
-                          }}
-                />}
-            <Input placeholder={'Home base'}
-                   name={'home_base'}
-                   onChange={onChange}
-                   requiredMessage={requiredMessage['home_base']}
-                   value={body?.home_base}
-            />
+                <>
+                    <DropDown variant={'underlined'}
+                              placeholder={body?.country_id || 'Nationality'}
+                              data={data?.countries}
+                              label={(e) => e.value.name}
+                              renderItem={({item, isSelected}) => {
+                                  return <View style={{flexDirection: "row", columnGap: 10, alignItems: 'center'}}>
+                                      <Image
+                                          source={{uri: `http://192.168.77.129:9026/sources/flags/${item.code.toLowerCase()}.png`}}
+                                          style={{width: 30, height: '100%'}}
+                                      />
+                                      <Text size={'14_400'}
+                                            style={{color: isSelected ? 'white' : '#787777'}}>{item.name}</Text>
+                                  </View>
+                              }}
+                              name={'country_id'}
+                              requiredMessage={requiredMessage['country_id']}
+                              onChange={(e) => {
+                                  onChange({value: e.value.id, name: e.name})
+                              }}
+                    />
+                    <DropDown variant={'underlined'}
+                              placeholder={body?.home_base || 'Home base'}
+                              data={data?.oaciList}
+                              label={(e) => e.value.oaci_code}
+                              renderItem={({item, isSelected}) => {
+                                  return (
+                                      <Text size={'14_400'}
+                                            style={{color: isSelected ? 'white' : '#787777'}}
+                                      >
+                                          {item.oaci_code}
+                                      </Text>
+                                  )
+                              }}
+                              name={'home_base'}
+                              requiredMessage={requiredMessage['home_base']}
+                              onChange={(e) => {
+                                  console.log(e)
+                                  onChange({value: e.value.id, name: e.name})
+                              }}
+                    />
+                </>}
             <Button label={'Next'}
                     variant={'primary'}
                     disabled={disableSubmitBtn()}

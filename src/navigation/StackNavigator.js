@@ -11,11 +11,14 @@ import DrawerNavigation from './DrawerNavigation'
 import {Colors} from "../resources";
 import {Button, Icon} from "../core";
 import SplashScreen from "react-native-splash-screen";
+import {authActions} from "../store/reducers";
+import {useDispatch} from "react-redux";
 
 const Stack = createNativeStackNavigator();
 
 const StackNavigator = () => {
     const navigation = useNavigation();
+    const dispatch = useDispatch()
 
     useEffect(() => {
         let currentState;
@@ -25,9 +28,10 @@ const StackNavigator = () => {
             if (currentState !== state.isConnected) {
                 currentState = state.isConnected;
                 if (state.isConnected) {
-                    AsyncStorage.getItem("token")
-                        .then(token => {
-                            if (token) {
+                    AsyncStorage.getItem("user")
+                        .then(user => {
+                            if (user) {
+                                dispatch(authActions.setUserData(JSON.parse(user)));
                                 navigation.reset({index: 0, routes: [{name: "Home"}]});
                             } else {
                                 if (currentRoute?.name !== "Signin") {
