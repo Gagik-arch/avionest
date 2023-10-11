@@ -50,10 +50,9 @@ const ColorPicker = ({
                     }}
             >
                 <Text>
-                    {_value || placeholder}
+                    { placeholder}
                 </Text>
                 <View style={[s.square,{backgroundColor:_value}]}/>
-
             </Button>
 
             <Modal visible={visibility}>

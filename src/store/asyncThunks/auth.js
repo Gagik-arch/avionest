@@ -12,7 +12,6 @@ export const login = createAsyncThunk(
         authApi
             .login(body)
             .then(res => {
-                console.log(res.data)
                 Promise.all([
                     AsyncStorage.setItem('token', res.data.tokens.accessToken),
                     AsyncStorage.setItem('user', JSON.stringify(res.data))
@@ -32,7 +31,6 @@ export const login = createAsyncThunk(
                     })
                     .then(() => {
                         dispatch(authActions.setLoading(false));
-                        setIsLoading(false)
                     })
             })
             .catch(e => {

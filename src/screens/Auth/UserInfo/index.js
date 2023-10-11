@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
 import s from "./style";
-import {Button, DropDown, Icon, Input, Screen, Text} from "../../../core";
+import {Button, DropDown, Icon, Input, Screen, Text, SearchInput} from "../../../core";
 import {ActivityIndicator, Platform, View, Image} from "react-native";
 import {margin, onChangeBody, generateYears, onRequiredFieldNotAvailable, validateFields} from "../../../resources";
 import global from '../../../styles/global'
@@ -121,25 +121,17 @@ export const UserInfo = (props) => {
                                   onChange({value: e.value.id, name: e.name})
                               }}
                     />
-                    <DropDown variant={'underlined'}
-                              placeholder={body?.home_base || 'Home base'}
-                              data={data?.oaciList}
-                              label={(e) => e.value.oaci_code}
-                              renderItem={({item, isSelected}) => {
-                                  return (
-                                      <Text size={'14_400'}
-                                            style={{color: isSelected ? 'white' : '#787777'}}
-                                      >
-                                          {item.oaci_code}
-                                      </Text>
-                                  )
-                              }}
-                              name={'home_base'}
-                              requiredMessage={requiredMessage['home_base']}
-                              onChange={(e) => {
-                                  console.log(e)
-                                  onChange({value: e.value.id, name: e.name})
-                              }}
+
+                    <SearchInput data={data?.oaciList}
+                                 name={'home_base'}
+                                 filter={(_data, value = '') => {
+                                     return _data.filter(item => item.oaci_code.toLowerCase().includes(value.toLowerCase()))
+                                 }}
+                                 setValue={(item) => item.oaci_code}
+                                 renderItem={({item}) => <Text>{item.oaci_code}</Text>}
+                                 onChange={(e) => {
+                                     onChange({value: e.value.id, name: e.name})
+                                 }}
                     />
                 </>}
             <Button label={'Next'}
@@ -155,3 +147,5 @@ export const UserInfo = (props) => {
         </Screen>
     );
 };
+
+

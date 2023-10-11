@@ -1,69 +1,63 @@
-import React, {useState} from 'react'
+import React, {useRef, useState} from 'react'
 import {FlatList, Modal, TouchableOpacity, View} from "react-native";
 import {Button, Icon, Input, Text} from "../../core";
 import s from './style'
 import globalApi from "../../api/globalApi";
 import {Colors, padding} from "../../resources";
 
-export const SelectableInput = ({
-                                    onChange,
-                                    name,
-                                }) => {
-    const [isLoading, setIsLoading] = useState(false)
-    const [data, setData] = useState([])
-    const [_value, _setValue] = useState('')
+const SearchInput = ({
+                         onChange,
+                         name,
+                         data = [],
+                         renderItem,
+                         filter,
+                         setValue,
+                         value = '',
+                         keyboardType
+                     }) => {
+    const [_value, _setValue] = useState(value)
+    const [visibility, setVisibility] = useState(false)
 
     return (
         <View>
             <Input variant={'underlined'}
-                   placeholder={'Registration number'}
+                   placeholder={'Select your aircraft'}
                    value={_value}
+                   keyboardType={keyboardType}
                    onChange={(e) => {
                        _setValue(e.value)
-                       if (e.value.length > 2) {
-                           // setIsLoading(true)
-                           globalApi.getAircrafts(e.value)
-                               .then(res => {
-                                   setData(res.data.aircrafts)
-                               })
-                               .catch(e => {
-                                   console.log(e)
-                               })
-                               .then(e => {
-                                   setIsLoading(false)
-                               })
+                       if (e.value.length >= 2) {
+                           setVisibility(true)
                        }
                    }}
             />
-            <Modal visible={data.length > 0}
+            <Modal visible={visibility}
                    animationType={'slide'}
             >
                 <View style={s.modal_container}>
                     <View style={s.block}>
                         <View style={s.top_container}>
                             <Button onPress={() => {
-                                setData([])
+                                setVisibility(false)
                             }}>
                                 <Icon type={'X'} stroke={Colors.darkBlue}/>
                             </Button>
                         </View>
                         <View style={{flex: 1}}>
                             <FlatList style={{...padding(16)}}
-                                      data={data}
+                                      data={filter(data, _value)}
                                       renderItem={({item, index}) => {
                                           return (
                                               <TouchableOpacity style={[s.list,
                                                   {borderBottomWidth: index < data.length ? 1 : 0}
                                               ]}
                                                                 onPress={() => {
-                                                                    console.log(item)
-                                                                    onChange({value: item, name})
-                                                                    setData([])
-                                                                    _setValue(item.number)
+                                                                    onChange?.({value: item, name})
+                                                                    setVisibility(false)
+                                                                    setValue && _setValue(setValue(item))
                                                                 }}
                                               >
-                                                  <Text>{item.number}</Text>
-                                                  <Text>{item.aircraft}</Text>
+                                                  {renderItem?.({item, index})}
                                               </TouchableOpacity>
                                           )
                                       }}
@@ -76,3 +70,5 @@ export const SelectableInput = ({
         </View>
     )
 }
+
+export default SearchInput

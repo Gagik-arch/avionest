@@ -68,7 +68,7 @@ export const YourAircraft = (props) => {
                 <ColorPicker onChange={onChange} name={'second_color_id'} placeholder={'Second color'}
                              containerStyle={{flex: 1}}/>
             </View>
-            <Input placeholder={'Registration number'}
+            <Input placeholder={'Select your aircraft'}
                    name={'registration_number'}
                    value={body?.aircraft_id?.aircraft}
                    onChange={onChange}

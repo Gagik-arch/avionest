@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import s from "./style";
 import {Button, DropDown, Icon, Input, Screen, Text} from "../../../core";
-import {FlatList, View} from "react-native";
+import {FlatList, Image, View} from "react-native";
 import {margin, onChangeBody, onRequiredFieldNotAvailable, validateFields} from "../../../resources";
 import global from '../../../styles/global'
 import NavigationHeader from "../../../core/NavigationHeader";
@@ -111,9 +111,14 @@ export const YourQualifications = (props) => {
                       data={data.countries}
                       label={(e) => e.value.name}
                       renderItem={({item, isSelected}) => {
-                          return <Text size={'14_400'}
-                                       style={{color: isSelected ? 'white' : '#787777'}}>{item.name}</Text>
-                      }}
+                          return <View style={{flexDirection: "row", columnGap: 10, alignItems: 'center'}}>
+                              <Image
+                                  source={{uri: `http://192.168.77.129:9026/sources/flags/${item.code.toLowerCase()}.png`}}
+                                  style={{width: 30, height: '100%'}}
+                              />
+                              <Text size={'14_400'}
+                                    style={{color: isSelected ? 'white' : '#787777'}}>{item.name}</Text>
+                          </View> }}
                       name={'issuing_country_id'}
                       requiredMessage={requiredMessage['issuing_country_id']}
                       onChange={(e) => {

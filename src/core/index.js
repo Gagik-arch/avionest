@@ -16,6 +16,7 @@ import Radio from "./Radio";
 import CardInput from "./CardInput";
 import Switch from "./Switch";
 import ColorPicker from "./ColorPicker";
+import SearchInput from "./SearchInput";
 
 export {
     DropDown,
@@ -36,4 +37,5 @@ export {
     CardInput,
     Switch,
     ColorPicker,
+    SearchInput,
 }

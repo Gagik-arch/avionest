@@ -24,7 +24,7 @@ const navigation = useNavigation()
                         Welcome to Avionest!
                     </Text>
                     <Text style={s.text}>
-                        Flypark aim to facilitate your journey by allowing
+                        Avionest aim to facilitate your journey by allowing
                         you to prebook parking space in all partnering
                         airfields in France. With a simple click, plan your
                         arrival with peace of mind and keep your aircraft

@@ -19,7 +19,8 @@ import {login, updateUser} from "../../../store/asyncThunks/auth";
 import Toast from "react-native-toast-message";
 
 export const Profile = (props) => {
-    const {auth, global} = useSelector(state => state)
+    const auth = useSelector(state => state.auth)
+    const global = useSelector(state => state.global)
     const date = auth?.data?.user?.date_of_birth ?
         moment(auth?.data?.user?.date_of_birth).format('YYYY/MM/DD') :
         undefined
@@ -63,7 +64,7 @@ export const Profile = (props) => {
             result[item] = `${item.toUpperCaseFirstChar()} is required`
         })
         setRequiredMessage(result)
-        if(hasNotChangedUserData()){
+        if (hasNotChangedUserData()) {
             Toast.show({
                 type: 'error',
                 text1: `You must change your personal information.`,
