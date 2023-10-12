@@ -15,7 +15,7 @@ const s = StyleSheet.create({
         flex: 1,
         ...padding(10, 12),
         columnGap: 8,
-        flexDirection: 'column'
+        alignItems:"center",
     },
     divider: {
         width: 1,

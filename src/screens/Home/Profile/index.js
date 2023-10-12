@@ -145,14 +145,16 @@ export const Profile = (props) => {
                       value={global?.data?.countries?.findIndex(item => item.id === auth?.data?.user?.country_id)}
                       label={(e) => e?.value?.name}
                       renderItem={({item, isSelected}) => {
-                          return <View style={{flexDirection: "row", columnGap: 10, alignItems: 'center'}}>
-                              <Image
-                                  source={{uri: `http://192.168.77.129:9026/sources/flags/${item.code.toLowerCase()}.png`}}
-                                  style={{width: 30, height: '100%'}}
-                              />
-                              <Text size={'14_400'}
-                                    style={{color: isSelected ? 'white' : '#787777'}}>{item.name}</Text>
-                          </View>
+                          return (
+                              <View style={{flexDirection: "row", columnGap: 10, alignItems: 'center'}}>
+                                  <Image
+                                      source={{uri: `http://192.168.77.129:9026/sources/flags/${item.code.toLowerCase()}.png`}}
+                                      style={{width: 30, height: '100%'}}
+                                  />
+                                  <Text size={'14_400'}
+                                        style={{color: isSelected ? 'white' : '#787777'}}>{item.name}</Text>
+                              </View>
+                          )
                       }}
                       name={'country_id'}
                       requiredMessage={requiredMessage['country_id']}

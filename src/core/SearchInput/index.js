@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import {FlatList, Modal, TouchableOpacity, View} from "react-native";
 import {Button, Icon, Input, Text} from "../../core";
 import s from './style'
@@ -13,7 +13,9 @@ const SearchInput = ({
                          filter,
                          setValue,
                          value = '',
-                         keyboardType
+                         keyboardType,
+                         containerStyles = {},
+                         renderButtons
                      }) => {
     const [_value, _setValue] = useState(value)
     const [visibility, setVisibility] = useState(false)
@@ -21,10 +23,12 @@ const SearchInput = ({
     return (
         <View>
             <Input variant={'underlined'}
+                   containerStyles={[containerStyles]}
                    placeholder={'Select your aircraft'}
                    value={_value}
+                   renderButtons={renderButtons}
                    keyboardType={keyboardType}
-                   onChange={(e) => {
+                   onFinish={(e) => {
                        _setValue(e.value)
                        if (e.value.length >= 2) {
                            setVisibility(true)

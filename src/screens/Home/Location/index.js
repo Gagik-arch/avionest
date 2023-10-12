@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import s from './style'
 import {Button, Icon, NavigationHeader, Screen, Switch, Text} from "../../../core";
 import {View} from "react-native";
@@ -7,25 +7,31 @@ import env from "../../../env";
 import {SelectLocation} from "../../../sheets";
 import {onChangeBody} from "../../../resources";
 import longPressGestureHandler from "react-native-gesture-handler/src/web_hammer/LongPressGestureHandler";
+import {useDispatch, useSelector} from "react-redux";
+import {getAuthSources} from "../../../store/asyncThunks/global";
+import global from "../../../styles/global";
 
 export const Location = (props) => {
     const sheetRef = useRef()
     const [airfields, setAirfields] = useState([])
+    const [body, setBody] = useState({space_type: 'hangar'})
+    const global = useSelector(state => state.global)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        if (!Object.keys(global.data).length) {
+            dispatch(getAuthSources())
+        }
+    }, [global])
+
     const [region, setRegion] = useState({
         latitude: 47.107184,
         longitude: 2.264011,
         latitudeDelta: 10,
         longitudeDelta: 10,
     });
-    const [body, setBody] = useState({space_type:'outdoor'})
 
-    const openDrawer = () => props.navigation.openDrawer();
-
-    const onPressMarker = () => props.navigation.navigate('Aeroclub')
-
-    const onChange = (e) => {
-        setBody(prev => ({...prev, [e.name]: e.value}))
-    }
+    const onChange = (e) => onChangeBody(e, body, setBody)
 
     return (
         <>
@@ -39,7 +45,7 @@ export const Location = (props) => {
                                                           containerStyle={{columnGap: 8}}
                                                           onChange={(e) => {
                                                               onChange({
-                                                                  value: e.value ?  'hangar' :  'outdoor' ,
+                                                                  value: e.value ? 'hangar' : 'outdoor',
                                                                   name: e.name
                                                               })
                                                           }}
@@ -52,35 +58,27 @@ export const Location = (props) => {
                                                           )
                                                       }}
                                                   </Switch>
-                                                  <Button onPress={openDrawer}>
+                                                  <Button onPress={() => props.navigation.openDrawer()}>
                                                       <Icon type={'Bars'} fill={'white'}/>
                                                   </Button>
                                               </View>}
                                               {...props}/>
             }>
                 <View style={s.top}>
-                    <Button style={[s.top_btn, {backgroundColor: body?.availability === 'no-space' ? 'rgba(0,0,0,0.07)' : '#fff'}]}
-                            onPress={() => onChange({value: 'no-space', name: 'availability'})}
-                    >
+                    <View style={[s.top_btn, {backgroundColor: '#fff'}]}>
                         <Icon type={'Mark'} size={16} fill={'#F4909E'}/>
                         <Text size={'10_400'} style={s.top_btn_text}>No space available</Text>
-                    </Button>
+                    </View>
                     <View style={s.divider}/>
-                    <Button
-                        style={[s.top_btn, {backgroundColor: body?.availability === 'available' ? 'rgba(0,0,0,0.07)' : '#fff'}]}
-                        onPress={() => onChange({value: 'available', name: 'availability'})}
-                    >
+                    <View style={[s.top_btn, {backgroundColor: '#fff'}]}>
                         <Icon type={'Mark'} size={16} fill={'#67E0D4'}/>
                         <Text size={'10_400'} style={s.top_btn_text}>Available space</Text>
-                    </Button>
+                    </View>
                     <View style={s.divider}/>
-                    <Button
-                        style={[s.top_btn, {backgroundColor: body?.availability === 'half-space' ? 'rgba(0,0,0,0.07)' : '#fff'}]}
-                        onPress={() => onChange({value: 'half-space', name: 'availability'})}
-                    >
+                    <View style={[s.top_btn, {backgroundColor: '#fff'}]}>
                         <Icon type={'Mark'} size={16} fill={'#FFDF7A'}/>
                         <Text size={'10_400'} style={s.top_btn_text}>50% space available</Text>
-                    </Button>
+                    </View>
                     <View style={s.divider}/>
                 </View>
                 <MapView key={env.GOOGLE_MAP_KEY}
@@ -94,7 +92,7 @@ export const Location = (props) => {
                     {airfields.map(item => {
                         return (
                             <Marker key={item.id}
-                                    onPress={onPressMarker}
+                                    onPress={() => props.navigation.navigate('Aeroclub')}
                                     title={'Region name ' + item.id}
                                     description={`Free space count is ${item.free_spaces_count}`}
                                     coordinate={{
@@ -112,6 +110,9 @@ export const Location = (props) => {
                             setAirfields={setAirfields}
                             setRegion={setRegion}
                             onClose={() => sheetRef.current.close()}
+                            body={body}
+                            setBody={setBody}
+                            OACIData={global.data?.oaciList}
             />
         </>
     )
