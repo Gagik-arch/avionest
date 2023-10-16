@@ -31,7 +31,6 @@ export const Aeroclub = (props) => {
             oaciId:5
         })
             .then(res => {
-                console.log(res.data)
                 setSuccessResponse(res.data)
             })
             .catch(e => {

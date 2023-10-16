@@ -8,6 +8,7 @@ import {Colors, margin, padding} from "../../resources";
 import LinearGradientBG from "../../core/LinearGradientBG";
 import successImg from '../../../assets/images/success.png'
 import moment from "moment/moment";
+import {useNavigation} from "@react-navigation/native";
 
 export const SuccessPayment = ({
                                    visibility,
@@ -15,6 +16,7 @@ export const SuccessPayment = ({
                                    state = null,
                                    body,
                                }) => {
+    const navigation = useNavigation()
 
     return (
         <Modal visible={visibility}
@@ -55,7 +57,8 @@ export const SuccessPayment = ({
                                 {moment(body.startDate).format('MMM YY')}
                             </Text>
                             <Text style={[{textAlign: 'center', ...margin(8, 0)}]}>
-                                6 hours booked in  {body.space_type === 'parking' ? 'outdoor space' :  'covered ' +body.space_type}
+                                6 hours booked
+                                in {body.space_type === 'parking' ? 'outdoor space' : 'covered ' + body.space_type}
                             </Text>
                             <Text style={[{textAlign: 'center'}]}>
                                 Parking expiry {moment(body.endDate).format('HH:MM')}
@@ -65,6 +68,7 @@ export const SuccessPayment = ({
                         <Button label={`Total price: ${state?.amount} Euros`}
                                 onPress={() => {
                                     setVisibility(null)
+                                    navigation.reset({index: 0, routes: [{name: "Home"}]});
                                 }}
                                 labelSize={'24_400'}
                                 labelStyle={{color: Colors.darkBlue}}

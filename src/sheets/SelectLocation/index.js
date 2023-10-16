@@ -31,7 +31,7 @@ export const SelectLocation = forwardRef(({
     const onConfirm = () => {
         globalApi.getAirfieldById(6)
             .then(res => {
-                navigation.navigate('Aeroclub', {body, data: res.data})
+                navigation.reset({index: 0, routes: [{name: "Aeroclub",params:{body, data: res.data}}]});
                 onSubmit()
             })
             .catch(e => {
