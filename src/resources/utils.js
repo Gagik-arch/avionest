@@ -1,5 +1,11 @@
 export const validateFields = (query = [], body) => {
-    return body ? Object.keys(body)?.filter(r => query.includes(r)).length < query.length : false;
+    return body ? Object.keys(body)?.filter(r => {
+         if(query.includes(r)){
+             return query.includes(r)
+         }
+        console.log(r)
+        return false
+    }).length < query.length : false;
 };
 
 export const onChangeBody = (e, body, setBody) => {

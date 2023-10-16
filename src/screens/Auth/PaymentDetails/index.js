@@ -2,20 +2,22 @@ import React, {useState} from "react";
 import s from "./style";
 import {Button, CardInput, Icon, Input, Screen, Text} from "../../../core";
 import {View} from "react-native";
-import {onChangeBody, onRequiredFieldNotAvailable, validateFields} from "../../../resources";
-import global from '../../../styles/global'
+import {Colors, onChangeBody, onRequiredFieldNotAvailable, validateFields} from "../../../resources";
 import NavigationHeader from "../../../core/NavigationHeader";
-import {WelcomeAvionest} from "../../../modals";
 import authApi from "../../../api/authApi";
-import {StripeProvider,  useStripe,resetPaymentSheetCustomer} from '@stripe/stripe-react-native'
+import {StripeProvider} from '@stripe/stripe-react-native'
 import Toast from "react-native-toast-message";
+import Stripe from 'react-native-stripe-api';
+import {WelcomeAvionest} from "../../../modals";
+
+const apiKey = 'pk_test_51NsQHOHsAwmdsPL7SBxgBVrIG2xBJ9HJ3pgIoC7EJhIHkRLzM5wzAr8vQuvNNkUWGcK4vSZqJ35qLhu9ouvUqr8o00X3dnSjzz';
 
 export const PaymentDetails = (props) => {
-    const [body, setBody] = useState(props.route.params);
+    const [body, setBody] = useState({...props.route.params});
     const [isLoading, setIsLoading] = useState(false);
     const [modalVisibility, setModalVisibility] = useState(false)
     const [requiredMessage, setRequiredMessage] = useState({})
-    const formQuery = ["card_name", "card_number", "card_date", "card_cvv", "card_postal"]
+    const formQuery = [ 'card_postal',"card_number", "card_cvv",'card_name','card_date']
 
     const onChange = (e) => {
         setRequiredMessage(prev => {
@@ -24,24 +26,54 @@ export const PaymentDetails = (props) => {
         })
         onChangeBody(e, body, setBody);
     }
-    const disableSubmitBtn = () => validateFields(formQuery, body) || isLoading;
+    const disableSubmitBtn = () =>validateFields(formQuery, body) || isLoading;
 
-    const onSubmit = () => {
-        setIsLoading(true)
-        authApi.signup(body)
-            .then((res) => {
-                setModalVisibility(true)
-            })
-            .catch(e => {
-                Toast.show({
-                    type: "error",
-                    text1: e?.response?.data || "An error occurred.",
-                });
-                console.log(123132, e)
-            })
-            .then(() => {
-                setIsLoading(false)
-            })
+    const onSubmit = async () => {
+        if (props.route.params) {
+            setIsLoading(true)
+            authApi.signup(body)
+                .then(async () => {
+                    const client = new Stripe(apiKey);
+                    const sendingData = {
+                        number: body.card_number,
+                        exp_month: body.card_date.split('/')[0],
+                        exp_year: body.card_date.split('/')[1],
+                        cvc: body.card_cvv,
+                    }
+                    try {
+                        const cardData = await client.createToken(sendingData);
+
+                        props.navigation.reset({index: 0, routes: [{name: "Signin"}]});
+                    } catch (e) {
+                        console.log(e)
+                    }
+                    setModalVisibility(true)
+                })
+                .catch(e => {
+                    console.log(e)
+                    Toast.show({
+                        type: "error",
+                        text1: e?.response?.data || "An error occurred.",
+                    });
+                })
+                .then(() => {
+                    setIsLoading(false)
+                })
+        } else {
+            const client = new Stripe(apiKey);
+            const sendingData = {
+                number: body.card_number,
+                exp_month: body.card_date.split('/')[0],
+                exp_year: body.card_date.split('/')[1],
+                cvc: body.card_cvv,
+            }
+            try {
+                const cardData = await client.createToken(sendingData);
+                props.navigation.reset({index: 0, routes: [{name: "Home"}]});
+            } catch (e) {
+                console.log(e)
+            }
+        }
     };
 
     const onDisable = () => {
@@ -54,7 +86,7 @@ export const PaymentDetails = (props) => {
 
     return (
         <StripeProvider urlScheme="https://github.com/stripe/stripe-react-native"
-                        publishableKey={'pk_live_51NsQHOHsAwmdsPL7oIhJvxKprJnoyFu6AxWChH5lAX1ojPhWrKocORL2l8mP5An7cZNgjiQWIuDuTTrFm6QqbPGq00YZdWrAen'}
+                        publishableKey={apiKey}
         >
 
             <Screen contentContainerStyle={s.container}
@@ -95,8 +127,8 @@ export const PaymentDetails = (props) => {
                                onChange={(e) => {
                                    onChange({
                                        name: e.name,
-                                       value: e.value.length ===2 ?
-                                          e.value + '/' :
+                                       value: e.value.length === 2 ?
+                                           e.value + '/' :
                                            e.value
                                    })
                                }}

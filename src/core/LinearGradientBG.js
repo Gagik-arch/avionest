@@ -3,9 +3,9 @@ import { StyleSheet, View } from "react-native";
 import { Defs, LinearGradient, Rect, Stop, Svg } from "react-native-svg";
 
 const LinearGradientBG = ({
-    from = { offset: '50%', color: 'rgba(71, 67, 255, 1)' },
-    to = { offset: '50%', color: 'rgba(254, 43, 84, 0.75)' },
-    degree = 0,
+    from = { offset: '10%', color: 'rgba(240,246,255,0.85)' },
+    to = { offset: '90%', color: '#b5cdf5' },
+    degree = 90,
     children,
     styles
 }) => {

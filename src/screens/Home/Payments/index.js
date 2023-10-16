@@ -43,6 +43,9 @@ export const Payments = (props) => {
             <Button label={'Add Payment method'}
                     variant={'primary'}
                     style={{...margin(208, 55, 0, 55)}}
+                    onPress={()=>{
+                        props.navigation.navigate('PaymentDetails')
+                    }}
             />
 
         </Screen>

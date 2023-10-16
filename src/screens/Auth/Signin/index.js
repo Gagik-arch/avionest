@@ -61,7 +61,7 @@ export const Signin = (props) => {
                    blockStyles={margin(0, 0, 16, 0)}
             />
             <Input placeholder={'Password'}
-                // validationKey={'password'}
+                validationKey={'password'}
                    onFinish={onChange}
                    name={'password'}
                    value={body?.password}

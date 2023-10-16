@@ -5,8 +5,7 @@ import PagerView from "react-native-pager-view";
 
 export const Slider = ({data}) => {
     const [selected, setSelected] = useState(0)
-const ref=useRef()
-
+    const ref = useRef()
     return (
         <View style={s.pager_view_container}>
             <PagerView style={s.pager_view}
@@ -26,18 +25,18 @@ const ref=useRef()
                     data.map((_, index) => {
                         return (
                             <TouchableOpacity key={index}
-                                              onPress={()=> {
+                                              onPress={() => {
                                                   ref.current?.setPage(index)
                                                   setSelected(index)
                                               }}
                                               style={[
-                                s.marker,
-                                {
-                                    backgroundColor: selected === index ?
-                                        'rgba(3, 65, 104, 0.80)' :
-                                        'rgba(255, 255, 255, 0.80)'
-                                }
-                            ]}/>
+                                                  s.marker,
+                                                  {
+                                                      backgroundColor: selected === index ?
+                                                          'rgba(3, 65, 104, 0.80)' :
+                                                          'rgba(255, 255, 255, 0.80)'
+                                                  }
+                                              ]}/>
                         )
                     })
                 }

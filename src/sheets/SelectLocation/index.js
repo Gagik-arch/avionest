@@ -3,7 +3,7 @@ import s from "./style";
 import {Icon, Screen, Text, Button, Checkbox, Input, SearchInput} from "../../core";
 import {View, Animated, Easing} from "react-native";
 import global from "../../styles/global";
-import {Colors, margin, onChangeBody, padding, themes} from "../../resources";
+import {Colors, margin, onChangeBody, padding, themes, validateFields} from "../../resources";
 import {Group} from "../../components";
 import BottomSheet, {BottomSheetScrollView} from "@gorhom/bottom-sheet";
 import DatePicker from "../../core/DatePicker";
@@ -14,14 +14,33 @@ import {getAuthSources} from "../../store/asyncThunks/global";
 import {useDispatch, useSelector} from "react-redux";
 
 export const SelectLocation = forwardRef(({
-                                              setAirfields,
                                               onClose,
                                               setRegion,
                                               OACIData = [],
                                               setBody,
-    body,
+                                              body,
+                                              onSubmit,
                                           }, ref) => {
     const snapPoints = useMemo(() => ["50%"], []);
+    const formQuery = ["oaciId", "space_type",'endDate','startDate']
+    const navigation = useNavigation()
+    const [isLoading, setIsLoading] = useState(false)
+
+    const disableSubmitBtn = () => validateFields(formQuery, body) ;
+
+    const onConfirm = () => {
+        globalApi.getAirfieldById(6)
+            .then(res => {
+                navigation.navigate('Aeroclub', {body, data: res.data})
+                onSubmit()
+            })
+            .catch(e => {
+                console.log(e)
+            })
+            .then(() => {
+                setIsLoading(false)
+            })
+    }
 
     const onChange = (e) => onChangeBody(e, body, setBody)
 
@@ -123,33 +142,12 @@ export const SelectLocation = forwardRef(({
                     <Button variant={'primary'}
                             label={'Confirm'}
                             style={{...margin(18, 0, 0, 0)}}
+                            disabled={disableSubmitBtn()}
                             onPress={() => {
-                                globalApi.getAirfieldByRange(
-                                    moment(body.startDate).format('YYYY-MM-DD HH:MM'),
-                                    moment(body.endDate).format('YYYY-MM-DD HH:MM'),
-                                    body?.spaceType,
-                                    body?.oaciId
-                                )
-                                    .then(res => {
-                                        console.log(res.data)
-                                        setAirfields(res.data.airfields)
-                                        if (res.data.airfields.length > 0) {
-                                            setRegion({
-                                                latitude: +res.data.airfields[0].latitude,
-                                                longitude: +res.data.airfields[0].longitude,
-                                                latitudeDelta: 0.0922,
-                                                longitudeDelta: 0.0421,
-                                            })
-                                        }
-                                        onClose()
-                                    })
-                                    .catch(e => {
-                                        console.log(e)
-                                    })
-                                    .then(() => {
-
-                                    })
-                            }}/>
+                                onSubmit?.()
+                                onConfirm()
+                            }}
+                    />
                 </BottomSheetScrollView>
             </View>
         </BottomSheet>
