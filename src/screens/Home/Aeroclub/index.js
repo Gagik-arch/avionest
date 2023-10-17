@@ -24,11 +24,11 @@ export const Aeroclub = (props) => {
     ]
 
     const onConfirm = () => {
-        globalApi.bookAirfield( {
+        globalApi.bookAirfield({
             paymentMethod: selected,
-            dateEnd:moment(state.body.endDate).format('YYYY-MM-DD hh:mm'),
-            dateStart:moment(state.body.startDate).format('YYYY-MM-DD hh:mm'),
-            oaciId:5
+            dateEnd: moment(state.body.endDate).format('YYYY-MM-DD hh:mm'),
+            dateStart: moment(state.body.startDate).format('YYYY-MM-DD hh:mm'),
+            oaciId: 5
         })
             .then(res => {
                 setSuccessResponse(res.data)
@@ -53,7 +53,7 @@ export const Aeroclub = (props) => {
                                           }
                                           backHandler={<>
                                               <Button onPress={() => {
-                                                  props.navigation.goBack({a:1});
+                                                  props.navigation.goBack({a: 1});
                                               }} style={{...margin(0, 10, 0, 0)}}>
                                                   <Icon type={'ArrowLeft'} fill={'white'}/>
                                               </Button>
@@ -65,11 +65,10 @@ export const Aeroclub = (props) => {
                                           </>
                                           }
                                           {...props}/>}>
-            {/*{state?.data?.airfield?.images ? <Slider data={*/}
-            {/*    state?.data?.airfield?.images.map(i => ({uri: 'http://192.168.77.129:9026' + i.file_path}))*/}
-            {/*}*/}
-            {/*/> : null}*/}
-            <Slider data={images}
+
+            <Slider data={state?.data?.airfield?.length ?
+                state?.data?.airfield?.images.map(i => ({uri: 'http://192.168.77.129:9026' + i.file_path})) :
+                images}
             />
             <View style={{rowGap: 6}}>
                 {plans.map((item, index) => {
@@ -128,6 +127,7 @@ export const Aeroclub = (props) => {
                             setVisibility={setSuccessResponse}
                             state={successResponse}
                             body={state.body}
+                            paymentMethod={selected}
             />
         </Screen>
     )

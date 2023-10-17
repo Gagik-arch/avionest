@@ -21,6 +21,10 @@ export const fonts = StyleSheet.create({
     fontSize:20,
     fontWeight:400
   },
+  '18_600':{
+    fontSize:18,
+    fontWeight:600
+  },
   '18_400':{
     fontSize:18,
     fontWeight:400

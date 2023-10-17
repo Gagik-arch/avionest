@@ -15,9 +15,13 @@ export const SuccessPayment = ({
                                    setVisibility,
                                    state = null,
                                    body,
+                                   paymentMethod,
                                }) => {
     const navigation = useNavigation()
-
+    const startD = moment(body.startDate);
+    const endD = moment(body.endDate);
+    const duration = moment.duration(endD.diff(startD));
+    
     return (
         <Modal visible={visibility}
                animationType="fade"
@@ -36,7 +40,7 @@ export const SuccessPayment = ({
                             backgroundColor: "#C5D8F8",
                             ...padding(21)
                         }}>
-                            <Text size={'16_600'}
+                            <Text size={'18_600'}
                                   style={[{
                                       textAlign: 'center',
                                       color: Colors.darkBlue,
@@ -45,27 +49,53 @@ export const SuccessPayment = ({
                             >
                                 Summary of your booking
                             </Text>
-                            <Text style={[{textAlign: 'center'}]}>
-                                {moment(body.startDate).format('HH:MM')}
+                            <Text size={'15_400'}
+                                  style={[{textAlign: 'center'}]}
+                            >
+                                {startD.format('HH:MM')}
                                 {' '}
                                 on
                                 {' '}
-                                {moment(body.startDate).format('dddd')}
+                                {startD.format('dddd')}
                                 {' '}
-                                {moment(body.startDate).format('DD')}th
+                                {startD.format('DD')}th
                                 {' '}
-                                {moment(body.startDate).format('MMM YY')}
+                                {startD.format('MMM YY')}
                             </Text>
-                            <Text style={[{textAlign: 'center', ...margin(8, 0)}]}>
-                                6 hours booked
+                            <Text size={'15_400'}
+                                  style={[{textAlign: 'center', ...margin(12, 0)}]}
+                            >
+                                {(duration[paymentMethod === 0 ? 'asHours' : 'asDays']())}
+                                {paymentMethod === 0 ? ' hours ' : ' days '}
+                                booked
                                 in {body.space_type === 'parking' ? 'outdoor space' : 'covered ' + body.space_type}
                             </Text>
-                            <Text style={[{textAlign: 'center'}]}>
-                                Parking expiry {moment(body.endDate).format('HH:MM')}
+                            <Text size={'15_400'}
+                                  style={[{textAlign: 'center', ...margin()}]}
+                            >
+                                Parking expiry
+                            </Text>
+                            <Text size={'15_400'}
+                                  style={[{textAlign: 'center', ...margin(10, 0)}]}
+                            >
+                                {endD.format('HH:MM')}
+                                {' '}
+                                on
+                                {' '}
+                                {endD.format('dddd')}
+                                {' '}
+                                {endD.format('DD')}th
+                                {' '}
+                                {endD.format('MMM YY')}
+                            </Text>
+                            <Text size={'14_500'}
+                                  style={{textAlign: 'center', color: 'rgba(220,0,0,0.9)'}}
+                            >
+                                Amount Total price: {state?.amount} Euros
                             </Text>
                         </View>
 
-                        <Button label={`Total price: ${state?.amount} Euros`}
+                        <Button label={`Go to home`}
                                 onPress={() => {
                                     setVisibility(null)
                                     navigation.reset({index: 0, routes: [{name: "Home"}]});

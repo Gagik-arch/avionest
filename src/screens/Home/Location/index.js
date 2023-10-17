@@ -31,7 +31,7 @@ export const Location = (props) => {
 
     useEffect(() => {
         globalApi.getAirfieldByRange(
-             body.startDate ? moment(body.startDate).format('YYYY-MM-DD HH:MM') : undefined,
+            body.startDate ? moment(body.startDate).format('YYYY-MM-DD HH:MM') : undefined,
             body.endDate ? moment(body.endDate).format('YYYY-MM-DD HH:MM') : undefined,
             body?.spaceType,
             body?.oaciId,
@@ -105,10 +105,6 @@ export const Location = (props) => {
                       provider={PROVIDER_GOOGLE}
                       style={s.map}
                       region={region}
-                      onPress={()=>{
-
-                          console.log(airfields)
-                      }}
                       mapType={'standard'}
                       showsCompass={true}
             >
