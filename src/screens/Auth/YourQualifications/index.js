@@ -52,7 +52,6 @@ export const YourQualifications = (props) => {
         })
         setRequiredMessage(result)
     }
-    console.log(body)
     return (
         <Screen contentContainerStyle={s.container}
                 header={

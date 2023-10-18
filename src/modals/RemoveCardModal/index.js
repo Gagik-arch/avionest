@@ -7,7 +7,7 @@ export const PaymentModal = ({
                                  visibility,
                                  setVisibility,
     onCancel,
-    onRemove
+                                 onDelete
                              }) => {
 
     return (
@@ -41,7 +41,7 @@ export const PaymentModal = ({
                                 style={s.btn}
                                 labelStyle={s.btn_text}
                                 labelSize={'20_400'}
-                                onPress={onRemove}
+                                onPress={onDelete}
                         />
                     </View>
                 </View>

@@ -60,13 +60,19 @@ export const YourAircraft = (props) => {
             <Text style={{...margin(12, 0, 80, 0)}}>
                 Select from the list below the type of aircraft you are currently using
             </Text>
-            <SelectableInput onChange={onChange} name={'aircraft_id'}/>
+            <SelectableInput          onChange={onChange} name={'aircraft_id'}/>
             <View style={{flexDirection: "row"}}>
-                <ColorPicker onChange={onChange} name={'first_color_id'} placeholder={'First color'}
-                             containerStyle={{flex: 1}}/>
+                <ColorPicker onChange={onChange}
+                             name={'first_color_id'}
+                             placeholder={'First color'}
+                             containerStyle={{flex: 1}}
+                />
                 <View style={{width: 20}}/>
-                <ColorPicker onChange={onChange} name={'second_color_id'} placeholder={'Second color'}
-                             containerStyle={{flex: 1}}/>
+                <ColorPicker onChange={onChange}
+                             name={'second_color_id'}
+                             placeholder={'Second color'}
+                             containerStyle={{flex: 1}}
+                />
             </View>
             <Input placeholder={'Select your aircraft'}
                    name={'registration_number'}
@@ -94,7 +100,9 @@ export const YourAircraft = (props) => {
                     onDisabled={onDisable}
                     style={{...margin(10, 0, 0, 0)}}
                     onPress={() => {
-                        props.navigation.navigate('YourQualifications', body)
+                        const cloneBody = {...body}
+                        cloneBody.aircraft_id = body.aircraft_id.id
+                        props.navigation.navigate('YourQualifications', {...cloneBody})
                     }}/>
         </Screen>
     );

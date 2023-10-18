@@ -17,7 +17,7 @@ export const PaymentDetails = (props) => {
     const [isLoading, setIsLoading] = useState(false);
     const [modalVisibility, setModalVisibility] = useState(false)
     const [requiredMessage, setRequiredMessage] = useState({})
-    const formQuery = [ 'card_postal',"card_number", "card_cvv",'card_name','card_date']
+    const formQuery = ['card_postal', "card_number", "card_cvv", 'card_name', 'card_date']
 
     const onChange = (e) => {
         setRequiredMessage(prev => {
@@ -26,31 +26,43 @@ export const PaymentDetails = (props) => {
         })
         onChangeBody(e, body, setBody);
     }
-    const disableSubmitBtn = () =>validateFields(formQuery, body) || isLoading;
+    const disableSubmitBtn = () => validateFields(formQuery, body) || isLoading;
 
     const onSubmit = async () => {
+        const cloneBody = {...body}
+        const sendingData = {
+            number: cloneBody.card_number,
+            exp_month: cloneBody.card_date.split('/')[0],
+            exp_year: cloneBody.card_date.split('/')[1],
+            cvc: cloneBody.card_cvv,
+            name: cloneBody.card_name,
+            address_zip: cloneBody.card_postal
+        }
+        delete cloneBody.card_postal
+        delete cloneBody.card_cvv
+        delete cloneBody.card_name
+        delete cloneBody.card_date
+
+        const client = new Stripe(apiKey);
+
+        try {
+            const card = await client.createToken(sendingData);
+
+            cloneBody.stripe_card_token = card.id
+            cloneBody.stripe_card_id = card.card.id
+
+        } catch (e) {
+            console.log(e)
+        }
+
         if (props.route.params) {
             setIsLoading(true)
-            authApi.signup(body)
-                .then(async () => {
-                    const client = new Stripe(apiKey);
-                    const sendingData = {
-                        number: body.card_number,
-                        exp_month: body.card_date.split('/')[0],
-                        exp_year: body.card_date.split('/')[1],
-                        cvc: body.card_cvv,
-                    }
-                    try {
-                        const cardData = await client.createToken(sendingData);
-
-                        props.navigation.reset({index: 0, routes: [{name: "Signin"}]});
-                    } catch (e) {
-                        console.log(e)
-                    }
+            authApi.signup(cloneBody)
+                .then(async (res) => {
+                    props.navigation.reset({index: 0, routes: [{name: "Signin"}]});
                     setModalVisibility(true)
                 })
                 .catch(e => {
-                    console.log(e)
                     Toast.show({
                         type: "error",
                         text1: e?.response?.data || "An error occurred.",
@@ -60,19 +72,7 @@ export const PaymentDetails = (props) => {
                     setIsLoading(false)
                 })
         } else {
-            const client = new Stripe(apiKey);
-            const sendingData = {
-                number: body.card_number,
-                exp_month: body.card_date.split('/')[0],
-                exp_year: body.card_date.split('/')[1],
-                cvc: body.card_cvv,
-            }
-            try {
-                const cardData = await client.createToken(sendingData);
-                props.navigation.reset({index: 0, routes: [{name: "Home"}]});
-            } catch (e) {
-                console.log(e)
-            }
+            props.navigation.reset({index: 0, routes: [{name: "Home"}]});
         }
     };
 

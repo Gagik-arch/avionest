@@ -12,7 +12,9 @@ const s = StyleSheet.create({
     container_list: {
         justifyContent: 'space-between',
         ...padding(15, 17, 15, 60),
-        backgroundColor:"#fff"
+        backgroundColor:"#fff",
+        flexDirection:'row',
+        alignItems:'center',
     },
     block_list: {
         flexDirection: 'row',

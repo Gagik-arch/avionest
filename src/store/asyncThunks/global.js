@@ -23,3 +23,22 @@ export const getAuthSources = createAsyncThunk(
     },
 );
 
+export const getCards = createAsyncThunk(
+    "countries",
+    async (_, {dispatch}) => {
+        dispatch(globalActions.setLoading(true));
+        globalApi.getAuthSources()
+            .then(res => {
+                dispatch(globalActions.setAuthSources(res.data));
+            })
+            .catch(e => {
+                Toast.show({
+                    type: "error",
+                    text1: e?.response?.data?.message || "getAllProjects An error occurred.",
+                });
+            })
+            .then(() => {
+                dispatch(globalActions.setLoading(false));
+            })
+    },
+);

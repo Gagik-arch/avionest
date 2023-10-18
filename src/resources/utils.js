@@ -3,7 +3,6 @@ export const validateFields = (query = [], body) => {
          if(query.includes(r)){
              return query.includes(r)
          }
-        console.log(r)
         return false
     }).length < query.length : false;
 };

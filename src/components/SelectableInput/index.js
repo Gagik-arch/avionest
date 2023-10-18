@@ -30,7 +30,7 @@ export const SelectableInput = ({
                                    console.log(e)
                                })
                                .then(e => {
-                                   setIsLoading(false)
+                                   // setIsLoading(false)
                                })
                        }
                    }}
