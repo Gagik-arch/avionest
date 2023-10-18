@@ -9,6 +9,7 @@ import {StripeProvider} from '@stripe/stripe-react-native'
 import Toast from "react-native-toast-message";
 import Stripe from 'react-native-stripe-api';
 import {WelcomeAvionest} from "../../../modals";
+import {getCards} from '../../../store/asyncThunks/cards'
 
 const apiKey = 'pk_test_51NsQHOHsAwmdsPL7SBxgBVrIG2xBJ9HJ3pgIoC7EJhIHkRLzM5wzAr8vQuvNNkUWGcK4vSZqJ35qLhu9ouvUqr8o00X3dnSjzz';
 
@@ -58,7 +59,7 @@ export const PaymentDetails = (props) => {
         if (props.route.params) {
             setIsLoading(true)
             authApi.signup(cloneBody)
-                .then(async (res) => {
+                .then(async () => {
                     props.navigation.reset({index: 0, routes: [{name: "Signin"}]});
                     setModalVisibility(true)
                 })

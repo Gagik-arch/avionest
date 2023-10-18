@@ -9,46 +9,22 @@ import visa from '../../../../assets/images/visa.png'
 import {PaymentModal} from "../../../modals";
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import NavigationHeader from "../../../core/NavigationHeader";
-import usersApi from "../../../api/usersApi";
-import Toast from "react-native-toast-message";
+import {useDispatch, useSelector} from "react-redux";
+import {deleteCard, getCards} from "../../../store/asyncThunks/cards";
 
 
 export const Payments = (props) => {
-    const [cards, setCards] = useState([])
     const [isLoading, setIsLoading] = useState(false)
+    const dispatch = useDispatch()
+    const cards = useSelector(state=>state.cards)
     const images = {mastercard, visa}
 
     useEffect(() => {
-        setIsLoading(true)
-        usersApi.getCards()
-            .then(res => {
-                setCards(res.data.cards.data)
-            })
-            .catch(e => {
-                Toast.show({
-                    type: 'error',
-                    text1: `${e} <usersApi.getCards>`,
-                });
-            })
-            .then(() => {
-                setIsLoading(false)
-            })
+        dispatch( getCards())
     }, [])
-    console.log(cards)
+
     const onDelete = (cardId) => {
-        usersApi.deleteCard({cardId})
-            .then(res => {
-                setCards(res.data.cards.data)
-            })
-            .catch(e => {
-                Toast.show({
-                    type: 'error',
-                    text1: `${e} <usersApi.getCards>`,
-                });
-            })
-            .then(() => {
-                setIsLoading(false)
-            })
+        dispatch( deleteCard({cardId}))
     }
 
     return (
@@ -65,10 +41,10 @@ export const Payments = (props) => {
             <Text style={[global.app_title, {...margin(100, 52, 40, 52)}]}>
                 Payment Method
             </Text>
-            {isLoading ?
+            {cards.isLoading ?
                 <ActivityIndicator/> :
-                cards.length ?
-                    cards.map(item => {
+                cards.data.length ?
+                    cards.data.map(item => {
                         return (
                             <CardList key={item.id}
                                       name={item.brand}
@@ -78,7 +54,7 @@ export const Payments = (props) => {
                             />
                         )
                     }) :
-                    <Text>Cards not available</Text>
+                    <Text size={'16_600'} style={{...margin(0,0,0,50)}}>Cards not available</Text>
             }
             <Button label={'Add Payment method'}
                     variant={'primary'}
