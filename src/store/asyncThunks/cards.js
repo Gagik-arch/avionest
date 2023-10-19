@@ -24,8 +24,8 @@ export const getCards = createAsyncThunk(
 );
 export const deleteCard = createAsyncThunk(
     "cards/delete",
-    async ({cardId}, {dispatch}) => {
-        dispatch(cardsActions.setLoading(true));
+    async ({cardId,setIsLoading}, {dispatch}) => {
+        setIsLoading(true);
         usersApi.deleteCard({cardId})
             .then(() => {
                 dispatch(cardsActions.removeCard(cardId));
@@ -38,7 +38,33 @@ export const deleteCard = createAsyncThunk(
                 });
             })
             .then(() => {
+                setIsLoading(false);
+            })
+    },
+);
+export const addCard = createAsyncThunk(
+    "cards/add",
+    async ({card, navigation}, {dispatch}) => {
+
+        dispatch(cardsActions.setLoading(true));
+        usersApi.addCard({
+            stripe_card_token: card.id,
+            stripe_card_id: card.card.id,
+        })
+            .then((res) => {
+                console.log(3,res)
+                dispatch(cardsActions.addCard(card));
+            })
+            .catch(e => {
+                console.log(e)
+                Toast.show({
+                    type: 'error',
+                    text1: `${e} <usersApi.addCard>`,
+                });
+            })
+            .then(() => {
                 dispatch(cardsActions.setLoading(false));
+                navigation.reset({index: 0, routes: [{name: "Payments"}]});
             })
     },
 );

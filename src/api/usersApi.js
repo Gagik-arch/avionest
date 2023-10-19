@@ -11,8 +11,9 @@ class UsersApi extends Api {
   deleteCard(body) {
     return this.post({url: '/delete-card',body});
   }
-
-
+  addCard(body) {
+    return this.post({url: '/insert-card',body});
+  }
 }
 
 const usersApi = new UsersApi();

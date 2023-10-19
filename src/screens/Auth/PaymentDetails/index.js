@@ -9,7 +9,8 @@ import {StripeProvider} from '@stripe/stripe-react-native'
 import Toast from "react-native-toast-message";
 import Stripe from 'react-native-stripe-api';
 import {WelcomeAvionest} from "../../../modals";
-import {getCards} from '../../../store/asyncThunks/cards'
+import {addCard, getCards} from '../../../store/asyncThunks/cards'
+import {useDispatch, useSelector} from "react-redux";
 
 const apiKey = 'pk_test_51NsQHOHsAwmdsPL7SBxgBVrIG2xBJ9HJ3pgIoC7EJhIHkRLzM5wzAr8vQuvNNkUWGcK4vSZqJ35qLhu9ouvUqr8o00X3dnSjzz';
 
@@ -18,6 +19,9 @@ export const PaymentDetails = (props) => {
     const [isLoading, setIsLoading] = useState(false);
     const [modalVisibility, setModalVisibility] = useState(false)
     const [requiredMessage, setRequiredMessage] = useState({})
+    const dispatch = useDispatch()
+    const cards = useSelector(state=>state.cards)
+
     const formQuery = ['card_postal', "card_number", "card_cvv", 'card_name', 'card_date']
 
     const onChange = (e) => {
@@ -27,7 +31,7 @@ export const PaymentDetails = (props) => {
         })
         onChangeBody(e, body, setBody);
     }
-    const disableSubmitBtn = () => validateFields(formQuery, body) || isLoading;
+    const disableSubmitBtn = () => validateFields(formQuery, body) || isLoading || cards.isLoading;
 
     const onSubmit = async () => {
         const cloneBody = {...body}
@@ -45,12 +49,12 @@ export const PaymentDetails = (props) => {
         delete cloneBody.card_date
 
         const client = new Stripe(apiKey);
-
+        let cardDetails;
         try {
-            const card = await client.createToken(sendingData);
+            cardDetails = await client.createToken(sendingData);
 
-            cloneBody.stripe_card_token = card.id
-            cloneBody.stripe_card_id = card.card.id
+            cloneBody.stripe_card_token = cardDetails.id
+            cloneBody.stripe_card_id = cardDetails.card.id
 
         } catch (e) {
             console.log(e)
@@ -73,7 +77,8 @@ export const PaymentDetails = (props) => {
                     setIsLoading(false)
                 })
         } else {
-            props.navigation.reset({index: 0, routes: [{name: "Home"}]});
+            console.log(cardDetails,cardDetails)
+            dispatch(addCard({navigation:props.navigation,card:cardDetails}))
         }
     };
 
@@ -163,7 +168,7 @@ export const PaymentDetails = (props) => {
                         disabled={disableSubmitBtn()}
                         onDisabled={onDisable}
                         style={{marginTop: 40}}
-                        isLoading={isLoading}
+                        isLoading={(isLoading) || (cards.isLoading)}
                 />
                 <WelcomeAvionest visibility={modalVisibility}
                                  setVisibility={setModalVisibility}

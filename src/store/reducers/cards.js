@@ -1,28 +1,28 @@
-import { createSlice } from "@reduxjs/toolkit";
+import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
-  isLoading: false,
-  data: [],
+    isLoading: false,
+    data: [],
 };
 
 export const cardsSlice = createSlice({
-  name: "cards",
-  initialState: initialState,
-  reducers: {
-    setData(state, action) {
-      state.data = action.payload;
+    name: "cards",
+    initialState: initialState,
+    reducers: {
+        setData(state, action) {
+            state.data = action.payload;
+        },
+        setLoading(state, action) {
+            state.isLoading = action.payload;
+        },
+        addCard(state, action) {
+            state.data.push(action.payload)
+        },
+        removeCard(state, action) {
+            const cloneData = [...state.data]
+            state.data = cloneData.filter(e => e.id !== action.payload)
+        }
     },
-    setLoading(state, action) {
-      state.isLoading = action.payload;
-    },
-    addCard(state, action) {
-
-    },
-    removeCard(state,action){
-      const cloneData = [...state.data]
-     state.data  = cloneData.filter(e=>e.id !== action.payload)
-    }
-  },
 });
 
 export const cardsActions = cardsSlice.actions;
