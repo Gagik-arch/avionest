@@ -79,7 +79,7 @@ export const SelectLocation = forwardRef(({
                                             ...padding(14, 4)
                                         }}
                                         onChange={(e) => {
-                                            setBody(prev => ({...prev, [e.name]: e.value}))
+                                            setBody(prev => ({...prev, [e.name]: e.value.toISOString()}))
                                         }}
                                         date={body.startDate}
                                         textStyle={{color: Colors.darkBlue}}
@@ -96,7 +96,7 @@ export const SelectLocation = forwardRef(({
                                             ...padding(14, 4)
                                         }}
                                         onChange={(e) => {
-                                            setBody(prev => ({...prev, [e.name]: e.value}))
+                                            setBody(prev => ({...prev, [e.name]: e.value.toISOString()}))
                                         }}
                                         date={body.startDate}
                                         textStyle={{color: Colors.darkBlue}}

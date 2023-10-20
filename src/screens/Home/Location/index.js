@@ -109,7 +109,8 @@ export const Location = (props) => {
                       showsCompass={true}
             >
                 {airfields?.map(item => {
-                    return (<Marker key={item.id}
+                    return (
+                        <Marker key={item.id}
                                     onPress={() => {
                                         sheetRef.current.snapToIndex(0)
                                     }}
@@ -121,7 +122,8 @@ export const Location = (props) => {
                         <Callout>
                             <CustomCallout item={item}/>
                         </Callout>
-                    </Marker>)
+                    </Marker>
+                    )
                 })}
             </MapView>}
         </Screen>

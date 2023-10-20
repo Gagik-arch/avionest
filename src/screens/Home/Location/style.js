@@ -41,6 +41,8 @@ const s = StyleSheet.create({
     },
     callout_footer_btn: {
         flex: 1,
+        width:50,
+        height:50,
         ...padding(8)
     },
     callout_footer_btn_text: {

@@ -21,7 +21,7 @@ const DatePicker = ({
                         requiredMessage = null
                     }) => {
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-    const [value, setValue] = useState(date)
+    const [value, setValue] = useState(typeof date === 'string' ? new Date(date) : date)
 
     const showDatePicker = () => setDatePickerVisibility(true);
 
@@ -61,7 +61,7 @@ const DatePicker = ({
             </Text>}
             {isDatePickerVisible ? (
                 <DateTimePicker mode={mode}
-                                value={date || new Date()}
+                                value={value || new Date()}
                                 display={Platform.OS === "ios" ? "spinner" : "default"}
                                 onChange={({nativeEvent, type}) => {
                                     hideDatePicker();

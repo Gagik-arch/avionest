@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react'
+import React, {useEffect, useMemo, useState} from 'react'
 import s from './style'
 import {Screen, Text, Button, NavigationHeader, Icon} from '../../../core'
 import {View, Image} from "react-native";
@@ -11,11 +11,24 @@ import {Slider} from '../../../components'
 import {SuccessPayment} from "../../../modals";
 import globalApi from "../../../api/globalApi";
 import moment from "moment";
+import CompassHeading from 'react-native-compass-heading';
 
 export const Aeroclub = (props) => {
     const state = useMemo(() => props.route.params, [])
     const [selected, setSelected] = useState(0)
     const [successResponse, setSuccessResponse] = useState(null)
+
+    useEffect(() => {
+        const degree_update_rate = 3;
+
+        CompassHeading.start(degree_update_rate, ({heading, accuracy}) => {
+            console.log('CompassHeading: ', heading, accuracy);
+        });
+
+        return () => {
+            CompassHeading.stop();
+        };
+    }, []);
 
     const images = [a, b, c, d]
     const plans = [
