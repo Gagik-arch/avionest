@@ -75,7 +75,6 @@ const CardList = ({
     const dispatch = useDispatch()
 
     const onDelete = () => {
-        console.log(cardId)
         dispatch(deleteCard({cardId, setIsLoading}))
     }
     const rightActions = (progress, dragX) => {

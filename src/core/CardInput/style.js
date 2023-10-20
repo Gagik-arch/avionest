@@ -9,15 +9,21 @@ const s = StyleSheet.create({
         position: "absolute",
         width: '100%',
         height: '100%',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        flexDirection:'row'
     },
-    input: {
-        color: 'transparent',
-        fontSize: 0,
-    },
+
     error: {
         color: Colors.red,
         ...margin(5, 0),
+    },
+    cursor: {
+        height: 2,
+        backgroundColor: '#69C569',
+        position: 'absolute',
+        bottom: 0,
+        right: 0,
+        left: 0,
     },
 });
 

@@ -16,42 +16,17 @@ const CodeInput = ({
                        cellStyles,
                        keyboardType = 'numeric',
                        name,
+                       onChange,
                    }) => {
     const [value, setValue] = useState('');
     const [focused, setFocused] = useState(true);
-    const opacity = useState(new Animated.Value(0))[0];
-
-    useEffect(() => {
-        if (focused) {
-            Animated.loop(
-                Animated.sequence([
-                    Animated.timing(opacity, {
-                        toValue: 1,
-                        duration: 700,
-                        useNativeDriver: true,
-                        easing: Easing.ease,
-                    }),
-                ]),
-            ).start();
-        } else {
-            Animated.loop(
-                Animated.sequence([
-                    Animated.timing(opacity, {
-                        toValue: 1,
-                        duration: 700,
-                        useNativeDriver: true,
-                        easing: Easing.ease,
-                    }),
-                ]),
-            ).stop();
-        }
-    });
 
     const onTextChange = text => {
         if (keyboardType === 'numeric') {
             text = text.toLowerCase().replace(/[^0-9]/g, '');
         }
         setValue(text);
+        onChange?.({name, text});
         if (text.length === columns && onFinish) {
             onFinish({name, text});
         }

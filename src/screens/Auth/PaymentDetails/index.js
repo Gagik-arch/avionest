@@ -77,7 +77,6 @@ export const PaymentDetails = (props) => {
                     setIsLoading(false)
                 })
         } else {
-            console.log(cardDetails,cardDetails)
             dispatch(addCard({navigation:props.navigation,card:cardDetails}))
         }
     };
