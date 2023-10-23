@@ -16,7 +16,8 @@ const SearchInput = ({
                          keyboardType,
                          containerStyles = {},
                          renderButtons,
-    onFinish
+    placeholder = 'Select your destination',
+    onFinish,
                      }) => {
     const [_value, _setValue] = useState(value)
     const [visibility, setVisibility] = useState(false)
@@ -25,7 +26,7 @@ const SearchInput = ({
         <View>
             <Input variant={'underlined'}
                    containerStyles={[containerStyles]}
-                   placeholder={'Select your aircraft'}
+                   placeholder={placeholder }
                    value={_value}
                    renderButtons={renderButtons}
                    keyboardType={keyboardType}

@@ -20,8 +20,8 @@ export const SuccessPayment = ({
     const navigation = useNavigation()
     const startD = moment(body.startDate);
     const endD = moment(body.endDate);
-    const duration = moment.duration(endD.diff(startD));
-    
+    const duration = moment.duration( endD.diff(startD)   );
+
     return (
         <Modal visible={visibility}
                animationType="fade"

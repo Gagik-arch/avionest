@@ -35,7 +35,7 @@ export const ForgotPassword = (props) => {
     const onSubmit = ()=>{
         setIsLoading(true)
         authApi.forgotPassword(body)
-            .then(res=>{
+            .then(()=>{
 
             })
             .catch(e=>{
