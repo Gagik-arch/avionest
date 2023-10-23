@@ -22,16 +22,16 @@ export const SelectLocation = forwardRef(({
                                               onSubmit,
                                           }, ref) => {
     const snapPoints = useMemo(() => ["50%"], []);
-    const formQuery = ["oaciId", "space_type",'endDate','startDate']
+    const formQuery = ["oaciId", "space_type", 'endDate', 'startDate']
     const navigation = useNavigation()
     const [isLoading, setIsLoading] = useState(false)
 
-    const disableSubmitBtn = () => validateFields(formQuery, body) ;
+    const disableSubmitBtn = () => validateFields(formQuery, body);
 
     const onConfirm = () => {
         globalApi.getAirfieldById(6)
             .then(res => {
-                navigation.reset({index: 0, routes: [{name: "Aeroclub",params:{body, data: res.data}}]});
+                navigation.reset({index: 0, routes: [{name: "Aeroclub", params: {body, data: res.data}}]});
                 onSubmit()
             })
             .catch(e => {
@@ -69,75 +69,37 @@ export const SelectLocation = forwardRef(({
                                                         onChange({value: e.value.id, name: e.name})
                                                     }}
                     /> : null}
-                    <View style={{flexDirection: "row", columnGap: 16}}>
-                        <View style={{flex: 1, ...margin(20, 0, 0, 0)}}>
-                            <Text size={'14_400'}>Check In Date</Text>
-                            <DatePicker name={'startDate'}
-                                        placeholder={'From Date'}
-                                        style={{
-                                            borderColor: '#EBEBEB',
-                                            ...padding(14, 4)
-                                        }}
-                                        onChange={(e) => {
-                                            setBody(prev => ({...prev, [e.name]: e.value.toISOString()}))
-                                        }}
-                                        date={body.startDate}
-                                        textStyle={{color: Colors.darkBlue}}
-                                        icon={<Icon type={'Calendar2'} size={20}/>}
-                            />
-                        </View>
-                        <View style={{flex: 1, ...margin(20, 0, 0, 0)}}>
-                            <Text size={'14_400'}>Check In Time</Text>
-                            <DatePicker name={'startDate'}
-                                        placeholder={'From Time'}
-                                        mode={'time'}
-                                        style={{
-                                            borderColor: '#EBEBEB',
-                                            ...padding(14, 4)
-                                        }}
-                                        onChange={(e) => {
-                                            setBody(prev => ({...prev, [e.name]: e.value.toISOString()}))
-                                        }}
-                                        date={body.startDate}
-                                        textStyle={{color: Colors.darkBlue}}
-                                        icon={<Icon type={'Calendar2'} size={20}/>}
-                            />
-                        </View>
+                    <View style={{flex: 1, ...margin(20, 0, 0, 0)}}>
+                        <Text size={'14_400'}>Check In Date</Text>
+                        <DatePicker name={'startDate'}
+                                    placeholder={'From Date'}
+                                    style={{
+                                        borderColor: '#EBEBEB',
+                                        ...padding(14, 4)
+                                    }}
+                                    onChange={(e) => {
+                                        setBody(prev => ({...prev, [e.name]: e.value.toISOString()}))
+                                    }}
+                                    date={body.startDate}
+                                    textStyle={{color: Colors.darkBlue}}
+                                    icon={<Icon type={'Calendar2'} size={20}/>}
+                        />
                     </View>
-                    <View style={{flexDirection: "row", columnGap: 16}}>
-                        <View style={{flex: 1, ...margin(20, 0, 0, 0)}}>
-                            <Text size={'14_400'}>Check In Date</Text>
-                            <DatePicker name={'endDate'}
-                                        placeholder={'To Date'}
-                                        style={{
-                                            borderColor: '#EBEBEB',
-                                            ...padding(14, 4)
-                                        }}
-                                        onChange={(e) => {
-                                            setBody(prev => ({...prev, [e.name]: e.value}))
-                                        }}
-                                        date={body.startDate}
-                                        textStyle={{color: Colors.darkBlue}}
-                                        icon={<Icon type={'Calendar2'} size={20}/>}
-                            />
-                        </View>
-                        <View style={{flex: 1, ...margin(20, 0, 0, 0)}}>
-                            <Text size={'14_400'}>Check In Time</Text>
-                            <DatePicker name={'endDate'}
-                                        placeholder={'To Time'}
-                                        mode={'time'}
-                                        style={{
-                                            borderColor: '#EBEBEB',
-                                            ...padding(14, 4)
-                                        }}
-                                        onChange={(e) => {
-                                            setBody(prev => ({...prev, [e.name]: e.value}))
-                                        }}
-                                        date={body.to_date}
-                                        textStyle={{color: Colors.darkBlue}}
-                                        icon={<Icon type={'Calendar2'} size={20}/>}
-                            />
-                        </View>
+                    <View style={{flex: 1, ...margin(20, 0, 0, 0)}}>
+                        <Text size={'14_400'}>Check In Date</Text>
+                        <DatePicker name={'endDate'}
+                                    placeholder={'To Date'}
+                                    style={{
+                                        borderColor: '#EBEBEB',
+                                        ...padding(14, 4)
+                                    }}
+                                    onChange={(e) => {
+                                        setBody(prev => ({...prev, [e.name]: e.value}))
+                                    }}
+                                    date={body.startDate}
+                                    textStyle={{color: Colors.darkBlue}}
+                                    icon={<Icon type={'Calendar2'} size={20}/>}
+                        />
                     </View>
                     <Button variant={'primary'}
                             label={'Confirm'}
