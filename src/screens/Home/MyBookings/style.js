@@ -37,7 +37,7 @@ const s = StyleSheet.create({
 
     },
     list_bottom: {
-        ...padding(10,16,0,16),
+        ...padding(10,16,0,60),
         borderTopWidth:1,
         borderColor:'#EFEFF4',
     },
