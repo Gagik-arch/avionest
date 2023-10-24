@@ -8,8 +8,8 @@ class Api {
         this.cleanReq = cleanReq;
     }
 
-    get({url = "", headers}) {
-        return this.#configureRequest({url, headers});
+    get({url = "", body,headers}) {
+        return this.#configureRequest({url, headers,body});
     }
 
     post({url = "", body, headers}) {
@@ -52,7 +52,7 @@ class Api {
             }
             config.data = body;
         }
-        // console.log(url, config)
+        // console.log(url,config)
         return axios(url, config).then(response => response);
     };
 }

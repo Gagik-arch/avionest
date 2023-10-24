@@ -1,15 +1,13 @@
 import {useEffect} from "react";
 import {
     ForgotPassword, NoNetwork, Signin, Signup, NewPassword, Steps, UserInfo, Welcome,
-    YourQualifications, PaymentDetails, YourAircraft, Aeroclub
+    YourQualifications, PaymentDetails, YourAircraft
 } from "../screens";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {useNavigation} from "@react-navigation/native";
 import NetInfo from "@react-native-community/netinfo";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import DrawerNavigation from './DrawerNavigation'
-import {Colors} from "../resources";
-import {Button, Icon} from "../core";
 import SplashScreen from "react-native-splash-screen";
 import {authActions} from "../store/reducers";
 import {useDispatch} from "react-redux";

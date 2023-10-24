@@ -19,6 +19,7 @@ import Calendar2 from './calendar2.svg';
 import Search from './search.svg';
 import Trash from './trash.svg';
 import Edit from './edit.svg';
+import MapMarker from './map-marker.svg';
 
 export {
   EyeOff,
@@ -41,4 +42,5 @@ export {
   Search,
   Trash,
   Edit,
+  MapMarker,
 };

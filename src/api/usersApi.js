@@ -14,6 +14,9 @@ class UsersApi extends Api {
   addCard(body) {
     return this.post({url: '/insert-card',body});
   }
+  getMyBookings(body) {
+    return this.get({url: '/get-bookings',body});
+  }
 }
 
 const usersApi = new UsersApi();

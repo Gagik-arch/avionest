@@ -1,7 +1,7 @@
-import React, {useEffect, useMemo, useRef, useState} from 'react'
+import React, {useEffect,  useRef, useState} from 'react'
 import s from './style'
 import {Button, Icon, NavigationHeader, Screen, Switch, Text} from "../../../core";
-import {TouchableOpacity, View} from "react-native";
+import { View} from "react-native";
 import MapView, {PROVIDER_GOOGLE, Marker, Callout} from 'react-native-maps';
 import env from "../../../env";
 import {SelectLocation} from "../../../sheets";
@@ -11,7 +11,6 @@ import {getAuthSources} from "../../../store/asyncThunks/global";
 import globalApi from "../../../api/globalApi";
 import moment from "moment";
 import {CustomCallout} from "../../../components";
-import {SuccessPayment} from "../../../modals";
 
 export const Location = (props) => {
     const sheetRef = useRef()
