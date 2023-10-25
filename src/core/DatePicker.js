@@ -18,7 +18,9 @@ const DatePicker = ({
                         textSize = '"14_500"',
                         textStyle = {},
                         containerStyle = {},
-                        requiredMessage = null
+                        requiredMessage = null,
+                        minimumDate,
+    ...props
                     }) => {
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [value, setValue] = useState(typeof date === 'string' ? new Date(date) : date)
@@ -63,6 +65,7 @@ const DatePicker = ({
                 <DateTimePicker mode={mode}
                                 value={value || new Date()}
                                 display={Platform.OS === "ios" ? "spinner" : "default"}
+                                minimumDate={minimumDate}
                                 onChange={({nativeEvent, type}) => {
                                     hideDatePicker();
                                     if (type === "set") {
@@ -74,6 +77,7 @@ const DatePicker = ({
                                         });
                                     }
                                 }}
+                                {...props}
                 />
             ) : null}
         </View>

@@ -15,7 +15,7 @@ class UsersApi extends Api {
     return this.post({url: '/insert-card',body});
   }
   getMyBookings(body) {
-    return this.get({url: '/get-bookings',body});
+    return this.post({url: '/get-bookings',body});
   }
 }
 

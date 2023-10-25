@@ -1,7 +1,7 @@
-import React, {useEffect,  useRef, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import s from './style'
 import {Button, Icon, NavigationHeader, Screen, Switch, Text} from "../../../core";
-import { View} from "react-native";
+import {View} from "react-native";
 import MapView, {PROVIDER_GOOGLE, Marker, Callout} from 'react-native-maps';
 import env from "../../../env";
 import {SelectLocation} from "../../../sheets";
@@ -60,8 +60,12 @@ export const Location = (props) => {
     return (<>
         <Screen header={<NavigationHeader style={s.header}
                                           title={<></>}
-                                          buttons={<View
-                                              style={{flexDirection: "row", columnGap: 10, alignItems: "center"}}>
+                                          buttons={<View style={{
+                                              flexDirection: "row",
+                                              columnGap: 10,
+                                              alignItems: "center"
+                                          }}
+                                          >
                                               <Switch style={{borderColor: "white"}}
                                                       name={'space_type'}
                                                       value={body?.space_type === 'hangar'}
@@ -110,18 +114,18 @@ export const Location = (props) => {
                 {airfields?.map(item => {
                     return (
                         <Marker key={item.id}
-                                    onPress={() => {
-                                        sheetRef.current.snapToIndex(0)
-                                    }}
-                                    coordinate={{
-                                        latitude: +item.latitude, longitude: +item.longitude,
-                                    }}
-                    >
-                        <Icon type={'Mark'} fill={item.free_spaces_count > 0 ? '#67E0D4' : '#F4909E'}/>
-                        <Callout>
-                            <CustomCallout item={item}/>
-                        </Callout>
-                    </Marker>
+                                onPress={() => {
+                                    sheetRef.current.snapToIndex(0)
+                                }}
+                                coordinate={{
+                                    latitude: +item.latitude, longitude: +item.longitude,
+                                }}
+                        >
+                            <Icon type={'Mark'} fill={item.free_spaces_count > 0 ? '#67E0D4' : '#F4909E'}/>
+                            <Callout>
+                                <CustomCallout item={item}/>
+                            </Callout>
+                        </Marker>
                     )
                 })}
             </MapView>}

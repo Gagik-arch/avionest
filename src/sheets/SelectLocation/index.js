@@ -26,9 +26,10 @@ export const SelectLocation = forwardRef(({
     const navigation = useNavigation()
     const [isLoading, setIsLoading] = useState(false)
 
-    const disableSubmitBtn = () => validateFields(formQuery, body);
+    const disableSubmitBtn = () => validateFields(formQuery, body) || isLoading;
 
     const onConfirm = () => {
+        setIsLoading(true)
         globalApi.getAirfieldById(6)
             .then(res => {
                 navigation.reset({index: 0, routes: [{name: "Aeroclub", params: {body, data: res.data}}]});
@@ -83,6 +84,7 @@ export const SelectLocation = forwardRef(({
                                     date={body.startDate}
                                     textStyle={{color: Colors.darkBlue}}
                                     icon={<Icon type={'Calendar2'} size={20}/>}
+                                    minimumDate={new Date()}
                         />
                     </View>
                     <View style={{flex: 1, ...margin(20, 0, 0, 0)}}>
@@ -99,12 +101,14 @@ export const SelectLocation = forwardRef(({
                                     date={body.startDate}
                                     textStyle={{color: Colors.darkBlue}}
                                     icon={<Icon type={'Calendar2'} size={20}/>}
+                                    minimumDate={new Date()}
                         />
                     </View>
                     <Button variant={'primary'}
                             label={'Confirm'}
                             style={{...margin(18, 0, 0, 0)}}
                             disabled={disableSubmitBtn()}
+                            isLoading={isLoading}
                             onPress={() => {
                                 onSubmit?.()
                                 onConfirm()
