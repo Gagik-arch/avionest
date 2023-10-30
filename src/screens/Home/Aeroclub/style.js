@@ -20,8 +20,16 @@ const s = StyleSheet.create({
         borderColor: 'rgba(0, 0, 0, 0.15)'
     },
     name:{
-        color:Colors.darkBlue
-    }
+        color:Colors.darkBlue,
+    },
+    runway_container:{
+        position:'relative'
+    },
+    runway_add_btn:{
+        position:'absolute',
+        bottom:10,
+        right:0,
+    },
 });
 
 export default s;

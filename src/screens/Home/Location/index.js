@@ -11,10 +11,12 @@ import {getAuthSources} from "../../../store/asyncThunks/global";
 import globalApi from "../../../api/globalApi";
 import moment from "moment";
 import {CustomCallout} from "../../../components";
+import Compass from "../../../core/Compass";
 
 export const Location = (props) => {
     const sheetRef = useRef()
     const [airfields, setAirfields] = useState([])
+    const [oacies, setOacies] = useState([])
     const [body, setBody] = useState({space_type: 'hangar'})
     const global = useSelector(state => state.global)
     const dispatch = useDispatch()
@@ -36,6 +38,7 @@ export const Location = (props) => {
             body?.oaciId,
         )
             .then(res => {
+                setOacies(res.data.oacies)
                 setAirfields(res.data.airfields)
                 if (res?.data?.airfields?.length > 0) {
                     setRegion({
@@ -53,7 +56,7 @@ export const Location = (props) => {
 
             })
     }, [body])
-
+    console.log(oacies)
     const onChange = (e) => onChangeBody(e, body, setBody)
 
 
@@ -86,7 +89,9 @@ export const Location = (props) => {
                                                   <Icon type={'Bars'} fill={'white'}/>
                                               </Button>
                                           </View>}
-                                          {...props}/>}>
+                                          {...props}/>}
+        >
+            {/*<Compass/>*/}
             <View style={s.top}>
                 <View style={[s.top_btn, {backgroundColor: '#fff'}]}>
                     <Icon type={'Mark'} size={16} fill={'#F4909E'}/>
@@ -128,6 +133,23 @@ export const Location = (props) => {
                         </Marker>
                     )
                 })}
+                {oacies?.map(item => {
+                    return (
+                        <Marker key={item.id}
+                                title={item.airfield_name}
+                                description={item.city}
+                                onPress={() => {
+                                    // sheetRef.current.snapToIndex(0)
+                                }}
+                                coordinate={{
+                                    latitude: +item.latitude, longitude: +item.longitude,
+                                }}
+                        >
+                            <Icon type={'Mark'} fill={'rgba(135,135,135,.4)'}/>
+
+                        </Marker>
+                    )
+                })}
             </MapView>}
         </Screen>
         <SelectLocation ref={sheetRef}
@@ -136,7 +158,7 @@ export const Location = (props) => {
                         setBody={setBody}
                         OACIData={global.data?.oaciList}
                         onSubmit={() => {
-                            sheetRef.current.close()
+                            sheetRef.current?.close()
                         }}
         />
     </>)

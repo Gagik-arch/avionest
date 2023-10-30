@@ -77,6 +77,7 @@ const CardList = ({
     const onDelete = () => {
         dispatch(deleteCard({cardId, setIsLoading}))
     }
+
     const rightActions = (progress, dragX) => {
         const scaleTrash = dragX.interpolate({
             inputRange: [-100, 100],

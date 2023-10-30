@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import s from "./style";
 import {Button, Input, Screen, Text} from "../../../core";
 import plane from '../../../../assets/images/plane.png'
@@ -20,6 +20,7 @@ export const Signin = (props) => {
     const formQuery = ["password", "email"]
     const dispatch = useDispatch()
     const {isLoading} = useSelector(state => state.auth)
+    const passIRef = useRef(null)
 
     const onChange = (e) => {
         const copyBody = {...requiredMessage}
@@ -59,13 +60,21 @@ export const Signin = (props) => {
                    validationKey={'email'}
                    requiredMessage={requiredMessage['email']}
                    blockStyles={margin(0, 0, 16, 0)}
+                   onSubmitEditing={() => {
+                       passIRef.current.focus();
+                   }}
             />
             <Input placeholder={'Password'}
-                validationKey={'password'}
+                   validationKey={'password'}
                    onFinish={onChange}
                    name={'password'}
                    value={body?.password}
                    requiredMessage={requiredMessage['password']}
+                   ref={passIRef}
+                   onSubmitEditing={() => {
+                       if (disableSubmitBtn()) return
+                       onSubmit()
+                   }}
             />
             <View style={[{alignItems: 'flex-end'}, margin(8, 0, 0, 0)]}>
                 <Button label={'Forgot password?'}

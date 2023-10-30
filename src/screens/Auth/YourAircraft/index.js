@@ -60,7 +60,7 @@ export const YourAircraft = (props) => {
             <Text style={{...margin(12, 0, 80, 0)}}>
                 Select from the list below the type of aircraft you are currently using
             </Text>
-            <SelectableInput          onChange={onChange} name={'aircraft_id'}/>
+            <SelectableInput onChange={onChange} name={'aircraft_id'}/>
             <View style={{flexDirection: "row"}}>
                 <ColorPicker onChange={onChange}
                              name={'first_color_id'}

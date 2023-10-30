@@ -104,7 +104,6 @@ export const YourQualifications = (props) => {
                         requiredMessage={requiredMessage['valid_until_date']}
                         value={body?.valid_until_date}
             />
-
             <DropDown variant={'underlined'}
                       placeholder={body?.issuing_country_id || 'Issuing country'}
                       data={data.countries}

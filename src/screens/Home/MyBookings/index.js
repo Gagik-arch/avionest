@@ -14,10 +14,10 @@ export const MyBookings = (props) => {
     const [isLoading, setIsLoading] = useState(false)
     const [isLong, setIsLong] = useState(false)
 
-    //console.log(user.data.user.id)
     useEffect(() => {
         setIsLoading(true)
-        usersApi.getMyBookings({userId: user.data.user.id})
+        usersApi.getMyBookings({userId:user.data.user.id
+        })
             .then(res => {
                 console.log(res.data)
                 setData(res.data)
@@ -95,7 +95,7 @@ export const MyBookings = (props) => {
                                             <Text style={{color: Colors.darkBlue}}
                                                   size={'16_400'}
                                             >
-                                                dfasdasdasd
+                                                {item?.address}
                                             </Text>
                                             <Text style={{color: Colors.darkBlue}}>
                                                 {moment(item.start_timestamp).format('DD MMMM YY')}

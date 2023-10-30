@@ -34,6 +34,7 @@ export const login = createAsyncThunk(
                     })
             })
             .catch(e => {
+                console.log(e)
                 Toast.show({
                     type: 'error',
                     text1: `${e} <Signin>`,

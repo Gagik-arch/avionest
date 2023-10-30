@@ -1,34 +1,35 @@
 import React, {useEffect, useMemo, useState} from 'react'
 import s from './style'
-import {Screen, Text, Button, NavigationHeader, Icon} from '../../../core'
-import {View, Image} from "react-native";
+import {Screen, Text, Button, NavigationHeader, Icon, DropDown} from '../../../core'
+import {Image, View} from "react-native";
 import a from '../../../../assets/images/a.jpg'
 import b from '../../../../assets/images/b.jpg'
 import c from '../../../../assets/images/c.jpg'
 import d from '../../../../assets/images/d.jpg'
 import {Colors, margin} from "../../../resources";
 import {Slider} from '../../../components'
-import {SuccessPayment} from "../../../modals";
+import {Compass, SuccessPayment} from "../../../modals";
 import globalApi from "../../../api/globalApi";
 import moment from "moment";
-import CompassHeading from 'react-native-compass-heading';
+import {useDispatch, useSelector} from "react-redux";
+import {getCards} from "../../../store/asyncThunks/cards";
+import MasterCard from '../../../../assets/images/mastercard.png'
+import Visa from '../../../../assets/images/visa.png'
 
 export const Aeroclub = (props) => {
     const state = useMemo(() => props.route.params, [])
     const [selected, setSelected] = useState(0)
     const [successResponse, setSuccessResponse] = useState(null)
+    const [visibility, setVisibility] = useState(null)
+    const cards = useSelector(state => state.cards)
+    const dispatch = useDispatch()
+    const cardImg = {MasterCard, Visa}
 
     useEffect(() => {
-        const degree_update_rate = 3;
-
-        CompassHeading.start(degree_update_rate, ({heading, accuracy}) => {
-            console.log('CompassHeading: ', heading, accuracy);
-        });
-
-        return () => {
-            CompassHeading.stop();
-        };
-    }, []);
+        if(!cards.data){
+            dispatch(getCards())
+        }
+    }, [cards.data])
 
     const images = [a, b, c, d]
     const plans = [
@@ -124,18 +125,54 @@ export const Aeroclub = (props) => {
                     )
                 })}
             </View>
+
             <View style={s.container}>
                 <Text style={s.name} size={'16_400'}>LFLI aeroclub Annemasse, Information</Text>
-                {renderList(`Runway 12/30 ${state.data.airfield.runways[0].title}`)}
+                <View style={s.runway_container}>
+                    {
+                        state.data.airfield.runways.map((item,index) => {
+                            return (
+                                <View style={s.list_container} key={index}>
+                                    <Text>Runway 12/30 {item.title}</Text>
+                                </View>)
+                        })
+                    }
+                    <Button labelSize={'18_400'}
+                            style={s.runway_add_btn}
+                            onPress={() => {
+                                setVisibility(true)
+                            }}
+                    >
+                        <Icon type={'PlusCircle'} stroke={'rgba(0,0,0,0.3)'} size={22}/>
+                    </Button>
+                </View>
                 {renderList(`${state.data.airfield.spaces_count} parking spaces`)}
-                {renderList('AVGAS +JETFUEL available')}
-                {renderList('ATS / NIGHT VFR / Repairs')}
                 <Button variant={'primary'}
                         label={'Book space'}
                         style={{...margin(40, 0)}}
                         onPress={onConfirm}
                 />
             </View>
+            {/*<DropDown variant={'underlined'}*/}
+            {/*          placeholder={'Cards'}*/}
+            {/*          data={cards.data}*/}
+            {/*          label={(e) => e.value.name}*/}
+            {/*          renderItem={({item, isSelected}) => {*/}
+            {/*              console.log(item)*/}
+            {/*              return <View style={{flexDirection: "row", columnGap: 10, alignItems: 'center'}}>*/}
+            {/*                  <Image*/}
+            {/*                      source={cardImg[item.brand]}*/}
+            {/*                      style={{width: 30, height: '100%'}}*/}
+            {/*                  />*/}
+            {/*                  <Text size={'14_400'}*/}
+            {/*                        style={{color: isSelected ? 'white' : '#787777'}}>{item.type}</Text>*/}
+            {/*              </View>*/}
+            {/*          }}*/}
+            {/*          name={'country_id'}*/}
+            {/*          onChange={(e) => {*/}
+            {/*              // onChange({value: e.value.id, name: e.name})*/}
+            {/*          }}*/}
+            {/*/>*/}
             <SuccessPayment visibility={successResponse !== null}
                             setVisibility={setSuccessResponse}
                             state={successResponse}

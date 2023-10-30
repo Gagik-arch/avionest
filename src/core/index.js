@@ -17,6 +17,7 @@ import CardInput from "./CardInput";
 import Switch from "./Switch";
 import ColorPicker from "./ColorPicker";
 import SearchInput from "./SearchInput";
+import Compass from "./Compass";
 
 export {
     DropDown,
@@ -38,4 +39,5 @@ export {
     Switch,
     ColorPicker,
     SearchInput,
+    Compass,
 }

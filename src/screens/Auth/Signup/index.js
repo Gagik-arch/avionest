@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useRef, useState} from "react";
 import s from "./style";
 import {Button, Checkbox, Icon, Input, Screen, Text} from "../../../core";
 import {View} from "react-native";
@@ -11,6 +11,9 @@ export const Signup = (props) => {
     const [terms, setTerms] = useState(false);
     const [requiredMessage, setRequiredMessage] = useState({})
     const formQuery = ["email", "username", "password", "confirm_password"]
+const usernameRef = useRef()
+const passwordRef = useRef()
+    const confirmPasswordRef = useRef()
 
     const onChange = (e) => {
         setRequiredMessage(prev => {
@@ -53,12 +56,19 @@ export const Signup = (props) => {
                    onChange={onChange}
                    value={body?.email}
                    requiredMessage={requiredMessage?.email}
+                   onSubmitEditing={()=>{
+                       usernameRef.current.focus();
+                   }}
             />
             <Input placeholder={'Username'}
                    name={'username'}
                    onChange={onChange}
                    value={body?.username}
                    requiredMessage={requiredMessage?.username}
+                   ref={usernameRef}
+                   onSubmitEditing={()=>{
+                       passwordRef.current.focus();
+                   }}
             />
             <Input placeholder={'Password'}
                    validationKey={'password'}
@@ -66,6 +76,10 @@ export const Signup = (props) => {
                    onChange={onChange}
                    value={body?.password}
                    requiredMessage={requiredMessage?.password}
+                   ref={passwordRef}
+                   onSubmitEditing={()=>{
+                       confirmPasswordRef.current.focus();
+                   }}
             />
             <Input placeholder={'Confirm password'}
                    validationKey={'password'}
@@ -73,6 +87,7 @@ export const Signup = (props) => {
                    onChange={onChange}
                    value={body?.confirm_password}
                    requiredMessage={requiredMessage?.confirm_password}
+                   ref={confirmPasswordRef}
             />
             <Checkbox label={'I have read and agreed to the Terms and Conditions'}
                       size={16}

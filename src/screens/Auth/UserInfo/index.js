@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import s from "./style";
 import {Button, DropDown, Icon, Input, Screen, Text, SearchInput} from "../../../core";
 import {ActivityIndicator, Platform, View, Image} from "react-native";
@@ -16,6 +16,7 @@ export const UserInfo = (props) => {
     const {isLoading, data} = useSelector(state => state.global)
     const dispatch = useDispatch()
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+const lastNameRef = useRef()
 
     const formQuery = ["first_name", "last_name", "date_of_birth", "country_id", "home_base"]
 
@@ -58,12 +59,16 @@ export const UserInfo = (props) => {
                    onChange={onChange}
                    requiredMessage={requiredMessage['first_name']}
                    value={body?.first_name}
+                   onSubmitEditing={()=>{
+                       lastNameRef.current.focus();
+                   }}
             />
             <Input placeholder={'Surname'}
                    name={'last_name'}
                    onChange={onChange}
                    requiredMessage={requiredMessage['last_name']}
                    value={body?.last_name}
+                   ref={lastNameRef}
             />
             <DropDown variant={'underlined'}
                       placeholder={body?.date_of_birth || 'Date of birth'}

@@ -12,6 +12,7 @@ class AuthApi extends Api {
   forgotPassword(body) {
     return this.post({url: '/forgot-password', body});
   }
+
   updateUser(body) {
     return this.put({url: '/users',body});
   }

@@ -20,6 +20,7 @@ import Search from './search.svg';
 import Trash from './trash.svg';
 import Edit from './edit.svg';
 import MapMarker from './map-marker.svg';
+import PlusCircle from './plus-circle.svg';
 
 export {
   EyeOff,
@@ -43,4 +44,5 @@ export {
   Trash,
   Edit,
   MapMarker,
+  PlusCircle,
 };
