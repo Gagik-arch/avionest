@@ -14,10 +14,6 @@ const s = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  input_container:{
-    borderColor:'#EBEBEB',
-...padding(4,4)
-  }
 });
 
 export default s;

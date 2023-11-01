@@ -17,7 +17,8 @@ const s = StyleSheet.create({
     list_container: {
         ...padding(19),
         borderBottomWidth: 1,
-        borderColor: 'rgba(0, 0, 0, 0.15)'
+        borderColor: 'rgba(0, 0, 0, 0.15)',
+        justifyContent:"space-between",
     },
     name:{
         color:Colors.darkBlue,

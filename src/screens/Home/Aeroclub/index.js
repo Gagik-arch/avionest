@@ -8,25 +8,27 @@ import c from '../../../../assets/images/c.jpg'
 import d from '../../../../assets/images/d.jpg'
 import {Colors, margin} from "../../../resources";
 import {Slider} from '../../../components'
-import {Compass, SuccessPayment} from "../../../modals";
+import {SuccessPayment,} from "../../../modals";
 import globalApi from "../../../api/globalApi";
 import moment from "moment";
 import {useDispatch, useSelector} from "react-redux";
 import {getCards} from "../../../store/asyncThunks/cards";
 import MasterCard from '../../../../assets/images/mastercard.png'
 import Visa from '../../../../assets/images/visa.png'
+import {Compass} from "../../../core";
+import env from "../../../env";
 
 export const Aeroclub = (props) => {
     const state = useMemo(() => props.route.params, [])
     const [selected, setSelected] = useState(0)
     const [successResponse, setSuccessResponse] = useState(null)
-    const [visibility, setVisibility] = useState(null)
     const cards = useSelector(state => state.cards)
     const dispatch = useDispatch()
+
     const cardImg = {MasterCard, Visa}
 
     useEffect(() => {
-        if(!cards.data){
+        if (!cards.data.length) {
             dispatch(getCards())
         }
     }, [cards.data])
@@ -79,9 +81,8 @@ export const Aeroclub = (props) => {
                                           </>
                                           }
                                           {...props}/>}>
-
-            <Slider data={state?.data?.airfield?.length ?
-                state?.data?.airfield?.images.map(i => ({uri: 'http://192.168.77.129:9026' + i.file_path})) :
+            <Slider data={state?.data?.airfield?.images?.length ?
+                state?.data?.airfield?.images.map(i => ({uri: env.APP_URL + i.file_path})) :
                 images}
             />
             <View style={{rowGap: 6}}>
@@ -125,61 +126,88 @@ export const Aeroclub = (props) => {
                     )
                 })}
             </View>
-
             <View style={s.container}>
                 <Text style={s.name} size={'16_400'}>LFLI aeroclub Annemasse, Information</Text>
                 <View style={s.runway_container}>
                     {
-                        state.data.airfield.runways.map((item,index) => {
-                            return (
-                                <View style={s.list_container} key={index}>
-                                    <Text>Runway 12/30 {item.title}</Text>
-                                </View>)
+                        state.data.airfield.runways.map((item, index) => {
+                            return <Runway key={index} item={item}/>
                         })
                     }
-                    <Button labelSize={'18_400'}
-                            style={s.runway_add_btn}
-                            onPress={() => {
-                                setVisibility(true)
-                            }}
-                    >
-                        <Icon type={'PlusCircle'} stroke={'rgba(0,0,0,0.3)'} size={22}/>
-                    </Button>
                 </View>
                 {renderList(`${state.data.airfield.spaces_count} parking spaces`)}
+                <DropDown variant={'underlined'}
+                          placeholder={'Cards'}
+                          data={cards.data}
+                          label={(e) => `${e.value.last4} ${e.value.name}`}
+                          renderItem={({item, isSelected,index}) => {
+                              return (
+                                  <View style={{flexDirection: "row", columnGap: 10, alignItems: 'center'}}>
+                                      <Text size={'16_600'}
+                                            style={{color: isSelected ? 'black' : '#787777'}}>{item.last4}</Text>
+                                      <Text size={'14_400'}
+                                            style={{color: isSelected ? 'black' : '#787777'}}>{item.name}</Text>
+                                      <Text size={'12_400'}
+                                            style={{color: 'rgba(0,0,0,0.2)'}}> {index === 0 && 'default'}</Text>
+                                      <View style={{flex:1}}/>
+                                      <Image
+                                          source={cardImg[item.brand]}
+                                          style={{width: 30, height: '100%'}}
+                                      />
+                                  </View>
+                              )
+                          }}
+                          name={'country_id'}
+                          onChange={(e) => {
+                              // onChange({value: e.value.id, name: e.name})
+                          }}
+                />
                 <Button variant={'primary'}
                         label={'Book space'}
                         style={{...margin(40, 0)}}
                         onPress={onConfirm}
                 />
             </View>
-            {/*<DropDown variant={'underlined'}*/}
-            {/*          placeholder={'Cards'}*/}
-            {/*          data={cards.data}*/}
-            {/*          label={(e) => e.value.name}*/}
-            {/*          renderItem={({item, isSelected}) => {*/}
-            {/*              console.log(item)*/}
-            {/*              return <View style={{flexDirection: "row", columnGap: 10, alignItems: 'center'}}>*/}
-            {/*                  <Image*/}
-            {/*                      source={cardImg[item.brand]}*/}
-            {/*                      style={{width: 30, height: '100%'}}*/}
-            {/*                  />*/}
-            {/*                  <Text size={'14_400'}*/}
-            {/*                        style={{color: isSelected ? 'white' : '#787777'}}>{item.type}</Text>*/}
-            {/*              </View>*/}
-            {/*          }}*/}
-            {/*          name={'country_id'}*/}
-            {/*          onChange={(e) => {*/}
-            {/*              // onChange({value: e.value.id, name: e.name})*/}
-            {/*          }}*/}
-            {/*/>*/}
+
             <SuccessPayment visibility={successResponse !== null}
                             setVisibility={setSuccessResponse}
                             state={successResponse}
                             body={state.body}
                             paymentMethod={selected}
             />
+
         </Screen>
+    )
+}
+
+const Runway = ({item}) => {
+    const [compassVisibility, setCompassVisibility] = useState(false)
+    const [value,setValue] = useState(0)
+
+    return (
+        <>
+            <View style={s.list_container}>
+                <Text>Runway {value.runaway} {item.title}</Text>
+                <Button labelSize={'18_400'}
+                        style={s.runway_add_btn}
+                        onPress={() => {
+                            setCompassVisibility(true)
+                        }}
+                >
+                    <Icon type={'PlusCircle'} stroke={'rgba(0,0,0,0.3)'} size={22}/>
+                </Button>
+            </View>
+            <Compass visibility={compassVisibility}
+                     degree={value.degree}
+                     onClose={() => {
+                         setCompassVisibility(false)
+                     }}
+                     onFinish={(e)=>{
+                         setValue(e)
+                         setCompassVisibility(false)
+                     }}
+            />
+        </>
     )
 }
 

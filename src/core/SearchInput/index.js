@@ -16,8 +16,8 @@ const SearchInput = ({
                          keyboardType,
                          containerStyles = {},
                          renderButtons,
-    placeholder = 'Select your destination',
-    onFinish,
+                         placeholder = 'Select your destination',
+                         onFinish,
                      }) => {
     const [_value, _setValue] = useState(value)
     const [visibility, setVisibility] = useState(false)
@@ -26,7 +26,7 @@ const SearchInput = ({
         <View>
             <Input variant={'underlined'}
                    containerStyles={[containerStyles]}
-                   placeholder={placeholder }
+                   placeholder={placeholder}
                    value={_value}
                    renderButtons={renderButtons}
                    keyboardType={keyboardType}
@@ -52,25 +52,25 @@ const SearchInput = ({
                         <View style={{flex: 1}}>
                             {filter(data, _value).length ?
                                 <FlatList style={{...padding(16)}}
-                                       data={filter(data, _value)}
-                                       renderItem={({item, index}) => {
-                                           return (
-                                               <TouchableOpacity style={[s.list,
-                                                   {borderBottomWidth: index < data.length ? 1 : 0}
-                                               ]}
-                                                                 onPress={() => {
-                                                                     onChange?.({value: item, name})
-                                                                     setVisibility(false)
-                                                                     setValue && _setValue(setValue(item))
-                                                                 }}
-                                               >
-                                                   {renderItem?.({item, index})}
-                                               </TouchableOpacity>
-                                           )
-                                       }}
-                                       keyExtractor={item => item.id}
-                            />:
-                            <Text style={{marginLeft:16}}>Data not available.</Text>}
+                                          data={filter(data, _value)}
+                                          renderItem={({item, index}) => {
+                                              return (
+                                                  <TouchableOpacity style={[s.list,
+                                                      {borderBottomWidth: index < data.length ? 1 : 0}
+                                                  ]}
+                                                                    onPress={() => {
+                                                                        onChange?.({value: item, name})
+                                                                        setVisibility(false)
+                                                                        setValue && _setValue(setValue(item))
+                                                                    }}
+                                                  >
+                                                      {renderItem?.({item, index})}
+                                                  </TouchableOpacity>
+                                              )
+                                          }}
+                                          keyExtractor={item => item.id}
+                                /> :
+                                <Text style={{marginLeft: 16}}>Data not available.</Text>}
                         </View>
                     </View>
                 </View>

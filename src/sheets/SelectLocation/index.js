@@ -4,7 +4,7 @@ import {Icon, Screen, Text, Button, Checkbox, Input, SearchInput} from "../../co
 import {View, Animated, Easing} from "react-native";
 import global from "../../styles/global";
 import {Colors, margin, onChangeBody, padding, themes, validateFields} from "../../resources";
-import {Group} from "../../components";
+import {Group, SelectYourDestination} from "../../components";
 import BottomSheet, {BottomSheetScrollView} from "@gorhom/bottom-sheet";
 import DatePicker from "../../core/DatePicker";
 import {useNavigation} from "@react-navigation/native";
@@ -27,11 +27,12 @@ export const SelectLocation = forwardRef(({
     const [isLoading, setIsLoading] = useState(false)
 
     const disableSubmitBtn = () => validateFields(formQuery, body) || isLoading;
-
+    // console.log(body)
     const onConfirm = () => {
         setIsLoading(true)
-        globalApi.getAirfieldById(6)
+        globalApi.getAirfieldById(body.oaciId)
             .then(res => {
+                console.log(res.data)
                 navigation.reset({index: 0, routes: [{name: "Aeroclub", params: {body, data: res.data}}]});
                 onSubmit()
             })
@@ -56,20 +57,26 @@ export const SelectLocation = forwardRef(({
                 <BottomSheetScrollView contentContainerStyle={{...padding(16)}}>
                     <Text size={'22_700'}>Select Location</Text>
                     <Text style={{color: '#515151', ...margin(20, 0, 9, 0)}}>Where are you flying to?</Text>
-                    {OACIData.length ? <SearchInput data={OACIData}
-                                                    name={'oaciId'}
-                                                    containerStyles={s.input_container}
-                                                    renderButtons={() => <Button><Icon type={'Search'}
-                                                                                       size={18}/></Button>}
-                                                    filter={(_data, _value = '') => {
-                                                        return _data.filter(item => item.airfield_name.toLowerCase().includes(_value.toLowerCase()))
-                                                    }}
-                                                    setValue={(item) => item.airfield_name}
-                                                    renderItem={({item}) => <Text>{item.airfield_name}</Text>}
-                                                    onChange={(e) => {
-                                                        onChange({value: e.value.id, name: e.name})
-                                                    }}
-                    /> : null}
+                    <SelectYourDestination OACIData={OACIData}
+                                           onChange={(e) => {
+                                               onChange({value: e.value.id, name: 'oaciId'})
+                                           }}
+                                           value={body.oaciId}
+                    />
+                    {/*{OACIData.length ? <SearchInput data={OACIData}*/}
+                    {/*                                name={'oaciId'}*/}
+                    {/*                                containerStyles={s.input_container}*/}
+                    {/*                                renderButtons={() => <Button><Icon type={'Search'}*/}
+                    {/*                                                                   size={18}/></Button>}*/}
+                    {/*                                filter={(_data, _value = '') => {*/}
+                    {/*                                    return _data.filter(item => item.airfield_name.toLowerCase().includes(_value.toLowerCase()))*/}
+                    {/*                                }}*/}
+                    {/*                                setValue={(item) => item.airfield_name}*/}
+                    {/*                                renderItem={({item}) => <Text>{item.airfield_name}</Text>}*/}
+                    {/*                                onChange={(e) => {*/}
+                    {/*                                    onChange({value: e.value.id, name: e.name})*/}
+                    {/*                                }}*/}
+                    {/*/> : null}*/}
                     <View style={{flex: 1, ...margin(20, 0, 0, 0)}}>
                         <Text size={'14_400'}>Check In Date</Text>
                         <DatePicker name={'startDate'}
@@ -119,3 +126,4 @@ export const SelectLocation = forwardRef(({
         </BottomSheet>
     );
 });
+

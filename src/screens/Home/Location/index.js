@@ -1,17 +1,19 @@
-import React, {useEffect, useRef, useState} from 'react'
-import s from './style'
 import {Button, Icon, NavigationHeader, Screen, Switch, Text} from "../../../core";
-import {View} from "react-native";
 import MapView, {PROVIDER_GOOGLE, Marker, Callout} from 'react-native-maps';
-import env from "../../../env";
-import {SelectLocation} from "../../../sheets";
-import {onChangeBody} from "../../../resources";
-import {useDispatch, useSelector} from "react-redux";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {getAuthSources} from "../../../store/asyncThunks/global";
-import globalApi from "../../../api/globalApi";
-import moment from "moment";
+import React, {useEffect, useRef, useState} from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import {authActions} from "../../../store/reducers";
 import {CustomCallout} from "../../../components";
-import Compass from "../../../core/Compass";
+import {onChangeBody} from "../../../resources";
+import globalApi from "../../../api/globalApi";
+import {SelectLocation} from "../../../sheets";
+import authApi from "../../../api/authApi";
+import {View} from "react-native";
+import env from "../../../env";
+import moment from "moment";
+import s from './style'
 
 export const Location = (props) => {
     const sheetRef = useRef()
@@ -50,13 +52,35 @@ export const Location = (props) => {
                 }
             })
             .catch(e => {
-                console.log(e)
-            })
-            .then(() => {
-
+                if (e.response.status === 401) {
+                    refreshTokenOn401()
+                }
             })
     }, [body])
-    console.log(oacies)
+    const refreshTokenOn401 = async () => {
+        try {
+            let refreshToken = await AsyncStorage.getItem('token')
+            refreshToken = JSON.parse(refreshToken).refreshToken
+            authApi.refreshToken({refreshToken})
+                .then(res => {
+                    Promise.all([
+                        AsyncStorage.setItem('token', JSON.stringify(res.data.tokens)),
+                        AsyncStorage.setItem('user', JSON.stringify(res.data.user))
+                    ])
+                        .then(() => {
+                            dispatch(authActions.setUserData(res.data));
+                        })
+                        .catch(e => {
+                            console.log(1313, e)
+                        })
+                })
+                .catch(e => {
+                    console.log(e)
+                })
+        } catch (e) {
+            console.log(e)
+        }
+    }
     const onChange = (e) => onChangeBody(e, body, setBody)
 
 
@@ -91,7 +115,6 @@ export const Location = (props) => {
                                           </View>}
                                           {...props}/>}
         >
-            {/*<Compass/>*/}
             <View style={s.top}>
                 <View style={[s.top_btn, {backgroundColor: '#fff'}]}>
                     <Icon type={'Mark'} size={16} fill={'#F4909E'}/>

@@ -65,9 +65,7 @@ export const SuccessPayment = ({
                             <Text size={'15_400'}
                                   style={[{textAlign: 'center', ...margin(12, 0)}]}
                             >
-                                {(duration[paymentMethod === 0 ? 'asHours' : 'asDays']())}
-                                {paymentMethod === 0 ? ' hours ' : ' days '}
-                                booked
+                                {duration.asDays()}{' '} days booked
                                 in {body.space_type === 'parking' ? 'outdoor space' : 'covered ' + body.space_type}
                             </Text>
                             <Text size={'15_400'}
@@ -91,7 +89,7 @@ export const SuccessPayment = ({
                             <Text size={'14_500'}
                                   style={{textAlign: 'center', color: 'rgba(220,0,0,0.9)'}}
                             >
-                                Amount Total price: {state?.amount} Euros
+                                Amount Total price: {state?.amount.currencyFormat()} Euros
                             </Text>
                         </View>
 

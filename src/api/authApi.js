@@ -16,6 +16,10 @@ class AuthApi extends Api {
   updateUser(body) {
     return this.put({url: '/users',body});
   }
+
+  refreshToken(body) {
+    return this.put({url: '/auth-refresh',body});
+  }
 }
 
 const authApi = new AuthApi();

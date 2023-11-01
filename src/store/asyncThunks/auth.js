@@ -13,7 +13,7 @@ export const login = createAsyncThunk(
             .login(body)
             .then(res => {
                 Promise.all([
-                    AsyncStorage.setItem('token', res.data.tokens.accessToken),
+                    AsyncStorage.setItem('token', JSON.stringify(res.data.tokens)),
                     AsyncStorage.setItem('user', JSON.stringify(res.data))
                 ])
                     .then(() => {
@@ -34,7 +34,6 @@ export const login = createAsyncThunk(
                     })
             })
             .catch(e => {
-                console.log(e)
                 Toast.show({
                     type: 'error',
                     text1: `${e} <Signin>`,

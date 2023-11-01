@@ -8,28 +8,33 @@ class Api {
         this.cleanReq = cleanReq;
     }
 
-    get({url = "", body,headers}) {
-        return this.#configureRequest({url, headers,body});
+    get({url = "", body, headers, refreshToken}) {
+        return this.#configureRequest({url, headers, body, refreshToken});
     }
 
-    post({url = "", body, headers}) {
-        return this.#configureRequest({url, body, method: "post", headers});
+    post({url = "", body, headers, refreshToken}) {
+        return this.#configureRequest({url, body, method: "post", headers, refreshToken});
     }
 
-    delete({url = "", headers}) {
-        return this.#configureRequest({url, method: "delete", headers});
+    delete({url = "", headers, refreshToken}) {
+        return this.#configureRequest({url, method: "delete", headers, refreshToken});
     }
 
-    put({url = "", body, headers}) {
-        return this.#configureRequest({url, body, method: "put", headers});
+    put({url = "", body, headers, refreshToken}) {
+        return this.#configureRequest({url, body, method: "put", headers, refreshToken});
     }
 
-    #configureRequest = async ({url, method = "get", body, headers = {}}) => {
-        const token = await AsyncStorage.getItem("token");
+    #configureRequest = async ({
+                                   url,
+                                   method = "get",
+                                   body,
+                                   headers = {},
+                                   refreshToken = false,
+                               }) => {
+        let tokens = await AsyncStorage.getItem("token");
+        tokens = JSON.parse(tokens)
 
-        url = this.cleanReq
-            ? '/api/v1' + this.URL +  + url
-            : env.APP_URL + '/api/v1' + this.URL + url;
+        url = `${this.cleanReq ? '' : env.APP_URL}/api/v1${this.URL}${url}`;
 
         const config = {
             method,
@@ -39,8 +44,8 @@ class Api {
             },
         };
 
-        if (token) {
-            config.headers.Authorization = "Bearer " + token;
+        if (tokens) {
+            config.headers.Authorization = "Bearer " + tokens[refreshToken ? 'refreshToken' : 'accessToken'];
         }
 
         if (body) {
@@ -52,7 +57,7 @@ class Api {
             }
             config.data = body;
         }
-        // console.log(url,config)
+        // console.log(url, config)
         return axios(url, config).then(response => response);
     };
 }
