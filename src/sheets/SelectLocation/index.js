@@ -25,9 +25,11 @@ export const SelectLocation = forwardRef(({
     const formQuery = ["oaciId", "space_type", 'endDate', 'startDate']
     const navigation = useNavigation()
     const [isLoading, setIsLoading] = useState(false)
+    const [value, setValue] = useState('')
+    const [visibility, setVisibility] = useState(false)
 
     const disableSubmitBtn = () => validateFields(formQuery, body) || isLoading;
-    // console.log(body)
+
     const onConfirm = () => {
         setIsLoading(true)
         globalApi.getAirfieldById(body.oaciId)
@@ -47,83 +49,83 @@ export const SelectLocation = forwardRef(({
     const onChange = (e) => onChangeBody(e, body, setBody)
 
     return (
-        <BottomSheet ref={ref}
-                     handleIndicatorStyle={{backgroundColor: '#E5E5EB', width: 60}}
-                     snapPoints={snapPoints}
-                     index={-1}
-                     enablePanDownToClose={true}
-        >
-            <View style={s.container}>
-                <BottomSheetScrollView contentContainerStyle={{...padding(16)}}>
-                    <Text size={'22_700'}>Select Location</Text>
-                    <Text style={{color: '#515151', ...margin(20, 0, 9, 0)}}>Where are you flying to?</Text>
-                    <SelectYourDestination OACIData={OACIData}
-                                           onChange={(e) => {
-                                               onChange({value: e.value.id, name: 'oaciId'})
-                                           }}
-                                           value={body.oaciId}
-                    />
-                    {/*{OACIData.length ? <SearchInput data={OACIData}*/}
-                    {/*                                name={'oaciId'}*/}
-                    {/*                                containerStyles={s.input_container}*/}
-                    {/*                                renderButtons={() => <Button><Icon type={'Search'}*/}
-                    {/*                                                                   size={18}/></Button>}*/}
-                    {/*                                filter={(_data, _value = '') => {*/}
-                    {/*                                    return _data.filter(item => item.airfield_name.toLowerCase().includes(_value.toLowerCase()))*/}
-                    {/*                                }}*/}
-                    {/*                                setValue={(item) => item.airfield_name}*/}
-                    {/*                                renderItem={({item}) => <Text>{item.airfield_name}</Text>}*/}
-                    {/*                                onChange={(e) => {*/}
-                    {/*                                    onChange({value: e.value.id, name: e.name})*/}
-                    {/*                                }}*/}
-                    {/*/> : null}*/}
-                    <View style={{flex: 1, ...margin(20, 0, 0, 0)}}>
-                        <Text size={'14_400'}>Check In Date</Text>
-                        <DatePicker name={'startDate'}
-                                    placeholder={'From Date'}
-                                    style={{
-                                        borderColor: '#EBEBEB',
-                                        ...padding(14, 4)
-                                    }}
-                                    onChange={(e) => {
-                                        setBody(prev => ({...prev, [e.name]: e.value.toISOString()}))
-                                    }}
-                                    date={body.startDate}
-                                    textStyle={{color: Colors.darkBlue}}
-                                    icon={<Icon type={'Calendar2'} size={20}/>}
-                                    minimumDate={new Date()}
+        <>
+            <SelectYourDestination OACIData={OACIData}
+                                   visibility={visibility}
+                                   setVisibility={setVisibility}
+                                   setValue={setValue}
+                                   value={value}
+                                   onChange={(e) => {
+                                       onChange({value: e.value.id, name: 'oaciId'})
+                                   }}
+            />
+            <BottomSheet ref={ref}
+                         handleIndicatorStyle={{backgroundColor: '#E5E5EB', width: 60, position: "relative", zIndex: 9}}
+                         snapPoints={snapPoints}
+                         index={-1}
+                         enablePanDownToClose={true}
+            >
+                <View style={s.container}>
+                    <BottomSheetScrollView contentContainerStyle={{...padding(16)}}>
+                        <Text size={'22_700'}>Select Location</Text>
+                        <Text style={{color: '#515151', ...margin(20, 0, 9, 0)}}>Where are you flying to?</Text>
+                        <Button variant={'underlined'} style={s.btn}
+                                onPress={() => {
+                                    setVisibility(true)
+                                }}>
+                            <Text
+                                style={s.placeholder}>{OACIData.find(item => item.id === body.oaciId)?.airfield_name || 'Select your destination'}</Text>
+                            <Icon type={'Search'}
+                                  size={18}/>
+                        </Button>
+                        <View style={{flex: 1, ...margin(20, 0, 0, 0)}}>
+                            <Text size={'14_400'}>Check In Date</Text>
+                            <DatePicker name={'startDate'}
+                                        placeholder={'From Date'}
+                                        style={{
+                                            borderColor: '#EBEBEB',
+                                            ...padding(14, 4)
+                                        }}
+                                        onChange={(e) => {
+                                            setBody(prev => ({...prev, [e.name]: e.value.toISOString()}))
+                                        }}
+                                        date={body.startDate}
+                                        textStyle={{color: Colors.darkBlue}}
+                                        icon={<Icon type={'Calendar2'} size={20}/>}
+                                        minimumDate={new Date()}
+                            />
+                        </View>
+                        <View style={{flex: 1, ...margin(20, 0, 0, 0)}}>
+                            <Text size={'14_400'}>Check In Date</Text>
+                            <DatePicker name={'endDate'}
+                                        placeholder={'To Date'}
+                                        style={{
+                                            borderColor: '#EBEBEB',
+                                            ...padding(14, 4)
+                                        }}
+                                        onChange={(e) => {
+                                            setBody(prev => ({...prev, [e.name]: e.value.toISOString()}))
+                                        }}
+                                        date={body.startDate}
+                                        textStyle={{color: Colors.darkBlue}}
+                                        icon={<Icon type={'Calendar2'} size={20}/>}
+                                        minimumDate={new Date()}
+                            />
+                        </View>
+                        <Button variant={'primary'}
+                                label={'Confirm'}
+                                style={{...margin(18, 0, 0, 0)}}
+                                disabled={disableSubmitBtn()}
+                                isLoading={isLoading}
+                                onPress={() => {
+                                    onSubmit?.()
+                                    onConfirm()
+                                }}
                         />
-                    </View>
-                    <View style={{flex: 1, ...margin(20, 0, 0, 0)}}>
-                        <Text size={'14_400'}>Check In Date</Text>
-                        <DatePicker name={'endDate'}
-                                    placeholder={'To Date'}
-                                    style={{
-                                        borderColor: '#EBEBEB',
-                                        ...padding(14, 4)
-                                    }}
-                                    onChange={(e) => {
-                                        setBody(prev => ({...prev, [e.name]: e.value.toISOString()}))
-                                    }}
-                                    date={body.startDate}
-                                    textStyle={{color: Colors.darkBlue}}
-                                    icon={<Icon type={'Calendar2'} size={20}/>}
-                                    minimumDate={new Date()}
-                        />
-                    </View>
-                    <Button variant={'primary'}
-                            label={'Confirm'}
-                            style={{...margin(18, 0, 0, 0)}}
-                            disabled={disableSubmitBtn()}
-                            isLoading={isLoading}
-                            onPress={() => {
-                                onSubmit?.()
-                                onConfirm()
-                            }}
-                    />
-                </BottomSheetScrollView>
-            </View>
-        </BottomSheet>
+                    </BottomSheetScrollView>
+                </View>
+            </BottomSheet>
+        </>
     );
 });
 

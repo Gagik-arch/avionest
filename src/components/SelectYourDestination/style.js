@@ -2,13 +2,12 @@ import {StyleSheet} from "react-native";
 import {Colors, margin, padding} from "../../resources";
 
 const s = StyleSheet.create({
-    btn:{
-        borderColor: '#EBEBEB',
-        justifyContent: "space-between",
-    },
+
     modal_container: {
         flex: 1,
         height: '100%',
+        zIndex:99,
+        position:"relative"
     },
     input_container: {
         borderColor: '#EBEBEB',

@@ -15,7 +15,6 @@ export const SuccessPayment = ({
                                    setVisibility,
                                    state = null,
                                    body,
-                                   paymentMethod,
                                }) => {
     const navigation = useNavigation()
     const startD = moment(body.startDate);

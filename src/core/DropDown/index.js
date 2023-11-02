@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {FlatList, Modal, StyleSheet, TouchableOpacity, View} from "react-native";
 import {Button, Text} from "../index";
 import ArrowDown from './arrow-down.svg'
@@ -21,7 +21,9 @@ const DropDown = ({
                       },
                       placeholder = '',
                       name,
-                      requiredMessage
+                      requiredMessage,
+                      frontIcon,
+                      btnTextStyle,
                   }) => {
     const [selected, setSelected] = useState(value);
     const [visibility, setVisibility] = useState(false);
@@ -32,6 +34,8 @@ const DropDown = ({
         }
     }, [value]);
 
+    const _selected = useMemo(()=>label(selected) ,[selected])
+
     return (
         <View style={[{position: 'relative'}]}>
             <Button
@@ -40,11 +44,12 @@ const DropDown = ({
                     setVisibility(true)
                 }}
             >
-                <Text size={"14_400"}
-                      style={[s.btn_text]}
+                {typeof frontIcon === 'function' && frontIcon(selected)}
+                {typeof _selected === 'string' ? <Text size={"14_400"}
+                                                             style={[s.btn_text, btnTextStyle]}
                 >
-                    {selected ? label(selected) : placeholder}
-                </Text>
+                    {selected ? _selected : placeholder}
+                </Text> : _selected}
                 {icon}
             </Button>
             {(requiredMessage && <Text size={"12_500"}

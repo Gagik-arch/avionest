@@ -21,6 +21,7 @@ import Trash from './trash.svg';
 import Edit from './edit.svg';
 import MapMarker from './map-marker.svg';
 import PlusCircle from './plus-circle.svg';
+import ChevronDown from './chevron-down.svg';
 
 export {
   EyeOff,
@@ -45,4 +46,5 @@ export {
   Edit,
   MapMarker,
   PlusCircle,
+  ChevronDown,
 };

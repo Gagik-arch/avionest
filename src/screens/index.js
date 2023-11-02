@@ -16,4 +16,5 @@ export * from './Home/Aeroclub'
 export * from './Home/Payments'
 export * from './Home/MyBookings'
 export * from './Home/Settings'
+export * from './Home/ViewBook'
 

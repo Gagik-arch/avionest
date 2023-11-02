@@ -1,5 +1,5 @@
 import {createDrawerNavigator} from "@react-navigation/drawer";
-import {Location, Payments, MyBookings, Aeroclub, Settings} from "../screens";
+import {Location, Payments, MyBookings, Aeroclub, Settings, ViewBook} from "../screens";
 import {DrawerMenu} from "../components";
 import {Profile} from "../screens/Home/Profile";
 import {useNavigation} from "@react-navigation/native";
@@ -36,6 +36,10 @@ const DrawerNavigator = () => {
             />
             <Drawer.Screen name={"Settings"}
                           component={Settings}
+                          options={{header: () => null}}
+            />
+            <Drawer.Screen name={"ViewBook"}
+                          component={ViewBook}
                           options={{header: () => null}}
             />
         </Drawer.Navigator>

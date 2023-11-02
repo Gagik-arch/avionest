@@ -33,10 +33,6 @@ class GlobalApi extends Api {
     getAirfieldById(id) {
         return this.get({url: '/airfields/' + id})
     }
-
-    bookAirfield(body) {
-        return this.post({url: '/airfields/book', body})
-    }
 }
 
 const globalApi = new GlobalApi();

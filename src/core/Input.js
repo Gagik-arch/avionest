@@ -59,6 +59,7 @@ const Input = React.forwardRef(({
                                     enableIconDivider = false,
                                     numberOfLines = 1,
                                     requiredMessage,
+                                    autoFocus=false,
                                     ...props
                                 }, ref) => {
     const [visibility, setVisibility] = useState(validationKey === "password");
@@ -144,6 +145,7 @@ const Input = React.forwardRef(({
         numberOfLines={numberOfLines}
         name={name}
         requiredMessage={requiredMessage}
+        autoFocus={autoFocus}
     />);
 
     return (
@@ -193,6 +195,7 @@ const DefaultFlow = React.forwardRef(({
                                           numberOfLines,
                                           name,
                                           requiredMessage,
+                                          autoFocus,
                                           props,
                                       }, ref) => {
 
@@ -234,6 +237,7 @@ const DefaultFlow = React.forwardRef(({
                 maxLength={maxLength}
                 autoCapitalize={autoCapitalize}
                 autoCorrect={autoCorrect}
+                autoFocus={autoFocus}
                 returnKeyType={returnKeyType}
                 onSubmitEditing={onSubmitEditing}
                 focus={focus}

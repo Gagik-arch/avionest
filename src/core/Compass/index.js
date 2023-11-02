@@ -1,6 +1,6 @@
-import React, {useLayoutEffect, useMemo, useState} from 'react'
+import React, {useLayoutEffect, useMemo, useRef, useState} from 'react'
 import s from './style'
-import {View, Image, Dimensions, Modal} from "react-native";
+import {View, Animated, Dimensions, Modal} from "react-native";
 import {GestureDetector, Gesture, GestureHandlerRootView,} from 'react-native-gesture-handler';
 import {Button, Text} from '../index'
 import Icon from "../Icon";
@@ -21,7 +21,8 @@ const Compass = ({
     }, [degree])
 
     const panChange = useMemo(() => {
-        return Gesture.Pan().onChange((e) => {
+        return Gesture.Pan()
+            .onChange((e) => {
             const x = e.absoluteX
             const y = e.absoluteY
 
@@ -33,16 +34,16 @@ const Compass = ({
             if (__degree < 0) {
                 __degree = 360 + __degree
             }
-            _setDegree(__degree - 90)
-            onChange?.({degree: angle, runaway})
-        })
+            _setDegree(__degree-90)
+            onChange?.({degree: __degree-90, runaway})
+        }).runOnJS(true)
     }, [_degree])
 
-    const panEnd = useMemo(()=>{
-        return  Gesture.Pan().onFinalize((e) => {
+    const panEnd = useMemo(() => {
+        return Gesture.Pan().onFinalize((e) => {
             onFinish({degree: angle, runaway})
         })
-    },[_degree])
+    }, [_degree])
 
     const angle = useMemo(() => _degree >= 0 ? Math.round(_degree) : Math.round(360 - Math.abs(_degree)), [_degree])
 
@@ -80,9 +81,9 @@ const Compass = ({
                             borderRadius: width / 2
                         }
                     ]}>
-                        <View style={[
+                        <Animated.View style={[
                             s.arrow,
-                            {transform: [{rotateZ: (_degree - 90) + 'deg'},]},
+                            {transform: [{rotateZ: (_degree-90) + 'deg'},]},
                         ]}>
                             <View style={{
                                 flex: 1,
@@ -94,7 +95,7 @@ const Compass = ({
                                 borderTopRightRadius: 50,
                                 borderBottomRightRadius: 50,
                             }}/>
-                        </View>
+                        </Animated.View>
                     </View>
                 </GestureDetector>
             </GestureHandlerRootView>

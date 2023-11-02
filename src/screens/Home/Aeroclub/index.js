@@ -1,38 +1,23 @@
 import React, {useEffect, useMemo, useState} from 'react'
 import s from './style'
 import {Screen, Text, Button, NavigationHeader, Icon, DropDown} from '../../../core'
-import {Image, View} from "react-native";
+import { View} from "react-native";
 import a from '../../../../assets/images/a.jpg'
 import b from '../../../../assets/images/b.jpg'
 import c from '../../../../assets/images/c.jpg'
 import d from '../../../../assets/images/d.jpg'
 import {Colors, margin} from "../../../resources";
 import {Slider} from '../../../components'
-import {SuccessPayment,} from "../../../modals";
 import globalApi from "../../../api/globalApi";
 import moment from "moment";
-import {useDispatch, useSelector} from "react-redux";
-import {getCards} from "../../../store/asyncThunks/cards";
-import MasterCard from '../../../../assets/images/mastercard.png'
-import Visa from '../../../../assets/images/visa.png'
 import {Compass} from "../../../core";
 import env from "../../../env";
+import airfieldsApi from "../../../api/airfieldsApi";
 
 export const Aeroclub = (props) => {
     const state = useMemo(() => props.route.params, [])
     const [selected, setSelected] = useState(0)
-    const [successResponse, setSuccessResponse] = useState(null)
-    const cards = useSelector(state => state.cards)
-    const dispatch = useDispatch()
-
-    const cardImg = {MasterCard, Visa}
-
-    useEffect(() => {
-        if (!cards.data.length) {
-            dispatch(getCards())
-        }
-    }, [cards.data])
-
+const [isLoading,setIsLoading] =  useState(false)
     const images = [a, b, c, d]
     const plans = [
         {label: `Short term parking fee <24hrs-${state.data.airfield?.short_hr_price_eur} euros/hr`, id: 1},
@@ -40,20 +25,22 @@ export const Aeroclub = (props) => {
     ]
 
     const onConfirm = () => {
-        globalApi.bookAirfield({
+        setIsLoading(true)
+        const body = {
             paymentMethod: selected,
             dateEnd: moment(state.body.endDate).format('YYYY-MM-DD hh:mm'),
             dateStart: moment(state.body.startDate).format('YYYY-MM-DD hh:mm'),
             oaciId: 5
-        })
+        }
+        airfieldsApi.calcBookPrice(body)
             .then(res => {
-                setSuccessResponse(res.data)
+                props.navigation.reset({index: 0, routes: [{name: "ViewBook",params: {data:res.data,body,paymentMethod:selected}}]});
             })
             .catch(e => {
                 console.log(e)
             })
             .then(() => {
-
+                setIsLoading(false)
             })
     }
 
@@ -136,45 +123,15 @@ export const Aeroclub = (props) => {
                     }
                 </View>
                 {renderList(`${state.data.airfield.spaces_count} parking spaces`)}
-                <DropDown variant={'underlined'}
-                          placeholder={'Cards'}
-                          data={cards.data}
-                          label={(e) => `${e.value.last4} ${e.value.name}`}
-                          renderItem={({item, isSelected,index}) => {
-                              return (
-                                  <View style={{flexDirection: "row", columnGap: 10, alignItems: 'center'}}>
-                                      <Text size={'16_600'}
-                                            style={{color: isSelected ? 'black' : '#787777'}}>{item.last4}</Text>
-                                      <Text size={'14_400'}
-                                            style={{color: isSelected ? 'black' : '#787777'}}>{item.name}</Text>
-                                      <Text size={'12_400'}
-                                            style={{color: 'rgba(0,0,0,0.2)'}}> {index === 0 && 'default'}</Text>
-                                      <View style={{flex:1}}/>
-                                      <Image
-                                          source={cardImg[item.brand]}
-                                          style={{width: 30, height: '100%'}}
-                                      />
-                                  </View>
-                              )
-                          }}
-                          name={'country_id'}
-                          onChange={(e) => {
-                              // onChange({value: e.value.id, name: e.name})
-                          }}
-                />
                 <Button variant={'primary'}
                         label={'Book space'}
                         style={{...margin(40, 0)}}
                         onPress={onConfirm}
                 />
+
             </View>
 
-            <SuccessPayment visibility={successResponse !== null}
-                            setVisibility={setSuccessResponse}
-                            state={successResponse}
-                            body={state.body}
-                            paymentMethod={selected}
-            />
+
 
         </Screen>
     )

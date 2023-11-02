@@ -2,30 +2,24 @@ import React, {useCallback, useMemo, useState} from 'react'
 import s from './style'
 import {Button, Icon, Input, Text} from "../../core";
 import {FlatList, Modal, TouchableOpacity, View} from "react-native";
-import {Colors, padding} from "../../resources";
+import {Colors, margin, padding} from "../../resources";
 
 export const SelectYourDestination = ({
                                           OACIData = [],
                                           onChange,
-                                          value
+                                          value,
+                                          visibility=false,
+                                          setValue,
+                                          setVisibility
                                       }) => {
-    const [_value, _setValue] = useState('')
-    const [visibility, setVisibility] = useState(false)
 
     const filter = useMemo(() => {
-        return _value ? OACIData.filter(item => item.airfield_name.toLowerCase().includes(_value.toLowerCase())) : []
-    }, [_value])
+        return value ? OACIData.filter(item => item.airfield_name.toLowerCase().includes(value.toLowerCase())) : []
+    }, [value])
 
     return (
         <>
-            <Button variant={'underlined'} style={s.btn}
-                    onPress={() => {
-                        setVisibility(true)
-                    }}>
-                <Text style={s.placeholder}>{OACIData.find(item=>item.id === value)?.airfield_name || 'Select your destination'}</Text>
-                <Icon type={'Search'}
-                      size={18}/>
-            </Button>
+
             <Modal visible={visibility}
                    animationType={'none'}
             >
@@ -37,21 +31,22 @@ export const SelectYourDestination = ({
                                        blockStyles={{height: 46}}
                                        containerStyles={s.input_container}
                                        placeholder={'Select your destination'}
-                                       value={_value}
+                                       value={value}
+                                       autoFocus={true}
                                        renderButtons={(e) => {
                                            if (!e.value) return null
                                            return <Button onPress={() => {
                                                e.setValue('')
-                                               _setValue('')
+                                               setValue('')
                                            }}>
                                                <Icon type={'X'} size={18} stroke={Colors.darkGray}/>
                                            </Button>
                                        }}
                                        onFinish={(e) => {
                                            if (e.value.length >= 2) {
-                                               _setValue(e.value)
+                                               setValue(e.value)
                                            } else {
-                                               _setValue('')
+                                               setValue('')
                                            }
                                        }}
                                 />
@@ -76,7 +71,7 @@ export const SelectYourDestination = ({
                                                                     onPress={() => {
                                                                         onChange?.({value: item})
                                                                         setVisibility(false)
-                                                                        _setValue(item.airfield_name)
+                                                                        setValue(item.airfield_name)
                                                                     }}
                                                   >
                                                       <View>
@@ -87,7 +82,7 @@ export const SelectYourDestination = ({
                                           }}
                                           keyExtractor={item => item.id}
                                 /> :
-                                <Text style={{marginLeft: 16}}>Data not available.</Text>}
+                                <Text style={{...margin(16,0,0,16)}}>Data not available.</Text>}
                         </View>
                     </View>
                 </View>
