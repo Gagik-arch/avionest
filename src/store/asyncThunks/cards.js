@@ -53,7 +53,6 @@ export const addCard = createAsyncThunk(
             stripe_card_id: card.card.id,
         })
             .then((res) => {
-                console.log(3,res)
                 dispatch(cardsActions.addCard(card));
             })
             .catch(e => {

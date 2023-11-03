@@ -23,8 +23,7 @@ export const ViewBook = (props) => {
     const dispatch = useDispatch()
     const [body, setBody] = useState({...state.body})
     const [requiredMessage, setRequiredMessage] = useState({})
-    const formQuery = ['cardId']
-    console.log(state)
+
     useEffect(() => {
         if (!cards.data.length) {
             dispatch(getCards())
@@ -42,7 +41,6 @@ export const ViewBook = (props) => {
 
     const submit = () => {
         setIsLoading(true)
-        console.log(body)
         airfieldsApi.bookAirfield(body)
             .then(() => {
                 setSuccessResponse(true)

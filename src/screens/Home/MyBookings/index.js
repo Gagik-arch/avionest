@@ -19,7 +19,6 @@ export const MyBookings = (props) => {
         usersApi.getMyBookings({userId:user.data.user.id
         })
             .then(res => {
-                console.log(res.data)
                 setData(res.data)
             })
             .catch(e => {
@@ -31,20 +30,7 @@ export const MyBookings = (props) => {
     }, [])
 
     return (
-        <Screen footer={<Button label={'Book'}
-                                variant={'primary'}
-                                style={{...margin(8, 48)}}
-                                onPress={() => {
-                                    usersApi.getMyBookings({userId: user.data.user.id})
-                                        .then(res => {
-                                            console.log(res.data)
-                                        })
-                                        .catch(e => {
-                                            console.log(e)
-                                        })
-                                }}
-        />}
-                header={<NavigationHeader title={<Text size={'14_400'}>My bookings</Text>}
+        <Screen    header={<NavigationHeader title={<Text size={'14_400'}>My bookings</Text>}
                                           backHandler={
                                               <Button onPress={() => {
                                                   props.navigation.goBack()

@@ -35,7 +35,6 @@ export const SelectLocation = forwardRef(({
         setIsLoading(true)
         globalApi.getAirfieldById(body.oaciId)
             .then(res => {
-                console.log( {body, data: res.data})
                 navigation.reset({index: 0, routes: [{name: "Aeroclub", params: {body, data: res.data}}]});
                 onSubmit()
             })
