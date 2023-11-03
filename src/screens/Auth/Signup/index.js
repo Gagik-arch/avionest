@@ -11,8 +11,8 @@ export const Signup = (props) => {
     const [terms, setTerms] = useState(false);
     const [requiredMessage, setRequiredMessage] = useState({})
     const formQuery = ["email", "username", "password", "confirm_password"]
-const usernameRef = useRef()
-const passwordRef = useRef()
+    const usernameRef = useRef()
+    const passwordRef = useRef()
     const confirmPasswordRef = useRef()
 
     const onChange = (e) => {
@@ -31,18 +31,17 @@ const passwordRef = useRef()
             result[item] = `${item.toUpperCaseFirstChar()} is required`
         })
         setRequiredMessage(result)
-        if(!terms){
+        if (!terms) {
             Toast.show({
                 type: 'error',
                 text1: 'You need to agree with Terms and Conditions',
             });
         }
-        if (body?.password !== body.confirm_password) {
+        if (body.password !== body.confirm_password) {
             Toast.show({
                 type: 'error',
                 text1: 'Password and confirm password don\'t match!',
             });
-            return
         }
     }
 
@@ -56,7 +55,7 @@ const passwordRef = useRef()
                    onChange={onChange}
                    value={body?.email}
                    requiredMessage={requiredMessage?.email}
-                   onSubmitEditing={()=>{
+                   onSubmitEditing={() => {
                        usernameRef.current.focus();
                    }}
             />
@@ -66,7 +65,7 @@ const passwordRef = useRef()
                    value={body?.username}
                    requiredMessage={requiredMessage?.username}
                    ref={usernameRef}
-                   onSubmitEditing={()=>{
+                   onSubmitEditing={() => {
                        passwordRef.current.focus();
                    }}
             />
@@ -77,7 +76,7 @@ const passwordRef = useRef()
                    value={body?.password}
                    requiredMessage={requiredMessage?.password}
                    ref={passwordRef}
-                   onSubmitEditing={()=>{
+                   onSubmitEditing={() => {
                        confirmPasswordRef.current.focus();
                    }}
             />

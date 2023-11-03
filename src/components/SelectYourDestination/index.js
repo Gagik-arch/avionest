@@ -19,7 +19,6 @@ export const SelectYourDestination = ({
 
     return (
         <>
-
             <Modal visible={visibility}
                    animationType={'none'}
             >

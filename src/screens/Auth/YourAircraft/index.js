@@ -3,18 +3,19 @@ import s from "./style";
 import {Button, ColorPicker, DropDown, Icon, Input, Screen, Text} from "../../../core";
 import {SelectableInput} from "../../../components";
 import {FlatList, View} from "react-native";
-import {margin, onChangeBody, onRequiredFieldNotAvailable, validateFields} from "../../../resources";
+import {generateYears, margin, onChangeBody, onRequiredFieldNotAvailable, validateFields} from "../../../resources";
 import global from '../../../styles/global'
 import NavigationHeader from "../../../core/NavigationHeader";
 import Radio from "../../../core/Radio";
 import {useSelector} from "react-redux";
+import moment from "moment";
 
 export const YourAircraft = (props) => {
     const [body, setBody] = useState(props.route.params);
     const [requiredMessage, setRequiredMessage] = useState({})
     const {data} = useSelector(state => state.global)
-    const formQuery = ["aircraft_id", 'first_color_id', 'second_color_id', 'equipments']
-
+    const formQuery = ["aircraft_id", 'first_color_id', 'color_id_1', 'equipments', 'weight_type_id']
+    console.log(data)
     const onChangeCheckbox = (e) => {
         setBody((prev) => {
             let copy = prev?.[e.name] ? [...prev[e.name]] : []
@@ -44,7 +45,7 @@ export const YourAircraft = (props) => {
         })
         setRequiredMessage(result)
     }
-
+    console.log(data?.weightTypes)
     return (
         <Screen contentContainerStyle={s.container}
                 header={
@@ -69,7 +70,7 @@ export const YourAircraft = (props) => {
                 />
                 <View style={{width: 20}}/>
                 <ColorPicker onChange={onChange}
-                             name={'second_color_id'}
+                             name={'color_id_1'}
                              placeholder={'Second color'}
                              containerStyle={{flex: 1}}
                 />
@@ -81,6 +82,21 @@ export const YourAircraft = (props) => {
                    disabled={true}
                    requiredMessage={requiredMessage['registration_number']}
             />
+            <DropDown variant={'underlined'}
+                      placeholder={'Aircraft height '}
+                      data={data?.weightTypes}
+                      name={'weight_type_id'}
+                      label={(e) => e?.value?.title}
+                      renderItem={({item, isSelected}) => {
+                          return <Text size={'14_400'}
+                                       style={{color: isSelected ? 'white' : '#787777'}}>{item.title}</Text>
+                      }}
+                      requiredMessage={requiredMessage['weight_type_id']}
+                      onChange={(e) => {
+                          onChange({value: e.value.id, name: e.name})
+                      }}
+            />
+
             <Text style={[global.app_subtitle, {...margin(32, 0, 12, 0)}]}>Equipment</Text>
             <View style={s.grid}>
                 <FlatList data={data?.equipmentTypes}

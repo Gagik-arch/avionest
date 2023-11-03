@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useState} from 'react'
 import s from './style'
 import {Screen, Text, Button, NavigationHeader, Icon, DropDown} from '../../../core'
-import { View} from "react-native";
+import {View} from "react-native";
 import a from '../../../../assets/images/a.jpg'
 import b from '../../../../assets/images/b.jpg'
 import c from '../../../../assets/images/c.jpg'
@@ -17,7 +17,8 @@ import airfieldsApi from "../../../api/airfieldsApi";
 export const Aeroclub = (props) => {
     const state = useMemo(() => props.route.params, [])
     const [selected, setSelected] = useState(0)
-const [isLoading,setIsLoading] =  useState(false)
+    const [isLoading, setIsLoading] = useState(false)
+
     const images = [a, b, c, d]
     const plans = [
         {label: `Short term parking fee <24hrs-${state.data.airfield?.short_hr_price_eur} euros/hr`, id: 1},
@@ -30,11 +31,15 @@ const [isLoading,setIsLoading] =  useState(false)
             paymentMethod: selected,
             dateEnd: moment(state.body.endDate).format('YYYY-MM-DD hh:mm'),
             dateStart: moment(state.body.startDate).format('YYYY-MM-DD hh:mm'),
-            oaciId: 5
+            oaciId: 5,
+            space_type:state.body.space_type,
         }
         airfieldsApi.calcBookPrice(body)
             .then(res => {
-                props.navigation.reset({index: 0, routes: [{name: "ViewBook",params: {data:res.data,body,paymentMethod:selected}}]});
+                props.navigation.reset({
+                    index: 0,
+                    routes: [{name: "ViewBook", params: {data: res.data, body, paymentMethod: selected}}]
+                });
             })
             .catch(e => {
                 console.log(e)
@@ -132,14 +137,13 @@ const [isLoading,setIsLoading] =  useState(false)
             </View>
 
 
-
         </Screen>
     )
 }
 
 const Runway = ({item}) => {
     const [compassVisibility, setCompassVisibility] = useState(false)
-    const [value,setValue] = useState(0)
+    const [value, setValue] = useState(0)
 
     return (
         <>
@@ -159,7 +163,7 @@ const Runway = ({item}) => {
                      onClose={() => {
                          setCompassVisibility(false)
                      }}
-                     onFinish={(e)=>{
+                     onFinish={(e) => {
                          setValue(e)
                          setCompassVisibility(false)
                      }}

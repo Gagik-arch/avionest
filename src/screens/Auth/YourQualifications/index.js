@@ -71,7 +71,7 @@ export const YourQualifications = (props) => {
             <DropDown variant={'underlined'}
                       placeholder={'License type'}
                       data={['LAPL(A)', 'PPL(A)', 'CPL(A)', 'ATPL(A)']}
-                      label={(e) => e.value}
+                      label={(e) => e?.value}
                       name={'license_type'}
                       onChange={onChange}
                       renderItem={({item, isSelected}) => {
@@ -85,11 +85,10 @@ export const YourQualifications = (props) => {
                       }}
             />
             <DatePicker placeholder={'Lssue date'}
-                // date={body?.issue_date}
                         name={'issue_date'}
                         onChange={(e) => onChange({name: e.name, value: e.text})}
                         requiredMessage={requiredMessage['issue_date']}
-                        value={body?.issue_date}
+                        date={body?.issue_date}
             />
             <Input placeholder={'License number'}
                    name={'license_number'}
@@ -99,15 +98,14 @@ export const YourQualifications = (props) => {
             />
             <DatePicker placeholder={'Valid until'}
                         name={'valid_until_date'}
-                // date={body?.valid_until_date}
+                        date={body?.valid_until_date}
                         onChange={(e) => onChange({name: e.name, value: e.text})}
                         requiredMessage={requiredMessage['valid_until_date']}
-                        value={body?.valid_until_date}
             />
             <DropDown variant={'underlined'}
                       placeholder={body?.issuing_country_id || 'Issuing country'}
                       data={data.countries}
-                      label={(e) => e.value.name}
+                      label={(e) => e?.value?.name}
                       renderItem={({item, isSelected}) => {
                           return <View style={{flexDirection: "row", columnGap: 10, alignItems: 'center'}}>
                               <Image
@@ -116,7 +114,8 @@ export const YourQualifications = (props) => {
                               />
                               <Text size={'14_400'}
                                     style={{color: isSelected ? 'white' : '#787777'}}>{item.name}</Text>
-                          </View> }}
+                          </View>
+                      }}
                       name={'issuing_country_id'}
                       requiredMessage={requiredMessage['issuing_country_id']}
                       onChange={(e) => {

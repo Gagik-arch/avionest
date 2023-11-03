@@ -2,10 +2,10 @@ import {Button, DropDown, Icon, NavigationHeader, Screen, Text} from '../../../c
 import MasterCard from "../../../../assets/images/mastercard.png";
 import {getCards} from "../../../store/asyncThunks/cards";
 import React, {useEffect, useMemo, useState} from 'react'
-import Visa from "../../../../assets/images/visa.png";
+import visa from "../../../../assets/images/visa.png";
 import {useDispatch, useSelector} from "react-redux";
 import global from '../../../styles/global'
-import {Colors, margin, padding} from "../../../resources";
+import {Colors, margin, onChangeBody, onRequiredFieldNotAvailable, padding, validateFields} from "../../../resources";
 import {List} from "../../../components";
 import {View, Image} from 'react-native'
 import s from './style'
@@ -13,7 +13,7 @@ import airfieldsApi from "../../../api/airfieldsApi";
 import moment from "moment";
 import {SuccessPayment} from "../../../modals";
 
-const cardImg = {MasterCard, Visa}
+const cardImg = {MasterCard, visa}
 
 export const ViewBook = (props) => {
     const state = useMemo(() => props.route.params, [])
@@ -21,16 +21,29 @@ export const ViewBook = (props) => {
     const [successResponse, setSuccessResponse] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const dispatch = useDispatch()
-
+    const [body, setBody] = useState({...state.body})
+    const [requiredMessage, setRequiredMessage] = useState({})
+    const formQuery = ['cardId']
+    console.log(state)
     useEffect(() => {
         if (!cards.data.length) {
             dispatch(getCards())
+        } else {
+            setBody(prev => ({...prev, ['cardId']: cards.data[0].id}))
         }
     }, [cards.data])
 
+    const onChange = (e) => {
+        const copyBody = {...requiredMessage}
+        delete copyBody[e.name]
+        setRequiredMessage(copyBody)
+        onChangeBody(e, body, setBody)
+    }
+
     const submit = () => {
         setIsLoading(true)
-        airfieldsApi.bookAirfield(state.body)
+        console.log(body)
+        airfieldsApi.bookAirfield(body)
             .then(() => {
                 setSuccessResponse(true)
             })
@@ -41,6 +54,10 @@ export const ViewBook = (props) => {
                 setIsLoading(false)
             })
     }
+
+    const selectedCard = useMemo(() => {
+        return cards?.defaultCardId ? cards.data.findIndex(item => item.id === cards?.defaultCardId) : undefined
+    }, [cards])
 
     return (
         <Screen header={<NavigationHeader style={s.header}
@@ -59,9 +76,9 @@ export const ViewBook = (props) => {
                                           </>
                                           }
                                           {...props}/>}
-                footer={<Button label={'Book'} variant={'primary'}
+                footer={<Button label={'Book'}
+                                variant={'primary'}
                                 isLoading={isLoading}
-                                disabled={isLoading}
                                 style={{...margin(16, 24)}}
                                 onPress={submit}
                 />}
@@ -84,6 +101,7 @@ export const ViewBook = (props) => {
                           ...padding(16), backgroundColor: '#0341680A',
                       }}
                       btnTextStyle={{}}
+                      defaultSelectedIndex={selectedCard}
                       data={cards.data}
                       icon={<Icon type={'ChevronDown'} stroke={'#787777'} size={18}/>}
                       label={(e) => {
@@ -91,11 +109,9 @@ export const ViewBook = (props) => {
                               <View>
                                   <Text size={'14_400'} style={{...margin(0, 0, 4, 0)}}>Payment Method</Text>
                                   {e ? <View style={{flexDirection: "row", alignItems: 'center', columnGap: 16}}>
-                                          <Image
-                                              source={cardImg[e.value.brand]}
-                                          />
+                                          <Image source={cardImg[e.value.card.brand]}/>
                                           {<Text size={'14_400'} style={{color: '#0094FF'}}>
-                                              **** **** **** ${e.value.last4}
+                                              **** **** **** ${e.value.card.last4}
                                           </Text>}
                                       </View> :
                                       <Text size={'16_400'}>Cards</Text>}
@@ -107,13 +123,13 @@ export const ViewBook = (props) => {
                           return (
                               <View style={{flexDirection: "row", columnGap: 10, alignItems: 'center'}}>
                                   <Image
-                                      source={cardImg[item.brand]}
+                                      source={cardImg[item.card.brand]}
                                       style={{width: 30, height: '100%'}}
                                   />
                                   <Text size={'16_600'}
-                                        style={{color: isSelected ? 'black' : '#787777'}}>{item.last4}</Text>
+                                        style={{color: isSelected ? 'black' : '#787777'}}>{item.card.last4}</Text>
                                   <Text size={'14_400'}
-                                        style={{color: isSelected ? 'black' : '#787777'}}>{item.name}</Text>
+                                        style={{color: isSelected ? 'black' : '#787777'}}>{item.card.name}</Text>
                                   <Text size={'12_400'}
                                         style={{color: 'rgba(0,0,0,0.2)'}}> {index === 0 && 'default'}</Text>
                               </View>
@@ -121,16 +137,16 @@ export const ViewBook = (props) => {
                       }}
                       name={'country_id'}
                       onChange={(e) => {
-                          // onChange({value: e.value.id, name: e.name})
+                          onChange({value: e.value.id, name: e.name})
                       }}
             />
             <View style={s.cost_container}>
                 <Text size={'16_600'} style={{color: Colors.darkBlue}}>Cost {state.data.amount} Euros</Text>
             </View>
-            <SuccessPayment visibility={successResponse }
+            <SuccessPayment visibility={successResponse}
                             setVisibility={setSuccessResponse}
                             state={state.data}
-                            body={state.body}
+                            body={body}
             />
         </Screen>
     )

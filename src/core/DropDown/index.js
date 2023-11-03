@@ -9,7 +9,7 @@ const DropDown = ({
                       variant = "",
                       label = () => {
                       },
-                      value,
+                      defaultSelectedIndex,
                       icon = <ArrowDown/>,
                       data = [],
                       renderItem = () => {
@@ -25,14 +25,14 @@ const DropDown = ({
                       frontIcon,
                       btnTextStyle,
                   }) => {
-    const [selected, setSelected] = useState(value);
+    const [selected, setSelected] = useState(null);
     const [visibility, setVisibility] = useState(false);
 
     useEffect(() => {
-        if (value) {
-            setSelected({value: data[value], index: value});
+        if (typeof defaultSelectedIndex === 'number' ) {
+            setSelected({value: data[defaultSelectedIndex], index: defaultSelectedIndex});
         }
-    }, [value]);
+    }, [defaultSelectedIndex]);
 
     const _selected = useMemo(()=>label(selected) ,[selected])
 
@@ -45,11 +45,12 @@ const DropDown = ({
                 }}
             >
                 {typeof frontIcon === 'function' && frontIcon(selected)}
-                {typeof _selected === 'string' ? <Text size={"14_400"}
+                { _selected ? (typeof _selected === 'string' ? <Text size={"14_400"}
                                                              style={[s.btn_text, btnTextStyle]}
                 >
                     {selected ? _selected : placeholder}
-                </Text> : _selected}
+                </Text> : _selected): <Text size={"14_400"}
+                                            style={[s.btn_text, btnTextStyle]}>{placeholder}</Text>}
                 {icon}
             </Button>
             {(requiredMessage && <Text size={"12_500"}

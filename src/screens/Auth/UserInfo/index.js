@@ -74,7 +74,7 @@ const lastNameRef = useRef()
                       placeholder={body?.date_of_birth || 'Date of birth'}
                       data={generateYears()}
                       name={'date_of_birth'}
-                      label={() => moment(body.date_of_birth).format('YYYY/MM/DD')}
+                      label={() =>body?.date_of_birth &&  moment(body?.date_of_birth).format('YYYY/MM/DD')}
                       renderItem={({item, isSelected}) => {
                           return <Text size={'14_400'}
                                        style={{color: isSelected ? 'white' : '#787777'}}>{item}</Text>
@@ -109,7 +109,7 @@ const lastNameRef = useRef()
                     <DropDown variant={'underlined'}
                               placeholder={body?.country_id || 'Nationality'}
                               data={data?.countries}
-                              label={(e) => e.value.name}
+                              label={(e) => e?.value?.name}
                               renderItem={({item, isSelected}) => {
                                   return <View style={{flexDirection: "row", columnGap: 10, alignItems: 'center'}}>
                                       <Image

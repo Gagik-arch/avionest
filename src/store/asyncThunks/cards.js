@@ -10,6 +10,7 @@ export const getCards = createAsyncThunk(
         usersApi.getCards()
             .then(res => {
                 dispatch(cardsActions.setData(res.data.cards.data));
+                dispatch(cardsActions.setDefaultCard(res.data.defaultCardId));
             })
             .catch(e => {
                 Toast.show({

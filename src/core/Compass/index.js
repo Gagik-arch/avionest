@@ -42,7 +42,7 @@ const Compass = ({
     const panEnd = useMemo(() => {
         return Gesture.Pan().onFinalize((e) => {
             onFinish({degree: angle, runaway})
-        })
+        }).runOnJS(true)
     }, [_degree])
 
     const angle = useMemo(() => _degree >= 0 ? Math.round(_degree) : Math.round(360 - Math.abs(_degree)), [_degree])

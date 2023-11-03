@@ -3,6 +3,7 @@ import {createSlice} from "@reduxjs/toolkit";
 const initialState = {
     isLoading: false,
     data: [],
+    defaultCardId: undefined
 };
 
 export const cardsSlice = createSlice({
@@ -21,7 +22,10 @@ export const cardsSlice = createSlice({
         removeCard(state, action) {
             const cloneData = [...state.data]
             state.data = cloneData.filter(e => e.id !== action.payload)
-        }
+        },
+        setDefaultCard(state, action) {
+            state.defaultCardId = action.payload
+        },
     },
 });
 

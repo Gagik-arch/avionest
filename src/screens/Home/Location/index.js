@@ -83,7 +83,6 @@ export const Location = (props) => {
     }
     const onChange = (e) => onChangeBody(e, body, setBody)
 
-
     return (<>
         <Screen header={<NavigationHeader style={s.header}
                                           title={<></>}
@@ -169,7 +168,6 @@ export const Location = (props) => {
                                 }}
                         >
                             <Icon type={'Mark'} fill={'rgba(135,135,135,.4)'}/>
-
                         </Marker>
                     )
                 })}

@@ -12,7 +12,8 @@ const s = StyleSheet.create({
     },
     btn_text: {
         color: "rgba(136, 136, 136, 1)",
-        flex:1
+        flex:1,
+
     },
     container:{
         justifyContent:'flex-end',

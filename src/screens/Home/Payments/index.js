@@ -3,9 +3,9 @@ import s from './style'
 import {Button, Icon, Screen, Text} from "../../../core";
 import global from "../../../styles/global";
 import {margin} from "../../../resources";
-import {ActivityIndicator, FlatList, Image, TouchableOpacity, View} from 'react-native'
+import {ActivityIndicator, FlatList, Image,  View} from 'react-native'
 import MasterCard from '../../../../assets/images/mastercard.png'
-import Visa from '../../../../assets/images/visa.png'
+import visa from '../../../../assets/images/visa.png'
 import {PaymentModal} from "../../../modals";
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import NavigationHeader from "../../../core/NavigationHeader";
@@ -15,7 +15,7 @@ import {deleteCard, getCards} from "../../../store/asyncThunks/cards";
 export const Payments = (props) => {
     const dispatch = useDispatch()
     const cards = useSelector(state => state.cards)
-    const images = {MasterCard, Visa}
+    const images = {MasterCard, visa}
 
     useEffect(() => {
         dispatch(getCards())
@@ -42,9 +42,9 @@ export const Payments = (props) => {
                     <FlatList
                         data={cards.data}
                         renderItem={({item}) => <CardList key={item.id}
-                                                          name={item.brand}
-                                                          number={item.last4}
-                                                          image={images[item.brand]}
+                                                          name={item.card.brand.toUpperCaseFirstChar()}
+                                                          number={item.card.last4}
+                                                          image={images[item.card.brand]}
                                                           cardId={item.id}
                         />}
                         keyExtractor={item => item.id}
