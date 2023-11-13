@@ -48,6 +48,11 @@ const s = StyleSheet.create({
     callout_footer_btn_text: {
         color: Colors.darkBlue,
     },
+    logoIcon: {
+        width: 25,
+        height: 25,
+        resizeMode: 'contain'
+    }
 });
 
 export default s;

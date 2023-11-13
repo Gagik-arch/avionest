@@ -17,10 +17,11 @@ export const SuccessPayment = ({
                                    body,
                                }) => {
     const navigation = useNavigation()
-    const startD = moment(body.startDate);
-    const endD = moment(body.endDate);
+    const startD = moment(body.dateStart);
+    const endD = moment(body.dateEnd);
     const duration = moment.duration( endD.diff(startD)   );
 
+    console.log(body);
     return (
         <Modal visible={visibility}
                animationType="fade"

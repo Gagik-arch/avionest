@@ -15,14 +15,15 @@ import env from "../../../env";
 import airfieldsApi from "../../../api/airfieldsApi";
 
 export const Aeroclub = (props) => {
+    console.log(props, 'props');
     const state = useMemo(() => props.route.params, [])
     const [selected, setSelected] = useState(0)
     const [isLoading, setIsLoading] = useState(false)
 
     const images = [a, b, c, d]
     const plans = [
-        {label: `Short term parking fee <24hrs-${state.data.airfield?.short_hr_price_eur} euros/hr`, id: 1},
-        {label: `Long term parking fee >24hrs-${state.data.airfield?.long_day_price_eur} euros/day`, id: 2},
+        {label: `Short term parking fee <1day-13.72 euros/hr`, id: 1},
+        {label: `Long term parking fee >3day-13.18 euros/day`, id: 2},
     ]
 
     const onConfirm = () => {
@@ -119,7 +120,7 @@ export const Aeroclub = (props) => {
                 })}
             </View>
             <View style={s.container}>
-                <Text style={s.name} size={'16_400'}>LFLI aeroclub Annemasse, Information</Text>
+                <Text style={s.name} size={'16_400'}>{state.data.airfield?.airfield_name}</Text>
                 <View style={s.runway_container}>
                     {
                         state.data.airfield.runways.map((item, index) => {
@@ -149,14 +150,14 @@ const Runway = ({item}) => {
         <>
             <View style={s.list_container}>
                 <Text>Runway {value.runaway} {item.title}</Text>
-                <Button labelSize={'18_400'}
+               {/* <Button labelSize={'18_400'}
                         style={s.runway_add_btn}
                         onPress={() => {
                             setCompassVisibility(true)
                         }}
                 >
                     <Icon type={'PlusCircle'} stroke={'rgba(0,0,0,0.3)'} size={22}/>
-                </Button>
+                </Button>*/}
             </View>
             <Compass visibility={compassVisibility}
                      degree={value.degree}

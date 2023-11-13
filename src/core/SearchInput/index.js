@@ -16,7 +16,7 @@ const SearchInput = ({
                          keyboardType,
                          containerStyles = {},
                          renderButtons,
-                         placeholder = 'Select your destination',
+                         placeholder = 'Select your home base',
                          onFinish,
                      }) => {
     const [_value, _setValue] = useState(value)

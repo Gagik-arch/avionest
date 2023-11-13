@@ -113,7 +113,7 @@ const lastNameRef = useRef()
                               renderItem={({item, isSelected}) => {
                                   return <View style={{flexDirection: "row", columnGap: 10, alignItems: 'center'}}>
                                       <Image
-                                          source={{uri: `http://192.168.77.129:9026/sources/flags/${item.code.toLowerCase()}.png`}}
+                                          source={{uri: `http://65.109.11.93:9026/sources/flags/${item.code.toLowerCase()}.png`}}
                                           style={{width: 30, height: '100%'}}
                                       />
                                       <Text size={'14_400'}
@@ -130,10 +130,21 @@ const lastNameRef = useRef()
                     <SearchInput data={data?.oaciList}
                                  name={'home_base'}
                                  filter={(_data, value = '') => {
-                                     return _data.filter(item => item.oaci_code.toLowerCase().includes(value.toLowerCase()))
+                                     return _data.filter(item =>(
+                                         item.oaci_code.toLowerCase().includes(value.toLowerCase()) ||
+                                         item.airfield_name.toLowerCase().includes(value.toLowerCase())
+                                         )
+                                     )
                                  }}
                                  setValue={(item) => item.oaci_code}
-                                 renderItem={({item}) => <Text>{item.oaci_code}</Text>}
+                                 renderItem={({item}) => <View style={{
+                                     flexDirection:'row',
+                                     justifyContent:'space-between',
+                                     width:'100%'
+                                 }}>
+                                     <Text>{item.airfield_name}</Text>
+                                     <Text>{item.oaci_code}</Text>
+                                 </View>}
                                  onChange={(e) => {
                                      onChange({value: e.value.id, name: e.name})
                                  }}

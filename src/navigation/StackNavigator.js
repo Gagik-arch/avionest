@@ -99,6 +99,10 @@ const StackNavigator = () => {
                               component={PaymentDetails}
                               options={{header: () => null}}
                 />
+                <Stack.Screen name={"NoNetwork"}
+                              component={NoNetwork}
+                              options={{header: () => null}}
+                />
 
             </Stack.Group>
             <Stack.Screen name={"Home"}

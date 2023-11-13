@@ -81,6 +81,7 @@ const CardInput = ({
                            onChangeText={onTextChange}
                            keyboardType={'numeric'}
                            placeholder={placeholder}
+                           placeholderTextColor={'#787777'}
                            style={{color: isNotValid ? Colors.red : '#787777'}}
                            onFocus={() => setFocused(true)}
                            onBlur={() => setFocused(false)}

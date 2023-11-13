@@ -19,6 +19,7 @@ export const MyBookings = (props) => {
         usersApi.getMyBookings({userId:user.data.user.id
         })
             .then(res => {
+                console.log(res);
                 setData(res.data)
             })
             .catch(e => {

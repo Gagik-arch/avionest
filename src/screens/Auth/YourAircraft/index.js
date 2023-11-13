@@ -15,7 +15,7 @@ export const YourAircraft = (props) => {
     const [requiredMessage, setRequiredMessage] = useState({})
     const {data} = useSelector(state => state.global)
     const formQuery = ["aircraft_id", 'first_color_id', 'color_id_1', 'equipments', 'weight_type_id']
-    console.log(data)
+
     const onChangeCheckbox = (e) => {
         setBody((prev) => {
             let copy = prev?.[e.name] ? [...prev[e.name]] : []
@@ -83,7 +83,7 @@ export const YourAircraft = (props) => {
                    requiredMessage={requiredMessage['registration_number']}
             />
             <DropDown variant={'underlined'}
-                      placeholder={'Aircraft height '}
+                      placeholder={'Aircraft weight'}
                       data={data?.weightTypes}
                       name={'weight_type_id'}
                       label={(e) => e?.value?.title}
@@ -116,8 +116,10 @@ export const YourAircraft = (props) => {
                     onDisabled={onDisable}
                     style={{...margin(10, 0, 0, 0)}}
                     onPress={() => {
+                        console.log('etrgh');
                         const cloneBody = {...body}
                         cloneBody.aircraft_id = body.aircraft_id.id
+
                         props.navigation.navigate('YourQualifications', {...cloneBody})
                     }}/>
         </Screen>

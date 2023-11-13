@@ -10,10 +10,11 @@ import {onChangeBody} from "../../../resources";
 import globalApi from "../../../api/globalApi";
 import {SelectLocation} from "../../../sheets";
 import authApi from "../../../api/authApi";
-import {View} from "react-native";
+import {View, Image} from "react-native";
 import env from "../../../env";
 import moment from "moment";
 import s from './style'
+import LogoIcon from '../../../../assets/images/LogoIcon.png'
 
 export const Location = (props) => {
     const sheetRef = useRef()
@@ -33,30 +34,31 @@ export const Location = (props) => {
     }, [global])
 
     useEffect(() => {
-        globalApi.getAirfieldByRange(
-            body.startDate ? moment(body.startDate).format('YYYY-MM-DD HH:MM') : undefined,
-            body.endDate ? moment(body.endDate).format('YYYY-MM-DD HH:MM') : undefined,
-            body?.spaceType,
-            body?.oaciId,
-        )
-            .then(res => {
-                setOacies(res.data.oacies)
-                setAirfields(res.data.airfields)
-                if (res?.data?.airfields?.length > 0) {
-                    setRegion({
-                        latitude: +res.data.airfields[0].latitude,
-                        longitude: +res.data.airfields[0].longitude,
-                        latitudeDelta: 0.1,
-                        longitudeDelta: 0.1,
-                    })
-                }
-            })
-            .catch(e => {
-                if (e.response.status === 401) {
-                    refreshTokenOn401()
-                }
-            })
+        // globalApi.getAirfieldByRange(
+        //     body.startDate ? moment(body.startDate).format('YYYY-MM-DD HH:MM') : undefined,
+        //     body.endDate ? moment(body.endDate).format('YYYY-MM-DD HH:MM') : undefined,
+        //     body?.spaceType,
+        //     body?.oaciId,
+        // )
+        //     .then(res => {
+        //         setOacies(res.data.oacies)
+        //         setAirfields(res.data.airfields)
+        //         if (res?.data?.airfields?.length > 0) {
+        //             setRegion({
+        //                 latitude: 48.850723,
+        //                 longitude: 2.349352,
+        //                 latitudeDelta: 3,
+        //                 longitudeDelta: 3,
+        //             })
+        //         }
+        //     })
+        //     .catch(e => {
+        //         if (e.response.status === 401) {
+        //             refreshTokenOn401()
+        //         }
+        //     })
     }, [body])
+
     const refreshTokenOn401 = async () => {
         try {
             let refreshToken = await AsyncStorage.getItem('token')
@@ -148,7 +150,8 @@ export const Location = (props) => {
                                     latitude: +item.latitude, longitude: +item.longitude,
                                 }}
                         >
-                            <Icon type={'Mark'} fill={item.free_spaces_count > 0 ? '#67E0D4' : '#F4909E'}/>
+                            <Image source={LogoIcon} style={s.logoIcon} />
+                           {/* <Icon type={'Mark'} fill={item.free_spaces_count > 0 ? '#67E0D4' : '#F4909E'}/>*/}
                             <Callout>
                                 <CustomCallout item={item}/>
                             </Callout>

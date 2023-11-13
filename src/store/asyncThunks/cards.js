@@ -52,19 +52,18 @@ export const addCard = createAsyncThunk(
             stripe_card_token: card.id,
             stripe_card_id: card.card.id,
         })
-            .then((res) => {
+            .then(() => {
                 dispatch(cardsActions.addCard(card));
+                navigation.reset({index: 0, routes: [{name: "Home"}]});
             })
             .catch(e => {
-                console.log(e)
                 Toast.show({
                     type: 'error',
                     text1: `${e} <usersApi.addCard>`,
                 });
             })
-            .then(() => {
+            .finally(() => {
                 dispatch(cardsActions.setLoading(false));
-                navigation.reset({index: 0, routes: [{name: "Payments"}]});
             })
     },
 );

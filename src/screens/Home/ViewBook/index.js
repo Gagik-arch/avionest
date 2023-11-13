@@ -42,7 +42,8 @@ export const ViewBook = (props) => {
     const submit = () => {
         setIsLoading(true)
         airfieldsApi.bookAirfield(body)
-            .then(() => {
+            .then((res) => {
+                console.log(res);
                 setSuccessResponse(true)
             })
             .catch(e => {

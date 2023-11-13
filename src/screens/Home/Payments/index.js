@@ -4,7 +4,7 @@ import {Button, Icon, Screen, Text} from "../../../core";
 import global from "../../../styles/global";
 import {margin} from "../../../resources";
 import {ActivityIndicator, FlatList, Image,  View} from 'react-native'
-import MasterCard from '../../../../assets/images/mastercard.png'
+import mastercard from '../../../../assets/images/mastercard.png'
 import visa from '../../../../assets/images/visa.png'
 import {PaymentModal} from "../../../modals";
 import Swipeable from 'react-native-gesture-handler/Swipeable';
@@ -15,8 +15,8 @@ import {deleteCard, getCards} from "../../../store/asyncThunks/cards";
 export const Payments = (props) => {
     const dispatch = useDispatch()
     const cards = useSelector(state => state.cards)
-    const images = {MasterCard, visa}
-
+    const images = {mastercard, visa}
+    // console.log(cards)
     useEffect(() => {
         dispatch(getCards())
     }, [])
@@ -41,12 +41,14 @@ export const Payments = (props) => {
                 cards.data.length ?
                     <FlatList
                         data={cards.data}
-                        renderItem={({item}) => <CardList key={item.id}
-                                                          name={item.card.brand.toUpperCaseFirstChar()}
-                                                          number={item.card.last4}
-                                                          image={images[item.card.brand]}
-                                                          cardId={item.id}
-                        />}
+                        renderItem={({item}) => {
+                            return  <CardList key={item.card.id}
+                                      name={item.card.brand.toUpperCaseFirstChar()}
+                                      number={item.card.last4}
+                                      image={images[item.card.brand.toLowerCase()]}
+                                      cardId={item.id}
+                            />
+                        }}
                         keyExtractor={item => item.id}
                     /> :
                     <Text size={'16_600'} style={{...margin(0, 0, 0, 50)}}>Cards not available</Text>
@@ -88,12 +90,11 @@ const CardList = ({
             <View style={s.swipe_container}>
                 <Button style={[s.swipeable_btn, {transform: [{scale: scaleTrash}]}]}
                         disabled={isLoading}
-                        isLoading={isLoading}
                         onPress={() => {
                             setVisibility(true)
                         }}
                 >
-                    <Icon type={'Trash'} stroke={'red'}/>
+                    {isLoading ? <ActivityIndicator/> : <Icon type={'Trash'} stroke={'red'}/>}
                 </Button>
             </View>
         );

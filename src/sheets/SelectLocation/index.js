@@ -96,7 +96,7 @@ export const SelectLocation = forwardRef(({
                             />
                         </View>
                         <View style={{flex: 1, ...margin(20, 0, 0, 0)}}>
-                            <Text size={'14_400'}>Check In Date</Text>
+                            <Text size={'14_400'}>Check Out Date</Text>
                             <DatePicker name={'endDate'}
                                         placeholder={'To Date'}
                                         style={{
