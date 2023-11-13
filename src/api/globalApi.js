@@ -30,8 +30,8 @@ class GlobalApi extends Api {
         return this.get({url: '/auth-sources'})
     }
 
-    getAirfieldById(id) {
-        return this.get({url: '/airfields/' + id})
+    getAirfieldById(id,spaceType) {
+        return this.get({url: `/airfields/${id}/${spaceType}`})
     }
 }
 

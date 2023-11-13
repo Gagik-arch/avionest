@@ -15,15 +15,14 @@ import env from "../../../env";
 import airfieldsApi from "../../../api/airfieldsApi";
 
 export const Aeroclub = (props) => {
-    console.log(props, 'props');
     const state = useMemo(() => props.route.params, [])
     const [selected, setSelected] = useState(0)
     const [isLoading, setIsLoading] = useState(false)
 
     const images = [a, b, c, d]
     const plans = [
-        {label: `Short term parking fee <1day-13.72 euros/hr`, id: 1},
-        {label: `Long term parking fee >3day-13.18 euros/day`, id: 2},
+        {label: `Short term parking fee <1day-${state.data.airfield.prices.short} euros/hr`, id: 1},
+        {label: `Long term parking fee >3day-${state.data.airfield.prices.long} euros/day`, id: 2},
     ]
 
     const onConfirm = () => {
@@ -133,11 +132,10 @@ export const Aeroclub = (props) => {
                         label={'Book space'}
                         style={{...margin(40, 0)}}
                         onPress={onConfirm}
+                        disabled={isLoading}
+                        isLoading={isLoading}
                 />
-
             </View>
-
-
         </Screen>
     )
 }

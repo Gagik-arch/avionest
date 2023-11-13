@@ -34,31 +34,30 @@ export const Location = (props) => {
     }, [global])
 
     useEffect(() => {
-        // globalApi.getAirfieldByRange(
-        //     body.startDate ? moment(body.startDate).format('YYYY-MM-DD HH:MM') : undefined,
-        //     body.endDate ? moment(body.endDate).format('YYYY-MM-DD HH:MM') : undefined,
-        //     body?.spaceType,
-        //     body?.oaciId,
-        // )
-        //     .then(res => {
-        //         setOacies(res.data.oacies)
-        //         setAirfields(res.data.airfields)
-        //         if (res?.data?.airfields?.length > 0) {
-        //             setRegion({
-        //                 latitude: 48.850723,
-        //                 longitude: 2.349352,
-        //                 latitudeDelta: 3,
-        //                 longitudeDelta: 3,
-        //             })
-        //         }
-        //     })
-        //     .catch(e => {
-        //         if (e.response.status === 401) {
-        //             refreshTokenOn401()
-        //         }
-        //     })
+        globalApi.getAirfieldByRange(
+            body.startDate ? moment(body.startDate).format('YYYY-MM-DD HH:MM') : undefined,
+            body.endDate ? moment(body.endDate).format('YYYY-MM-DD HH:MM') : undefined,
+            body?.spaceType,
+            body?.oaciId,
+        )
+            .then(res => {
+                setOacies(res.data.oacies)
+                setAirfields(res.data.airfields)
+                if (res?.data?.airfields?.length > 0) {
+                    setRegion({
+                        latitude: 48.850723,
+                        longitude: 2.349352,
+                        latitudeDelta: 3,
+                        longitudeDelta: 3,
+                    })
+                }
+            })
+            .catch(e => {
+                if (e.response.status === 401) {
+                    refreshTokenOn401()
+                }
+            })
     }, [body])
-
     const refreshTokenOn401 = async () => {
         try {
             let refreshToken = await AsyncStorage.getItem('token')

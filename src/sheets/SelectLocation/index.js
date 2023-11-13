@@ -31,9 +31,8 @@ export const SelectLocation = forwardRef(({
     const disableSubmitBtn = () => validateFields(formQuery, body) || isLoading;
 
     const onConfirm = () => {
-
         setIsLoading(true)
-        globalApi.getAirfieldById(body.oaciId)
+        globalApi.getAirfieldById(body.oaciId,body?.space_type)
             .then(res => {
                 navigation.reset({index: 0, routes: [{name: "Aeroclub", params: {body, data: res.data}}]});
                 onSubmit()
