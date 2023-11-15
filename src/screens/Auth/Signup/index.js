@@ -1,11 +1,11 @@
-import React, {useContext, useRef, useState} from "react";
+import React, { useRef, useState} from "react";
 import s from "./style";
-import {Button, Checkbox, Icon, Input, Screen, Text} from "../../../core";
+import {Button, Checkbox,  Input, Screen, Text} from "../../../core";
 import {View} from "react-native";
-import {Colors, margin, onChangeBody, onRequiredFieldNotAvailable, padding, validateFields} from "../../../resources";
+import {Colors, margin, onChangeBody, onRequiredFieldNotAvailable,  validateFields} from "../../../resources";
 import global from '../../../styles/global'
 import Toast from "react-native-toast-message";
-import authApi from "../../../api/authApi";
+import globalApi from "../../../api/globalApi";
 
 export const Signup = (props) => {
     const [body, setBody] = useState({});
@@ -48,32 +48,26 @@ export const Signup = (props) => {
     }
 
     const submit = ()=>{
-        authApi.signup(body)
-            .then( () => {
-                props.navigation.navigate('UserInfo', body)
+        globalApi.checkEmailExist({email:body.email})
+            .then( (res) => {
+                if(res.data.emailExists){
+                    Toast.show({
+                        type: "error",
+                        text1: 'Email is exists!',
+                    });
+                   const bodyClone = {...body}
+                    delete bodyClone.email
+                    setBody(bodyClone)
+                }else{
+                    props.navigation.navigate('UserInfo', body)
+                }
             })
             .catch(e => {
-                const existEmail = e?.response?.data?.validationErrors.find(item=>item.param === 'email')
-
-                if(e?.response?.data?.validationErrors?.length){
-                    if(existEmail){
-                        setBody(p=>{
-                            delete p.email
-                            return p
-                        })
-                        return  Toast.show({
-                            type: "error",
-                            text1: existEmail.msg,
-                        });
-                    }else{
-                        props.navigation.navigate('UserInfo', body)
-                    }
-                }else{
+                console.log(e)
                     Toast.show({
                         type: "error",
                         text1: e || "An error occurred.",
                     });
-                }
             })
             .finally(() => {
                 setIsLoading(false)

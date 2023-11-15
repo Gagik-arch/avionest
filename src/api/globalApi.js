@@ -33,6 +33,10 @@ class GlobalApi extends Api {
     getAirfieldById(id,spaceType) {
         return this.get({url: `/airfields/${id}/${spaceType}`})
     }
+
+    checkEmailExist(body){
+        return this.post({url:'/check-email-exists',body})
+    }
 }
 
 const globalApi = new GlobalApi();

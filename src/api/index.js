@@ -50,7 +50,7 @@ class Api {
 
         if (body) {
             if (body.hasOwnProperty("email")) {
-                body.email = body.email.toLowerCase();
+                body.email = body.email?.toLowerCase();
             }
             if (body instanceof FormData) {
                 config.headers["content-type"] = "multipart/form-data";
