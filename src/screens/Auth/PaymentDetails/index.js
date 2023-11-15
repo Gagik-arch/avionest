@@ -68,9 +68,10 @@ export const PaymentDetails = (props) => {
                     setModalVisibility(true)
                 })
                 .catch(e => {
+                    console.log(e,cloneBody)
                     Toast.show({
                         type: "error",
-                        text1: e?.response?.data || "An error occurred.",
+                        text1: e || "An error occurred.",
                     });
                 })
                 .then(() => {

@@ -12,6 +12,8 @@ const ColorPicker = ({
                          placeholder = 'Color',
                          onChange = () => {
                          },
+                         onFinish = () => {
+                         },
                          name,
                          containerStyle={},
                      }) => {
@@ -38,6 +40,9 @@ const ColorPicker = ({
     const onColorChangeComplete = (e) => {
         _setValue(e)
         onChange({value: e, name})
+        if(onFinish){
+            onFinish({value: e, name})
+        }
     }
 
     return (

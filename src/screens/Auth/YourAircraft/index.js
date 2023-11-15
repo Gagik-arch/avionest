@@ -45,7 +45,7 @@ export const YourAircraft = (props) => {
         })
         setRequiredMessage(result)
     }
-    console.log(data?.weightTypes)
+
     return (
         <Screen contentContainerStyle={s.container}
                 header={
@@ -63,13 +63,13 @@ export const YourAircraft = (props) => {
             </Text>
             <SelectableInput onChange={onChange} name={'aircraft_id'}/>
             <View style={{flexDirection: "row"}}>
-                <ColorPicker onChange={onChange}
+                <ColorPicker onFinish={onChange}
                              name={'first_color_id'}
                              placeholder={'First color'}
                              containerStyle={{flex: 1}}
                 />
                 <View style={{width: 20}}/>
-                <ColorPicker onChange={onChange}
+                <ColorPicker onFinish={onChange}
                              name={'color_id_1'}
                              placeholder={'Second color'}
                              containerStyle={{flex: 1}}
@@ -116,7 +116,6 @@ export const YourAircraft = (props) => {
                     onDisabled={onDisable}
                     style={{...margin(10, 0, 0, 0)}}
                     onPress={() => {
-                        console.log('etrgh');
                         const cloneBody = {...body}
                         cloneBody.aircraft_id = body.aircraft_id.id
 

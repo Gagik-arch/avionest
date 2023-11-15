@@ -5,10 +5,12 @@ import {View} from "react-native";
 import {Colors, margin, onChangeBody, onRequiredFieldNotAvailable, padding, validateFields} from "../../../resources";
 import global from '../../../styles/global'
 import Toast from "react-native-toast-message";
+import authApi from "../../../api/authApi";
 
 export const Signup = (props) => {
     const [body, setBody] = useState({});
     const [terms, setTerms] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [requiredMessage, setRequiredMessage] = useState({})
     const formQuery = ["email", "username", "password", "confirm_password"]
     const usernameRef = useRef()
@@ -45,6 +47,38 @@ export const Signup = (props) => {
         }
     }
 
+    const submit = ()=>{
+        authApi.signup(body)
+            .then( () => {
+                props.navigation.navigate('UserInfo', body)
+            })
+            .catch(e => {
+                const existEmail = e?.response?.data?.validationErrors.find(item=>item.param === 'email')
+
+                if(e?.response?.data?.validationErrors?.length){
+                    if(existEmail){
+                        setBody(p=>{
+                            delete p.email
+                            return p
+                        })
+                        return  Toast.show({
+                            type: "error",
+                            text1: existEmail.msg,
+                        });
+                    }else{
+                        props.navigation.navigate('UserInfo', body)
+                    }
+                }else{
+                    Toast.show({
+                        type: "error",
+                        text1: e || "An error occurred.",
+                    });
+                }
+            })
+            .finally(() => {
+                setIsLoading(false)
+            })
+    }
     return (
         <Screen contentContainerStyle={s.container}>
             <Text style={global.app_title}>Welcome!</Text>
@@ -100,10 +134,9 @@ export const Signup = (props) => {
             <View style={{flex: 1}}/>
             <Button label={'Create Account'} variant={'primary'}
                     disabled={disableSubmitBtn()}
-                    onPress={() => {
-                        props.navigation.navigate('UserInfo', body)
-                    }}
+                    onPress={submit}
                     onDisabled={onDisable}
+                    isLoading={isLoading}
             />
             <Text style={{textAlign: 'center', ...margin(14, 0, 10, 0)}}>
                 Already have an account?
