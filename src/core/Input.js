@@ -19,6 +19,18 @@ const regex = {
     phone: {
         validation: new RegExp("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])(?:[A-z])?\\.)+(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum|mail|ru)\\b"),
         errorMessage: "Invalid email.",
+    }, // @, 0 UPPERCASE, only com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)
+    CVV: {
+        validation: new RegExp("^[0-9]{3,4}$"),
+        errorMessage: "Invalid CVV",
+    },
+    postalCode: {
+        validation: new RegExp("^[0-9]{4,5}?$"), // USPOSTAL CODE
+        errorMessage: "Invalid postal code.",
+    },
+    cardExpiryDate: {
+        validation: new RegExp('^\([0-9]{2})\/\([0-9]{2})$'),
+        errorMessage: "Invalid expiry date!",
     },
 };
 
@@ -59,7 +71,7 @@ const Input = React.forwardRef(({
                                     enableIconDivider = false,
                                     numberOfLines = 1,
                                     requiredMessage,
-                                    autoFocus=false,
+                                    autoFocus = false,
                                     ...props
                                 }, ref) => {
     const [visibility, setVisibility] = useState(validationKey === "password");
@@ -89,11 +101,14 @@ const Input = React.forwardRef(({
             const numText = text.toLowerCase().replace(/[^0-9]/g, "");
             text = validationKey === "phone" ? `1 (${numText.slice(1, 4)}) ${numText.slice(4)}` : numText;
         }
-
+        if (validationKey === 'cardExpiryDate') {
+            text = text.length === 2 ? text + '/' : text
+        }
         setDefaultValue(text);
 
         if (validationKey) {
             // [--- handled when user finished typing >>>
+
             const _isValid = validateField(validationKey, text);
             setIsValid(_isValid);
 

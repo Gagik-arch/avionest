@@ -3,31 +3,19 @@ import s from './style'
 import {Button, Icon, Switch, NavigationHeader, Screen, Text} from "../../../core";
 import {Colors, margin} from "../../../resources";
 import {ActivityIndicator, View} from 'react-native'
-import usersApi from "../../../api/usersApi";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import moment from "moment";
-import { useFocusEffect } from '@react-navigation/native';
+import {getMyBookings} from "../../../store/asyncThunks/myBookings";
 
 export const MyBookings = (props) => {
-    const user = useSelector(state => state.auth)
+    const myBookings = useSelector(state => state.myBookings)
     const [data, setData] = useState([])
-    const [isLoading, setIsLoading] = useState(false)
     const [isLong, setIsLong] = useState(false)
+    const dispatch = useDispatch()
 
+    console.log(myBookings)
     useEffect(() => {
-        setIsLoading(true)
-        usersApi.getMyBookings({userId:user.data.user.id
-        })
-            .then(res => {
-                console.log(res);
-                setData(res.data)
-            })
-            .catch(e => {
-                console.log(e)
-            })
-            .then(() => {
-                setIsLoading(false)
-            })
+      dispatch(getMyBookings())
     }, [])
 
     return (
@@ -65,9 +53,9 @@ export const MyBookings = (props) => {
                 />
             </View>
             <View style={s.container}>
-                {isLoading ? <ActivityIndicator/> :
-                    data.length ?
-                        data.map(item => {
+                {myBookings.isLoading ? <ActivityIndicator/> :
+                    myBookings.data?.length ?
+                        myBookings.data.map(item => {
                             const startD = moment(item.start_timestamp);
                             const endD = moment(item.end_timestamp);
                             const duration = moment.duration(endD.diff(startD));

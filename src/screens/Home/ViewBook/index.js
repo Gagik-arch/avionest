@@ -12,6 +12,7 @@ import s from './style'
 import airfieldsApi from "../../../api/airfieldsApi";
 import moment from "moment";
 import {SuccessPayment} from "../../../modals";
+import {addMyBooking} from "../../../store/asyncThunks/myBookings";
 
 const cardImg = {MasterCard, visa}
 
@@ -40,10 +41,10 @@ export const ViewBook = (props) => {
     }
 
     const submit = () => {
+        dispatch(addMyBooking({body,facsetSuccessResponse}))
         setIsLoading(true)
         airfieldsApi.bookAirfield(body)
             .then((res) => {
-                console.log(res);
                 setSuccessResponse(true)
             })
             .catch(e => {

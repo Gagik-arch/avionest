@@ -52,9 +52,12 @@ const CardInput = ({
     const onTextChange = text => {
         text = text.toLowerCase().replace(/[^0-9]/g, '');
         _setValue(text);
-        onChange?.({name, value: text})
+
+        const isValid = text && regexp.test(text)
+
+        onChange?.({name, value: text, isValid})
         if (text.length === 16) {
-            onFinish?.({name, value: text});
+            onFinish?.({name, value: text, isValid: !isNotValid});
         }
     };
 

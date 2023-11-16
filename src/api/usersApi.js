@@ -14,8 +14,8 @@ class UsersApi extends Api {
   addCard(body) {
     return this.post({url: '/insert-card',body});
   }
-  getMyBookings(body) {
-    return this.post({url: '/get-bookings',body});
+  getIntents() {
+    return this.get({url: '/intents'});
   }
 }
 

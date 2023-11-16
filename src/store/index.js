@@ -2,14 +2,16 @@ import {configureStore} from '@reduxjs/toolkit';
 import {
   authReducer,
   globalReducer,
-    cardsReducer
+    cardsReducer,
+    myBookingsReducer
 } from './reducers';
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
     global: globalReducer,
-    cards:cardsReducer
+    cards:cardsReducer,
+    myBookings:myBookingsReducer
   },
 });
 

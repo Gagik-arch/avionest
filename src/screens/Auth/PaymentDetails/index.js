@@ -31,6 +31,7 @@ export const PaymentDetails = (props) => {
         })
         onChangeBody(e, body, setBody);
     }
+
     const disableSubmitBtn = () => validateFields(formQuery, body) || isLoading || cards.isLoading;
 
     const onSubmit = async () => {
@@ -122,24 +123,18 @@ export const PaymentDetails = (props) => {
                 />
                 <CardInput placeholder={'Card Number'}
                            name={'card_number'}
-                           onFinish={onChange}
-                           value={body?.card_number}
+                           onChange={onChange}
+                           requiredMessage={requiredMessage?.card_number}
                 />
                 <View style={s.row}>
                     <View style={{flex: 1}}>
                         <Input placeholder={'MM/YY'}
                                maxLength={5}
                                name={'card_date'}
-                               onChange={(e) => {
-                                   onChange({
-                                       name: e.name,
-                                       value: e.value.length === 2 ?
-                                           e.value + '/' :
-                                           e.value
-                                   })
-                               }}
+                               onChange={onChange }
                                value={body?.card_date}
                                requiredMessage={requiredMessage?.card_date}
+                               validationKey={'cardExpiryDate'}
                         />
                     </View>
                     <View style={{flex: 1}}>
@@ -150,6 +145,7 @@ export const PaymentDetails = (props) => {
                                onFinish={onChange}
                                value={body?.card_cvv}
                                requiredMessage={requiredMessage.card_cvv}
+                               validationKey={'CVV'}
                         />
                     </View>
                 </View>
@@ -160,6 +156,7 @@ export const PaymentDetails = (props) => {
                        onFinish={onChange}
                        value={body?.card_postal}
                        requiredMessage={requiredMessage.card_postal}
+                       validationKey={'postalCode'}
                 />
                 <View style={{flex: 1}}/>
                 <Button label={'Next'}

@@ -41,6 +41,7 @@ export const Location = (props) => {
             body?.oaciId,
         )
             .then(res => {
+                console.log(res.data)
                 setOacies(res.data.oacies)
                 setAirfields(res.data.airfields)
                 if (res?.data?.airfields?.length > 0) {
@@ -138,10 +139,12 @@ export const Location = (props) => {
                       region={region}
                       mapType={'standard'}
                       showsCompass={true}
+
             >
                 {airfields?.map(item => {
                     return (
                         <Marker key={item.id}
+                                tracksViewChanges={false}
                                 onPress={() => {
                                     sheetRef.current.snapToIndex(0)
                                 }}
@@ -160,6 +163,7 @@ export const Location = (props) => {
                 {oacies?.map(item => {
                     return (
                         <Marker key={item.id}
+                                tracksViewChanges={false}
                                 title={item.airfield_name}
                                 description={item.city}
                                 onPress={() => {
