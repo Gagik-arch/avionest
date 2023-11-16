@@ -29,10 +29,10 @@ export const Aeroclub = (props) => {
         setIsLoading(true)
         const body = {
             paymentMethod: selected,
-            dateEnd: moment(state.body.endDate).format('YYYY-MM-DD hh:mm'),
-            dateStart: moment(state.body.startDate).format('YYYY-MM-DD hh:mm'),
+            endDate: moment(state.body.endDate).format('YYYY-MM-DD hh:mm'),
+            startDate: moment(state.body.startDate).format('YYYY-MM-DD hh:mm'),
             oaciId: 5,
-            space_type:state.body.space_type,
+            spaceType:state.body.space_type,
         }
         airfieldsApi.calcBookPrice(body)
             .then(res => {

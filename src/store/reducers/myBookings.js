@@ -15,6 +15,9 @@ export const myBookingsSlice = createSlice({
         setLoading(state, action) {
             state.isLoading = action.payload
         },
+        addBooking(state,action){
+            state.data.unshift(action.payload)
+        }
     },
 })
 

@@ -14,7 +14,7 @@ export const SelectYourDestination = ({
                                       }) => {
 
     const filter = useMemo(() => {
-        return value ? OACIData.filter(item => item.airfield_name.toLowerCase().includes(value.toLowerCase())) : []
+         return value ? OACIData.filter(item => item.airfield_name?.toLowerCase()?.includes(value?.toLowerCase())) : []
     }, [value])
 
     return (
@@ -79,7 +79,7 @@ export const SelectYourDestination = ({
                                                   </TouchableOpacity>
                                               )
                                           }}
-                                          keyExtractor={item => item.id}
+                                          keyExtractor={(_,index) => index }
                                 /> :
                                 <Text style={{...margin(16,0,0,16)}}>Data not available.</Text>}
                         </View>

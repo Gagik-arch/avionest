@@ -32,6 +32,7 @@ export const SelectLocation = forwardRef(({
 
     const onConfirm = () => {
         setIsLoading(true)
+        console.log(body.oaciId,body?.space_type)
         globalApi.getAirfieldById(body.oaciId,body?.space_type)
             .then(res => {
                 navigation.reset({index: 0, routes: [{name: "Aeroclub", params: {body, data: res.data}}]});
@@ -40,7 +41,7 @@ export const SelectLocation = forwardRef(({
             .catch(e => {
                 console.log(e)
             })
-            .then(() => {
+            .finally(() => {
                 setIsLoading(false)
             })
     }
@@ -55,7 +56,8 @@ export const SelectLocation = forwardRef(({
                                    setValue={setValue}
                                    value={value}
                                    onChange={(e) => {
-                                       onChange({value: e.value.id, name: 'oaciId'})
+                                       console.log(e)
+                                       onChange({value: e.value.oaci_id, name: 'oaciId'})
                                    }}
             />
             <BottomSheet ref={ref}
@@ -73,7 +75,9 @@ export const SelectLocation = forwardRef(({
                                     setVisibility(true)
                                 }}>
                             <Text
-                                style={s.placeholder}>{OACIData.find(item => item.id === body.oaciId)?.airfield_name || 'Select your destination'}</Text>
+                                style={s.placeholder}>
+                                {OACIData.find(item => item?.id === body.oaciId)?.airfield_name || 'Select your destination'}
+                            </Text>
                             <Icon type={'Search'}
                                   size={18}/>
                         </Button>

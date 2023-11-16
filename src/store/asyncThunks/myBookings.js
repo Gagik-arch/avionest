@@ -30,11 +30,11 @@ export const addMyBooking = createAsyncThunk(
         dispatch(myBookingsActions.setLoading(true));
         airfieldsApi.bookAirfield(body)
             .then(res => {
-                console.log(res)
                 setSuccessResponse(true)
-                // dispatch(cardsActions.setData(res.data.stripeIntents));
+                dispatch(myBookingsActions.addBooking(res.data.stripeIntents));
             })
             .catch(e => {
+                console.log(e)
                 Toast.show({
                     type: 'error',
                     text1: `${e} <usersApi.addMyBooking>`,

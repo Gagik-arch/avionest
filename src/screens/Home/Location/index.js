@@ -38,12 +38,10 @@ export const Location = (props) => {
             body.startDate ? moment(body.startDate).format('YYYY-MM-DD HH:MM') : undefined,
             body.endDate ? moment(body.endDate).format('YYYY-MM-DD HH:MM') : undefined,
             body?.spaceType,
-            body?.oaciId,
         )
             .then(res => {
-                console.log(res.data)
                 setOacies(res.data.oacies)
-                setAirfields(res.data.airfields)
+                setAirfields(res.data.airfields.filter(item=>item.id))
                 if (res?.data?.airfields?.length > 0) {
                     setRegion({
                         latitude: 48.850723,
@@ -59,6 +57,7 @@ export const Location = (props) => {
                 }
             })
     }, [body])
+
     const refreshTokenOn401 = async () => {
         try {
             let refreshToken = await AsyncStorage.getItem('token')
@@ -141,9 +140,9 @@ export const Location = (props) => {
                       showsCompass={true}
 
             >
-                {airfields?.map(item => {
+                {airfields?.map((item,i) => {
                     return (
-                        <Marker key={item.id}
+                        <Marker key={i}
                                 tracksViewChanges={false}
                                 onPress={() => {
                                     sheetRef.current.snapToIndex(0)
@@ -160,9 +159,9 @@ export const Location = (props) => {
                         </Marker>
                     )
                 })}
-                {oacies?.map(item => {
+                {oacies?.map((item,i) => {
                     return (
-                        <Marker key={item.id}
+                        <Marker key={i}
                                 tracksViewChanges={false}
                                 title={item.airfield_name}
                                 description={item.city}
@@ -183,7 +182,8 @@ export const Location = (props) => {
                         setRegion={setRegion}
                         body={body}
                         setBody={setBody}
-                        OACIData={global.data?.oaciList}
+                        // OACIData={global.data?.oaciList}
+                      OACIData={airfields}
                         onSubmit={() => {
                             sheetRef.current?.close()
                         }}

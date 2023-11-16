@@ -29,9 +29,11 @@ export const ViewBook = (props) => {
         if (!cards.data.length) {
             dispatch(getCards())
         } else {
-            setBody(prev => ({...prev, ['cardId']: cards.data[0].id}))
+            console.log(cards.data[0])
+            setBody(prev => ({...prev, ['stripeCardId']: cards.data[0].id}))
         }
     }, [cards.data])
+
 
     const onChange = (e) => {
         const copyBody = {...requiredMessage}
@@ -41,18 +43,7 @@ export const ViewBook = (props) => {
     }
 
     const submit = () => {
-        dispatch(addMyBooking({body,facsetSuccessResponse}))
-        setIsLoading(true)
-        airfieldsApi.bookAirfield(body)
-            .then((res) => {
-                setSuccessResponse(true)
-            })
-            .catch(e => {
-                console.log(e)
-            })
-            .then(() => {
-                setIsLoading(false)
-            })
+        dispatch(addMyBooking({body,setSuccessResponse}))
     }
 
     const selectedCard = useMemo(() => {

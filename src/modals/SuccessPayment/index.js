@@ -89,7 +89,7 @@ export const SuccessPayment = ({
                             <Text size={'14_500'}
                                   style={{textAlign: 'center', color: 'rgba(220,0,0,0.9)'}}
                             >
-                                Amount Total price: {state?.amount.currencyFormat()} Euros
+                                Amount Total price: {state?.amount?.currencyFormat()} Euros
                             </Text>
                         </View>
 
