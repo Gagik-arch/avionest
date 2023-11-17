@@ -102,7 +102,10 @@ const Input = React.forwardRef(({
             text = validationKey === "phone" ? `1 (${numText.slice(1, 4)}) ${numText.slice(4)}` : numText;
         }
         if (validationKey === 'cardExpiryDate') {
-            text = text.length === 2 ? text + '/' : text
+            text = (text.length === 2 &&
+                !isNaN(+text) &&
+            typeof  +text === 'number')
+                ? text + '/' : text
         }
         setDefaultValue(text);
 
