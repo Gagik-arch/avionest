@@ -9,11 +9,9 @@ import {getMyBookings} from "../../../store/asyncThunks/myBookings";
 
 export const MyBookings = (props) => {
     const myBookings = useSelector(state => state.myBookings)
-    const [data, setData] = useState([])
     const [isLong, setIsLong] = useState(false)
     const dispatch = useDispatch()
 
-    console.log(myBookings)
     useEffect(() => {
       dispatch(getMyBookings())
     }, [])
@@ -56,12 +54,12 @@ export const MyBookings = (props) => {
                 {myBookings.isLoading ? <ActivityIndicator/> :
                     myBookings.data?.length ?
                         myBookings.data.map(item => {
-                            const startD = moment(item.start_timestamp);
-                            const endD = moment(item.end_timestamp);
+                            const startD = moment(item?.dateStart);
+                            const endD = moment(item?.dateEnd);
                             const duration = moment.duration(endD.diff(startD));
 
                             return (
-                                <View style={s.list_container} key={item.id}>
+                                <View style={s.list_container} key={item?.id}>
                                     <View style={s.list_top}>
                                         <View style={{alignItems: 'center',}}>
                                             <Icon type={'MapMarker'} size={26}/>
@@ -73,9 +71,9 @@ export const MyBookings = (props) => {
                                                 {item?.address}
                                             </Text>
                                             <Text style={{color: Colors.darkBlue}}>
-                                                {moment(item.start_timestamp).format('DD MMMM YY')}
+                                                {moment(item?.dateStart).format('DD MMMM YY')}
                                                 {' '} on {' '}
-                                                {moment(item.end_timestamp).format('DD MMMM YY')}
+                                                {moment(item?.dateEnd).format('DD MMMM YY')}
                                             </Text>
                                             <Text style={{color: Colors.darkBlue}}>
                                                 {duration.asDays().toFixed()} {' '}

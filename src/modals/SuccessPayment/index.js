@@ -21,7 +21,6 @@ export const SuccessPayment = ({
     const endD = moment(body.dateEnd);
     const duration = moment.duration( endD.diff(startD)   );
 
-    console.log(body);
     return (
         <Modal visible={visibility}
                animationType="fade"
@@ -92,7 +91,6 @@ export const SuccessPayment = ({
                                 Amount Total price: {state?.amount?.currencyFormat()} Euros
                             </Text>
                         </View>
-
                         <Button label={`Go to home`}
                                 onPress={() => {
                                     setVisibility(null)

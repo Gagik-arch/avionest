@@ -2,14 +2,14 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
     isLoading: false,
-    data: null,
+    data: [],
 }
 
 export const myBookingsSlice = createSlice({
     name: 'myBookings',
     initialState: initialState,
     reducers: {
-        setBookings(state, action) {
+        addBookings(state, action) {
             state.data = action.payload
         },
         setLoading(state, action) {

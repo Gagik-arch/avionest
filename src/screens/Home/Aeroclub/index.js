@@ -28,9 +28,8 @@ export const Aeroclub = (props) => {
     const onConfirm = () => {
         setIsLoading(true)
         const body = {
-            paymentMethod: selected,
-            endDate: moment(state.body.endDate).format('YYYY-MM-DD hh:mm'),
-            startDate: moment(state.body.startDate).format('YYYY-MM-DD hh:mm'),
+            endDate: moment(state.body.endDate).format('YYYY-MM-DD'),
+            startDate: moment(state.body.startDate).format('YYYY-MM-DD'),
             oaciId: 5,
             spaceType:state.body.space_type,
         }
@@ -38,7 +37,7 @@ export const Aeroclub = (props) => {
             .then(res => {
                 props.navigation.reset({
                     index: 0,
-                    routes: [{name: "ViewBook", params: {data: res.data, body, paymentMethod: selected}}]
+                    routes: [{name: "ViewBook", params: {data: res.data, body}}]
                 });
             })
             .catch(e => {

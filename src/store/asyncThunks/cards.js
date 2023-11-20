@@ -32,7 +32,7 @@ export const deleteCard = createAsyncThunk(
                 dispatch(cardsActions.removeCard(cardId));
             })
             .catch(e => {
-                console.log(111111,e)
+
                 Toast.show({
                     type: 'error',
                     text1: `${e} <usersApi.deleteCard>`,

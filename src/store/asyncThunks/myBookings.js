@@ -10,9 +10,11 @@ export const getMyBookings = createAsyncThunk(
         dispatch(myBookingsActions.setLoading(true));
         usersApi.getIntents()
             .then(res => {
-                dispatch(myBookingsActions.setData(res.data.stripeIntents));
+                console.log(res.data)
+                dispatch(myBookingsActions.addBookings(res.data.stripeIntents));
             })
             .catch(e => {
+                console.log(e)
                 Toast.show({
                     type: 'error',
                     text1: `${e} <usersApi.getIntents>`,

@@ -11,6 +11,7 @@ import Stripe from 'react-native-stripe-api';
 import {WelcomeAvionest} from "../../../modals";
 import {addCard, getCards} from '../../../store/asyncThunks/cards'
 import {useDispatch, useSelector} from "react-redux";
+import {cardsActions} from "../../../store/reducers";
 
 const apiKey = 'pk_test_51NsQHOHsAwmdsPL7SBxgBVrIG2xBJ9HJ3pgIoC7EJhIHkRLzM5wzAr8vQuvNNkUWGcK4vSZqJ35qLhu9ouvUqr8o00X3dnSjzz';
 
@@ -61,7 +62,7 @@ export const PaymentDetails = (props) => {
             }
             cloneBody.stripe_card_token = cardDetails.id
             cloneBody.stripe_card_id = cardDetails.card.id
-
+            dispatch(addCard({cardDetails,navigation: props.navigation}))
         } catch (e) {
             console.log(e)
         }
@@ -74,7 +75,6 @@ export const PaymentDetails = (props) => {
                     setModalVisibility(true)
                 })
                 .catch(e => {
-                    console.log(e)
                     Toast.show({
                         type: "error",
                         text1: e || "An error occurred.",
@@ -84,7 +84,6 @@ export const PaymentDetails = (props) => {
                     setIsLoading(false)
                 })
         } else {
-            console.log(cardDetails)
             dispatch(addCard({navigation:props.navigation,card:cardDetails}))
         }
     };

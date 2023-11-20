@@ -29,11 +29,9 @@ export const ViewBook = (props) => {
         if (!cards.data.length) {
             dispatch(getCards())
         } else {
-            console.log(cards.data[0])
             setBody(prev => ({...prev, ['stripeCardId']: cards.data[0].id}))
         }
     }, [cards.data])
-
 
     const onChange = (e) => {
         const copyBody = {...requiredMessage}
