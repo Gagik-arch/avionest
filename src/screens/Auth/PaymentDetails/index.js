@@ -53,7 +53,12 @@ export const PaymentDetails = (props) => {
         let cardDetails;
         try {
             cardDetails = await client.createToken(sendingData);
-
+            if(cardDetails.hasOwnProperty('error')){
+                return   Toast.show({
+                    type: "error",
+                    text1: cardDetails.error.code,
+                });
+            }
             cloneBody.stripe_card_token = cardDetails.id
             cloneBody.stripe_card_id = cardDetails.card.id
 

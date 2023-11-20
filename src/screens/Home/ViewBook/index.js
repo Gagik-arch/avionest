@@ -126,7 +126,7 @@ export const ViewBook = (props) => {
                               </View>
                           )
                       }}
-                      name={'country_id'}
+                      name={'stripeCardId'}
                       onChange={(e) => {
                           onChange({value: e.value.id, name: e.name})
                       }}

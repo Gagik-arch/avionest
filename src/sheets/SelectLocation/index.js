@@ -32,7 +32,7 @@ export const SelectLocation = forwardRef(({
 
     const onConfirm = () => {
         setIsLoading(true)
-        console.log(body.oaciId,body?.space_type)
+
         globalApi.getAirfieldById(body.oaciId,body?.space_type)
             .then(res => {
                 navigation.reset({index: 0, routes: [{name: "Aeroclub", params: {body, data: res.data}}]});
@@ -76,7 +76,7 @@ export const SelectLocation = forwardRef(({
                                 }}>
                             <Text
                                 style={s.placeholder}>
-                                {OACIData.find(item => item?.id === body.oaciId)?.airfield_name || 'Select your destination'}
+                                {OACIData.find(item => item?.oaci_id === body.oaciId)?.airfield_name || 'Select your destination'}
                             </Text>
                             <Icon type={'Search'}
                                   size={18}/>
